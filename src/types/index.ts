@@ -5,6 +5,7 @@ export interface Product {
   oldPrice?: number;
   image: string;
   tag?: string;
+  tagColor?: string;
   rating?: number;
   reviews?: string | number;
   description?: string;
