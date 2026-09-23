@@ -12,9 +12,9 @@
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "lucide-react": "^0.370.0",
-    "recharts": "^2.12.7",
-    "firebase": "^10.11.1"
+    "lucide-react": "latest",
+    "recharts": "latest",
+    "firebase": "latest"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
