@@ -19,7 +19,7 @@ export default function Categories() {
       <div className="flex items-center justify-between overflow-x-auto gap-4 pb-4 scrollbar-hide">
         {categories.map((c, i) => (
           <div key={i} className="flex flex-col items-center gap-3 min-w-[80px] cursor-pointer group">
-            <div className={\`w-[72px] h-[72px] rounded-full flex items-center justify-center transition-transform group-hover:scale-105 \${c.color}\`}>
+            <div className={`w-[72px] h-[72px] rounded-full flex items-center justify-center transition-transform group-hover:scale-105 ${c.color}`}>
               <c.icon className="w-6 h-6 stroke-[1.5]" />
             </div>
             <span className="text-xs font-medium text-gray-700 whitespace-nowrap">{c.name}</span>

@@ -26,7 +26,7 @@ export default function Highlights() {
           <div key={p.id} className="group">
             <div className="relative bg-[#F5F5F5] rounded-2xl aspect-[4/3] mb-4 overflow-hidden flex items-center justify-center">
               <img src={p.img} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              <div className={\`absolute top-3 left-3 \${p.tagColor} text-white text-[10px] font-bold px-2 py-1 rounded-full\`}>{p.tag}</div>
+              <div className={`absolute top-3 left-3 ${p.tagColor} text-white text-[10px] font-bold px-2 py-1 rounded-full`}>{p.tag}</div>
               <button className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-white text-gray-600 hover:text-red-500 transition-colors shadow-sm">
                 <Heart className="w-4 h-4 stroke-[1.5]" />
               </button>
@@ -38,8 +38,8 @@ export default function Highlights() {
               <span className="text-xs text-gray-500">({p.reviews})</span>
             </div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="font-bold text-red-500 text-lg">$\${p.price}</span>
-              <span className="text-xs text-gray-400 line-through font-medium">$\${p.oldPrice}</span>
+              <span className="font-bold text-red-500 text-lg">${p.price}</span>
+              <span className="text-xs text-gray-400 line-through font-medium">${p.oldPrice}</span>
             </div>
             <button className="w-full border-2 border-gray-100 rounded-full py-2.5 flex items-center justify-center gap-2 text-sm font-bold text-gray-900 hover:border-black hover:bg-black hover:text-white transition-colors">
               <ShoppingCart className="w-4 h-4" /> Add to Cart

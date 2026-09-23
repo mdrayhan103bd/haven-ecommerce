@@ -25,7 +25,7 @@ export default function Hero() {
           <div className="mt-12 flex items-center gap-4">
             <div className="flex -space-x-2">
               {[1,2,3,4].map(i => (
-                <img key={i} src={\`https://ui-avatars.com/api/?name=U\${i}&background=random\`} className="w-8 h-8 rounded-full border-2 border-[#F6F4EF]" alt="user" />
+                <img key={i} src={`https://ui-avatars.com/api/?name=U${i}&background=random`} className="w-8 h-8 rounded-full border-2 border-[#F6F4EF]" alt="user" />
               ))}
             </div>
             <div className="text-sm">
