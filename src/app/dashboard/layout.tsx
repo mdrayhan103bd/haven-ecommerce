@@ -13,19 +13,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         
         <nav className="flex-1 px-4 space-y-1">
-          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-orange-50 text-orange-900 font-medium">
+          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 text-gray-900 font-medium transition-colors">
             <Home className="w-5 h-5" /> Dashboard
           </Link>
-          <Link href="/dashboard/orders" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+          <Link href="/dashboard/orders" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
             <div className="flex items-center gap-3"><ShoppingBag className="w-5 h-5" /> Orders</div>
             <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12</span>
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Box className="w-5 h-5" /> Products</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Users className="w-5 h-5" /> Customers</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><BarChart2 className="w-5 h-5" /> Analytics</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Megaphone className="w-5 h-5" /> Marketing</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Tag className="w-5 h-5" /> Discounts</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><FileText className="w-5 h-5" /> Content</Link>
+          <Link href="/dashboard/products" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Box className="w-5 h-5" /> Products</Link>
+          <Link href="/dashboard/customers" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Users className="w-5 h-5" /> Customers</Link>
+          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><BarChart2 className="w-5 h-5" /> Analytics</Link>
+          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Megaphone className="w-5 h-5" /> Marketing</Link>
+          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Tag className="w-5 h-5" /> Discounts</Link>
+          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><FileText className="w-5 h-5" /> Content</Link>
           <Link href="#" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
             <div className="flex items-center gap-3"><MessageSquare className="w-5 h-5" /> Messages</div>
             <span className="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         
         <nav className="p-4 border-t border-gray-100">
-          <Link href="#" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><Settings className="w-5 h-5" /> Settings</Link>
+          <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><Settings className="w-5 h-5" /> Settings</Link>
           <Link href="#" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><HelpCircle className="w-5 h-5" /> Help & Support</Link>
         </nav>
       </aside>

@@ -19,7 +19,7 @@ export default function Categories() {
     <section className="container mx-auto px-4 lg:px-8 py-8 font-sans">
       <div className="flex items-center justify-between overflow-x-auto gap-4 pb-4 scrollbar-hide">
         {categories.map((c, i) => (
-          <Link href="/products" key={i} className="flex flex-col items-center gap-3 min-w-[80px] cursor-pointer group">
+          <Link href={`/products/category/${encodeURIComponent(c.name.toLowerCase())}`} key={i} className="flex flex-col items-center gap-3 min-w-[80px] cursor-pointer group">
             <div className={`w-[72px] h-[72px] rounded-full flex items-center justify-center transition-transform group-hover:scale-105 ${c.color}`}>
               <c.icon className="w-6 h-6 stroke-[1.5]" />
             </div>

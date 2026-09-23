@@ -43,10 +43,10 @@ export default function Header() {
                   </span>
                 )}
               </button>
-              <Link href="/dashboard" className="flex items-center gap-2">
-              <img src="https://ui-avatars.com/api/?name=Bappy&background=random" className="w-9 h-9 rounded-full object-cover" alt="User" />
+              <Link href="/account" className="flex items-center gap-2">
+              <img src="https://ui-avatars.com/api/?name=User&background=random" className="w-9 h-9 rounded-full object-cover" alt="User" />
               <div className="hidden lg:block leading-tight">
-                <div className="text-xs text-gray-500 font-medium">Hello, Bappy</div>
+                <div className="text-xs text-gray-500 font-medium">Hello, User</div>
                 <div className="text-sm font-bold text-gray-900 flex items-center gap-1">My Account <span className="text-[10px] text-gray-400">▼</span></div>
               </div>
             </Link>
@@ -54,14 +54,14 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex items-center gap-8 mt-5 text-sm font-medium text-gray-500 overflow-x-auto">
-          <Link href="#" className="text-black font-bold border-b-2 border-black pb-1">All Products</Link>
-          <Link href="#" className="hover:text-black pb-1">Women</Link>
-          <Link href="#" className="hover:text-black pb-1">Men</Link>
-          <Link href="#" className="hover:text-black pb-1">Home & Living</Link>
-          <Link href="#" className="hover:text-black pb-1">Beauty</Link>
-          <Link href="#" className="hover:text-black pb-1">Electronics</Link>
-          <Link href="#" className="hover:text-black pb-1">Sports</Link>
-          <Link href="#" className="text-red-500 font-bold hover:text-red-600 pb-1">Deals</Link>
+          <Link href="/products" className="text-black font-bold border-b-2 border-black pb-1">All Products</Link>
+          <Link href="/products/category/women" className="hover:text-black pb-1">Women</Link>
+          <Link href="/products/category/men" className="hover:text-black pb-1">Men</Link>
+          <Link href="/products/category/home%20%26%20living" className="hover:text-black pb-1">Home & Living</Link>
+          <Link href="/products/category/beauty" className="hover:text-black pb-1">Beauty</Link>
+          <Link href="/products/category/electronics" className="hover:text-black pb-1">Electronics</Link>
+          <Link href="/products/category/sports" className="hover:text-black pb-1">Sports</Link>
+          <Link href="/products" className="text-red-500 font-bold hover:text-red-600 pb-1">Deals</Link>
         </nav>
       </div>
     </header>
