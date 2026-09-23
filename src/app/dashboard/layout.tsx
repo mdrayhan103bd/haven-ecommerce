@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-orange-50 text-orange-900 font-medium">
             <Home className="w-5 h-5" /> Dashboard
           </Link>
-          <Link href="#" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+          <Link href="/dashboard/orders" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
             <div className="flex items-center gap-3"><ShoppingBag className="w-5 h-5" /> Orders</div>
             <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12</span>
           </Link>

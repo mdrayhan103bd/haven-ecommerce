@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shirt, ShoppingBag, Monitor, Search, Coffee, Gift, Dumbbell, Sparkles } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const categories = [
   { name: 'Women', icon: Shirt, color: 'bg-[#FDF3F3] text-red-400 border border-[#F8E3E3]' },
@@ -18,12 +19,12 @@ export default function Categories() {
     <section className="container mx-auto px-4 lg:px-8 py-8 font-sans">
       <div className="flex items-center justify-between overflow-x-auto gap-4 pb-4 scrollbar-hide">
         {categories.map((c, i) => (
-          <div key={i} className="flex flex-col items-center gap-3 min-w-[80px] cursor-pointer group">
+          <Link href="/products" key={i} className="flex flex-col items-center gap-3 min-w-[80px] cursor-pointer group">
             <div className={`w-[72px] h-[72px] rounded-full flex items-center justify-center transition-transform group-hover:scale-105 ${c.color}`}>
               <c.icon className="w-6 h-6 stroke-[1.5]" />
             </div>
             <span className="text-xs font-medium text-gray-700 whitespace-nowrap">{c.name}</span>
-          </div>
+          </Link>
         ))}
         
         <div className="flex-1 min-w-[220px] ml-4">

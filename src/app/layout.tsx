@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Essentials for a Happier You",
 };
 
+import AppProviders from "@/providers/AppProviders";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col bg-[#fcfcfc]">
-        {children}
+        <AppProviders>
+          {children}
+        </AppProviders>
       </body>
     </html>
   );

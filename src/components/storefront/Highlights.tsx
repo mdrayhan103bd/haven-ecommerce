@@ -1,13 +1,27 @@
-import React from 'react';
-import { Heart, ShoppingCart, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+'use client';
 
-const products = [
-  { id: 1, name: 'UrbanEase Sneakers', rating: 4.8, reviews: '2.1k', price: 79, oldPrice: 99, tag: 'Best Seller', tagColor: 'bg-[#FF6B6B]', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop' },
-  { id: 2, name: 'BrewMaster Coffee Machine', rating: 4.7, reviews: '890', price: 129, oldPrice: 199, tag: 'Limited Time', tagColor: 'bg-[#FF9F43]', img: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500&auto=format&fit=crop' },
-  { id: 3, name: 'Luxe Curve Handbag', rating: 4.9, reviews: '1.4k', price: 89, oldPrice: 129, tag: 'Trending', tagColor: 'bg-[#FF9F43]', img: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&auto=format&fit=crop' },
+import React from 'react';
+import { Heart, ShoppingCart, ArrowRight, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+import { Product } from '@/types';
+import Link from 'next/link';
+
+const products: Product[] = [
+  { id: '1', name: 'UrbanEase Sneakers', rating: 4.8, reviews: '2.1k', price: 79, oldPrice: 99, tag: 'Best Seller', tagColor: 'bg-[#FF6B6B]', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop' },
+  { id: '2', name: 'BrewMaster Coffee Machine', rating: 4.7, reviews: '890', price: 129, oldPrice: 199, tag: 'Limited Time', tagColor: 'bg-[#FF9F43]', image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500&auto=format&fit=crop' },
+  { id: '3', name: 'Luxe Curve Handbag', rating: 4.9, reviews: '1.4k', price: 89, oldPrice: 129, tag: 'Trending', tagColor: 'bg-[#FF9F43]', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&auto=format&fit=crop' },
 ];
 
 export default function Highlights() {
+  const { addToCart } = useCart();
+  const [added, setAdded] = React.useState<Record<string, boolean>>({});
+
+  const handleAdd = (p: Product) => {
+    addToCart(p);
+    setAdded({ ...added, [p.id]: true });
+    setTimeout(() => setAdded(prev => ({ ...prev, [p.id]: false })), 2000);
+  };
+
   return (
     <section className="container mx-auto px-4 lg:px-8 mb-12 font-sans">
       <div className="flex items-end justify-between mb-6">
@@ -23,15 +37,12 @@ export default function Highlights() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map(p => (
-          <div key={p.id} className="group">
-            <div className="relative bg-[#F5F5F5] rounded-2xl aspect-[4/3] mb-4 overflow-hidden flex items-center justify-center">
-              <img src={p.img} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              <div className={`absolute top-3 left-3 ${p.tagColor} text-white text-[10px] font-bold px-2 py-1 rounded-full`}>{p.tag}</div>
-              <button className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-white text-gray-600 hover:text-red-500 transition-colors shadow-sm">
-                <Heart className="w-4 h-4 stroke-[1.5]" />
-              </button>
-            </div>
-            <h3 className="font-bold text-gray-900 mb-1.5">{p.name}</h3>
+          <div key={p.id} className="group flex flex-col">
+            <Link href={`/products/${p.id}`} className="relative bg-[#F5F5F5] rounded-2xl aspect-[4/3] mb-4 overflow-hidden flex items-center justify-center cursor-pointer">
+              <img src={p.image} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
+              {p.tag && <div className={`absolute top-3 left-3 ${p.tagColor} text-white text-[10px] font-bold px-2 py-1 rounded-full`}>{p.tag}</div>}
+            </Link>
+            <Link href={`/products/${p.id}`} className="font-bold text-gray-900 mb-1.5 cursor-pointer hover:underline decoration-2 underline-offset-2">{p.name}</Link>
             <div className="flex items-center gap-1 mb-2">
               <div className="flex text-yellow-400 text-[10px]">★★★★★</div>
               <span className="text-xs font-bold text-gray-900">{p.rating}</span>
@@ -41,8 +52,16 @@ export default function Highlights() {
               <span className="font-bold text-red-500 text-lg">${p.price}</span>
               <span className="text-xs text-gray-400 line-through font-medium">${p.oldPrice}</span>
             </div>
-            <button className="w-full border-2 border-gray-100 rounded-full py-2.5 flex items-center justify-center gap-2 text-sm font-bold text-gray-900 hover:border-black hover:bg-black hover:text-white transition-colors">
-              <ShoppingCart className="w-4 h-4" /> Add to Cart
+            <button 
+              onClick={() => handleAdd(p)}
+              disabled={added[p.id]}
+              className={`w-full border-2 rounded-full py-2.5 flex items-center justify-center gap-2 text-sm font-bold transition-all ${
+                added[p.id] 
+                  ? 'bg-green-500 border-green-500 text-white' 
+                  : 'border-gray-100 text-gray-900 hover:border-black hover:bg-black hover:text-white'
+              }`}
+            >
+              {added[p.id] ? <><Check className="w-4 h-4" /> Added</> : <><ShoppingCart className="w-4 h-4" /> Add to Cart</>}
             </button>
           </div>
         ))}
