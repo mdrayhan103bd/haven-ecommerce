@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, ShoppingBag, Box, Users, BarChart2, Megaphone, Tag, FileText, MessageSquare, MonitorSmartphone, Settings, HelpCircle, Bell } from 'lucide-react';
+import { Home, ShoppingBag, Box, Users, BarChart2, Megaphone, Tag, FileText, MessageSquare, MonitorSmartphone, Settings, HelpCircle, Bell, Search } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
