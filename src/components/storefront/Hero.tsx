@@ -45,9 +45,9 @@ export default function Hero() {
           <div className="relative z-10 w-2/3">
             <h3 className="text-lg font-bold text-gray-900 mb-1">New Arrivals</h3>
             <p className="text-xs text-gray-500 mb-4">Fresh finds, just for you.</p>
-            <button className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+            <Link href="/products" className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
           <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-[url('https://images.unsplash.com/photo-1543459176-4426b36f23ac?auto=format&fit=crop')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black_40%)]"></div>
         </div>
@@ -56,9 +56,9 @@ export default function Hero() {
           <div className="relative z-10 w-2/3">
             <h3 className="text-lg font-bold text-gray-900 mb-1">Up to 50% Off</h3>
             <p className="text-xs text-gray-500 mb-4">On selected items</p>
-            <button className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+            <Link href="/products" className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
           <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-[url('https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black_40%)]"></div>
         </div>
@@ -67,9 +67,9 @@ export default function Hero() {
           <div className="relative z-10 w-2/3">
             <h3 className="text-lg font-bold text-gray-900 mb-1">Sustainable Choices</h3>
             <p className="text-xs text-gray-500 mb-4">Good for you, better for tomorrow.</p>
-            <button className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+            <Link href="/products" className="w-8 h-8 bg-[#2C2927] text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
           <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-[url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop')] bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black_40%)]"></div>
         </div>

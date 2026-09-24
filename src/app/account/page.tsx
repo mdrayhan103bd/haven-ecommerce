@@ -38,18 +38,18 @@ export default function AccountPage() {
             <p className="text-sm text-gray-500 mb-6">john.doe@example.com</p>
             
             <nav className="space-y-2">
-              <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white text-gray-900 font-bold shadow-sm">
+              <Link href="/account" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white text-gray-900 font-bold shadow-sm">
                 <Package className="w-4 h-4" /> My Orders
-              </a>
-              <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
+              </Link>
+              <Link href="/account/profile" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
                 <User className="w-4 h-4" /> Personal Info
-              </a>
-              <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
+              </Link>
+              <Link href="/account/addresses" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
                 <MapPin className="w-4 h-4" /> Addresses
-              </a>
-              <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
+              </Link>
+              <Link href="/account/payments" className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-white hover:text-gray-900 transition-colors">
                 <CreditCard className="w-4 h-4" /> Payment Methods
-              </a>
+              </Link>
             </nav>
           </div>
           <button className="w-full text-left px-4 py-2 text-red-500 font-medium hover:bg-red-50 rounded-lg transition-colors">

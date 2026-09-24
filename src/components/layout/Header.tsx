@@ -32,7 +32,7 @@ export default function Header() {
             <div className="flex items-center gap-6">
               <Link href="/products" className="hidden lg:block text-sm font-medium text-gray-600 hover:text-black">Shop</Link>
               <Link href="/dashboard" className="hidden lg:block text-sm font-medium text-gray-600 hover:text-black">Dashboard</Link>
-              <Link href="#" className="text-gray-600 hover:text-black">
+              <Link href="/wishlist" className="text-gray-600 hover:text-black">
                 <Heart className="w-5 h-5" />
               </Link>
               <button onClick={toggleCart} className="text-gray-600 hover:text-black relative outline-none">

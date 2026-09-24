@@ -71,9 +71,9 @@ export default function Highlights() {
           <div className="relative z-10 pl-2">
             <h3 className="text-[2rem] font-serif leading-[1.1] mb-2 tracking-wide text-white">Make Your<br/>Space Yours</h3>
             <p className="text-sm mb-6 opacity-90 tracking-wide">Beautiful living, made simple.</p>
-            <button className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 w-max hover:bg-gray-100 transition-colors">
+            <Link href="/products/category/home%20%26%20living" className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 w-max hover:bg-gray-100 transition-colors">
               Shop Home & Living <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

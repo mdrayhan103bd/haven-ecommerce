@@ -66,7 +66,7 @@ export default function Login() {
             <label className="flex items-center gap-2">
               <input type="checkbox" className="rounded border-gray-300" /> Remember me
             </label>
-            <Link href="#" className="text-gray-600 hover:text-black font-medium">Forgot password?</Link>
+            <Link href="/forgot-password" className="text-gray-600 hover:text-black font-medium">Forgot password?</Link>
           </div>
           <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
             Sign In <ArrowRight className="w-4 h-4" />

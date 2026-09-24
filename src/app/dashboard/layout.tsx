@@ -23,18 +23,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard/products" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Box className="w-5 h-5" /> Products</Link>
           <Link href="/dashboard/customers" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Users className="w-5 h-5" /> Customers</Link>
           <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><BarChart2 className="w-5 h-5" /> Analytics</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Megaphone className="w-5 h-5" /> Marketing</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Tag className="w-5 h-5" /> Discounts</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><FileText className="w-5 h-5" /> Content</Link>
-          <Link href="#" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+          <Link href="/dashboard/marketing" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Megaphone className="w-5 h-5" /> Marketing</Link>
+          <Link href="/dashboard/discounts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><Tag className="w-5 h-5" /> Discounts</Link>
+          <Link href="/dashboard/content" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"><FileText className="w-5 h-5" /> Content</Link>
+          <Link href="/dashboard/messages" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
             <div className="flex items-center gap-3"><MessageSquare className="w-5 h-5" /> Messages</div>
             <span className="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
           </Link>
           
           <div className="pt-4 pb-2 px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Sales Channels</div>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Home className="w-5 h-5" /> Online Store</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><MonitorSmartphone className="w-5 h-5" /> Mobile App</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Box className="w-5 h-5" /> Marketplaces</Link>
+          <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Home className="w-5 h-5" /> Online Store</Link>
+          <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><MonitorSmartphone className="w-5 h-5" /> Mobile App</Link>
+          <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900"><Box className="w-5 h-5" /> Marketplaces</Link>
         </nav>
         
         <div className="p-4">
@@ -42,14 +42,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <h4 className="font-bold mb-1">Grow Your Business</h4>
             <p className="text-xs text-gray-600 mb-3">Unlock new sales channels and tools.</p>
             <button className="w-full bg-[#2c2a29] text-white text-sm py-2 rounded-full flex items-center justify-center gap-2 hover:bg-black">
-              Upgrade Plan →
+              Upgrade Plan
             </button>
           </div>
         </div>
         
         <nav className="p-4 border-t border-gray-100">
           <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><Settings className="w-5 h-5" /> Settings</Link>
-          <Link href="#" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><HelpCircle className="w-5 h-5" /> Help & Support</Link>
+          <Link href="/help" className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-600 hover:bg-gray-50"><HelpCircle className="w-5 h-5" /> Help & Support</Link>
         </nav>
       </aside>
 
