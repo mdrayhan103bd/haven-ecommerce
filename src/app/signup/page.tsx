@@ -32,10 +32,10 @@ export default function SignUpPage() {
       <div className="max-w-md w-full bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
         <div className="text-center mb-8">
           <Link href="/" className="text-3xl font-serif font-bold tracking-tight text-gray-900">
-            Haven
+            Cavrozone
           </Link>
           <h2 className="mt-4 text-xl font-bold text-gray-900">Create an Account</h2>
-          <p className="text-gray-400 text-xs mt-1">Join Haven to track orders, save favorites, and check out faster</p>
+          <p className="text-gray-400 text-xs mt-1">Join Cavrozone to track orders, save favorites, and check out faster</p>
         </div>
         
         <form onSubmit={handleSignup} className="space-y-4">

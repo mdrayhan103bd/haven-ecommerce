@@ -30,16 +30,16 @@ export default function LoginPage() {
   };
 
   const handleDemoAdmin = () => {
-    setEmail('admin@haven.com');
+    setEmail('admin@cavrozone.com');
     setPassword('admin123');
-    login('admin@haven.com', 'admin123');
+    login('admin@cavrozone.com', 'admin123');
     router.push('/dashboard');
   };
 
   const handleDemoCustomer = () => {
-    setEmail('customer@haven.com');
+    setEmail('customer@cavrozone.com');
     setPassword('customer123');
-    login('customer@haven.com', 'customer123');
+    login('customer@cavrozone.com', 'customer123');
     router.push('/account');
   };
 
@@ -48,7 +48,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
         <div className="text-center mb-8">
           <Link href="/" className="text-3xl font-serif font-bold tracking-tight text-gray-900">
-            Haven
+            Cavrozone
           </Link>
           <h2 className="mt-4 text-xl font-bold text-gray-900">Welcome Back</h2>
           <p className="text-gray-400 text-xs mt-1">Sign in to your account to manage orders and profile</p>

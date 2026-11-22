@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className="w-64 bg-white border-r border-gray-100 hidden lg:flex flex-col h-screen sticky top-0 overflow-y-auto">
         <div className="p-6">
           <Link href="/" className="text-2xl font-bold tracking-tight text-gray-900 flex items-center gap-1.5">
-            Haven <span className="text-[10px] bg-black text-white px-1.5 py-0.5 rounded font-mono font-normal">ADMIN</span>
+            {settings.storeName || 'Cavrozone'} <span className="text-[10px] bg-black text-white px-1.5 py-0.5 rounded font-mono font-normal">ADMIN</span>
           </Link>
           <div className="text-[11px] text-gray-400 mt-0.5">{settings.tagline}</div>
         </div>

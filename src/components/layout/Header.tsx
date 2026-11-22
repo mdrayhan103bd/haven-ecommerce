@@ -52,7 +52,7 @@ export default function Header() {
               </button>
               <div className="flex flex-col">
                 <Link href="/" className="text-2xl md:text-3xl font-bold tracking-tight text-black leading-none">
-                  Haven
+                  {settings.storeName || 'Cavrozone'}
                 </Link>
                 <span className="text-[10px] text-gray-500 font-medium tracking-wide mt-1 hidden sm:block">
                   {settings.tagline}
@@ -267,7 +267,7 @@ export default function Header() {
           <div className="relative w-4/5 max-w-xs bg-white h-full p-6 flex flex-col overflow-y-auto shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold">
-                Haven
+                {settings.storeName || 'Cavrozone'}
               </Link>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 rounded-full text-gray-500 hover:text-black">
                 <X className="w-6 h-6" />

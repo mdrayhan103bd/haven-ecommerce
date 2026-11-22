@@ -280,16 +280,16 @@ export const INITIAL_MESSAGES: SupportMessage[] = [
 
 // Initial Store Settings
 export const INITIAL_SETTINGS: StoreSettings = {
-  storeName: 'Haven E-Commerce',
+  storeName: 'Cavrozone',
   tagline: 'Good Things. Brighter Days.',
-  contactEmail: 'support@haven.com',
+  contactEmail: 'support@cavrozone.com',
   contactPhone: '+1 (800) 428-3601',
   currency: 'USD',
   currencySymbol: '$',
   shippingFee: 10,
   freeShippingThreshold: 50,
   taxRate: 0,
-  announcementText: '✨ Spring Festival Offer: Enjoy 20% off with coupon HAVEN20 | Free Shipping over $50!',
+  announcementText: '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over $50!',
   announcementEnabled: true
 };
 
