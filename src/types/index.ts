@@ -132,6 +132,16 @@ export interface HeroBanner {
   image: string;
 }
 
+export interface HeroSlide {
+  id: string;
+  tag: string;
+  headline: string;
+  subheadline: string;
+  ctaText: string;
+  ctaLink: string;
+  image: string;
+}
+
 export interface SideBanner {
   id: string;
   title: string;
@@ -158,6 +168,7 @@ export interface LifestyleBanner {
 
 export interface BannerSettings {
   hero: HeroBanner;
+  heroSlides: HeroSlide[];
   sideBanners: SideBanner[];
   highlightsBanner: HighlightsBanner;
   lifestyles: LifestyleBanner[];

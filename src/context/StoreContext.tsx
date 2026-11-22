@@ -12,12 +12,13 @@ import {
   PaymentCard,
   BannerSettings,
   HeroBanner,
+  HeroSlide,
   SideBanner,
   HighlightsBanner,
   LifestyleBanner
 } from '@/types';
 
-// Initial Mock Products
+// Initial Mock Products (30 Comprehensive Demo Products)
 export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '1',
@@ -149,6 +150,311 @@ export const INITIAL_PRODUCTS: Product[] = [
     image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=600&auto=format&fit=crop',
     description: 'Waterproof fitness tracker with heart rate monitor, sleep stage analysis, SpO2 sensor, and 14-day battery life.',
     features: ['AMOLED vibrant touchscreen', '50m water resistance (5ATM)', 'Heart rate & blood oxygen tracking', 'Over 30 sport workout modes']
+  },
+  {
+    id: '10',
+    name: 'Ultra-Slim Mechanical Wireless Keyboard',
+    price: 119,
+    oldPrice: 149,
+    category: 'Electronics',
+    stock: 40,
+    tag: 'Popular',
+    tagColor: 'bg-indigo-600',
+    rating: 4.9,
+    reviews: '780',
+    image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop',
+    description: 'Low-profile mechanical switches with hot-swappable keys, RGB backlighting, and dual Bluetooth 5.2 / 2.4GHz connectivity.',
+    features: ['Low profile mechanical switches', 'Multi-device Bluetooth pairing', 'CNC aluminum chassis', 'Customizable RGB backlighting']
+  },
+  {
+    id: '11',
+    name: 'Artisan Ceramic Pour-Over Coffee Dripper',
+    price: 39,
+    oldPrice: 55,
+    category: 'Home & Living',
+    stock: 55,
+    tag: 'Artisan',
+    tagColor: 'bg-amber-600',
+    rating: 4.8,
+    reviews: '410',
+    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop',
+    description: 'Handcrafted stoneware dripper with precision internal spiral ribs for consistent heat retention and rich extraction.',
+    features: ['High-fired ceramic stoneware', 'Internal water flow spiral ribs', 'Dishwasher and microwave safe', 'Fits universal #02 filters']
+  },
+  {
+    id: '12',
+    name: 'Cashmere Wool Oversized Wrap Coat',
+    price: 219,
+    oldPrice: 280,
+    category: 'Women',
+    stock: 22,
+    tag: 'Luxury',
+    tagColor: 'bg-rose-700',
+    rating: 4.9,
+    reviews: '340',
+    image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop',
+    description: 'Sumptuous double-faced cashmere and virgin wool blend. Features a draped shawl collar and detachable waist tie.',
+    features: ['80% virgin wool, 20% Mongolian cashmere', 'Double-faced hand-finished seams', 'Deep welt pockets', 'Relaxed tailored silhouette']
+  },
+  {
+    id: '13',
+    name: 'Vintage Washed Denim Trucker Jacket',
+    price: 85,
+    oldPrice: 110,
+    category: 'Men',
+    stock: 38,
+    rating: 4.7,
+    reviews: '610',
+    image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop',
+    description: 'Classic American trucker jacket made with 100% organic cotton selvedge denim in a vintage stone-washed fade.',
+    features: ['13.5oz organic rigid selvedge denim', 'Antiqued brass hardware', 'Dual chest flap pockets', 'Button-tab waist adjusters']
+  },
+  {
+    id: '14',
+    name: 'Pure Silk Floral Summer Midi Dress',
+    price: 129,
+    oldPrice: 165,
+    category: 'Women',
+    stock: 28,
+    tag: 'Trending',
+    tagColor: 'bg-fuchsia-600',
+    rating: 4.8,
+    reviews: '890',
+    image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop',
+    description: 'Fluid mulberry silk crepe de chine adorned with delicate botanical prints. Cut on the bias for a flattering silhouette.',
+    features: ['100% Mulberry silk (19mm)', 'Bias-cut flattering drape', 'Adjustable spaghetti straps', 'Concealed side zipper']
+  },
+  {
+    id: '15',
+    name: 'Ultrasonic Bamboo Aromatherapy Diffuser',
+    price: 45,
+    oldPrice: 60,
+    category: 'Home & Living',
+    stock: 65,
+    rating: 4.7,
+    reviews: '530',
+    image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=600&auto=format&fit=crop',
+    description: 'BPA-free natural bamboo essential oil diffuser with whisper-quiet ultrasonic atomization and soft ambient LED halo.',
+    features: ['Real bamboo housing', '300ml water capacity (8-10 hrs)', 'Auto safety shut-off', '7 ambient light color options']
+  },
+  {
+    id: '16',
+    name: 'Falcon 4K GPS Ultra-Light Drone',
+    price: 349,
+    oldPrice: 429,
+    category: 'Electronics',
+    stock: 15,
+    tag: 'Flagship',
+    tagColor: 'bg-cyan-700',
+    rating: 4.9,
+    reviews: '412',
+    image: 'https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=600&auto=format&fit=crop',
+    description: 'Compact foldable quadcopter featuring a 3-axis gimbal 4K HDR camera, 35-minute flight time, and AI obstacle avoidance.',
+    features: ['4K HDR 60fps stabilized video', 'Level 5 wind resistance', '10km HD video transmission', 'Under 249g lightweight regulation']
+  },
+  {
+    id: '17',
+    name: 'Eco-Grip Natural Tree Rubber Yoga Mat',
+    price: 55,
+    oldPrice: 75,
+    category: 'Sports',
+    stock: 44,
+    tag: 'Eco-Friendly',
+    tagColor: 'bg-emerald-600',
+    rating: 4.8,
+    reviews: '720',
+    image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop',
+    description: 'Non-slip textured surface engineered from sustainable harvested tree rubber. 5mm thickness delivers optimum joint cushioning.',
+    features: ['100% biodegradable natural tree rubber', 'Laser-etched body alignment lines', 'Non-toxic, PVC and phthalate free', 'Includes carry sling strap']
+  },
+  {
+    id: '18',
+    name: 'ChronoMaster Titanium Minimalist Watch',
+    price: 169,
+    oldPrice: 220,
+    category: 'Men',
+    stock: 24,
+    tag: 'Premium',
+    tagColor: 'bg-neutral-800',
+    rating: 4.9,
+    reviews: '1.2k',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop',
+    description: 'Grade 2 titanium case paired with scratch-resistant sapphire crystal and Japanese Miyota quartz movement.',
+    features: ['Featherlight titanium casing', 'Sapphire crystal glass face', '5 ATM water resistance (50m)', 'Quick-release Italian leather strap']
+  },
+  {
+    id: '19',
+    name: 'Botanical Glow Restorative Face Serum',
+    price: 38,
+    oldPrice: 50,
+    category: 'Beauty',
+    stock: 75,
+    tag: 'Clean Beauty',
+    tagColor: 'bg-pink-600',
+    rating: 4.8,
+    reviews: '930',
+    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&auto=format&fit=crop',
+    description: 'Potent vitamin C and botanical squalane serum that restores natural radiance, fades dark spots, and shields against pollution.',
+    features: ['15% stable THD Vitamin C', 'Plant-derived olive squalane', 'Dermatologist tested & hypoallergenic', 'Paraben, sulfate and fragrance free']
+  },
+  {
+    id: '20',
+    name: 'Handcrafted Italian Leather Oxford Shoes',
+    price: 145,
+    oldPrice: 195,
+    category: 'Men',
+    stock: 19,
+    tag: 'Classic',
+    tagColor: 'bg-amber-900',
+    rating: 4.9,
+    reviews: '480',
+    image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop',
+    description: 'Goodyear welted wholecut Oxford shoes cut from full-grain calfskin leather with hand-burnished patina finish.',
+    features: ['Full-grain Italian calf leather', 'Traditional Goodyear welt construction', 'Cushioned leather insole', 'Stacked leather heel with rubber tap']
+  },
+  {
+    id: '21',
+    name: 'Compact 360 Waterproof Bluetooth Speaker',
+    price: 79,
+    oldPrice: 109,
+    category: 'Electronics',
+    stock: 52,
+    tag: 'Hot Deal',
+    tagColor: 'bg-orange-600',
+    rating: 4.7,
+    reviews: '1.5k',
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop',
+    description: 'Immersive omnidirectional stereo sound with deep bass. IP67 waterproof and dustproof with 24 hours of playtime.',
+    features: ['360-degree omnidirectional audio', 'IP67 fully waterproof & floats', '24-hour battery with USB-C power bank', 'True Wireless Stereo pairing']
+  },
+  {
+    id: '22',
+    name: 'Sculptural Ceramic Tabletop Flower Vase',
+    price: 34,
+    oldPrice: 48,
+    category: 'Home & Living',
+    stock: 48,
+    rating: 4.6,
+    reviews: '280',
+    image: 'https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?w=600&auto=format&fit=crop',
+    description: 'Contemporary donut-shaped hollow stoneware vase with a matte unglazed chalky textured exterior.',
+    features: ['High-temp fired stoneware', 'Matte sculptural geometry', 'Watertight glazed interior', 'Non-scratch protective base pads']
+  },
+  {
+    id: '23',
+    name: 'Thermal Double-Wall Vacuum Water Bottle 750ml',
+    price: 29,
+    oldPrice: 39,
+    category: 'Sports',
+    stock: 90,
+    tag: 'Essential',
+    tagColor: 'bg-teal-600',
+    rating: 4.8,
+    reviews: '2.4k',
+    image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop',
+    description: '18/8 food-grade stainless steel flask keeps beverages ice cold for 24 hours or steaming hot for 12 hours.',
+    features: ['18/8 pro-grade stainless steel', 'TempShield vacuum insulation', 'Leak-proof flex cap with silicone seal', 'Powder-coated sweat-free grip']
+  },
+  {
+    id: '24',
+    name: 'Cloud Quilted Nylon Crossbody Bag',
+    price: 54,
+    oldPrice: 75,
+    category: 'Women',
+    stock: 42,
+    tag: 'Trending',
+    tagColor: 'bg-violet-600',
+    rating: 4.8,
+    reviews: '670',
+    image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&auto=format&fit=crop',
+    description: 'Pillow-soft lightweight quilted bag with spacious compartments and an adjustable webbing strap.',
+    features: ['Water-repellent ripstop nylon', 'Plush cloud-quilted padding', 'Interior key clip and card slots', 'Two-way smooth metal zippers']
+  },
+  {
+    id: '25',
+    name: 'Rose Quartz Gua Sha & Facial Roller Set',
+    price: 22,
+    oldPrice: 35,
+    category: 'Beauty',
+    stock: 85,
+    tag: 'Self Care',
+    tagColor: 'bg-pink-400',
+    rating: 4.9,
+    reviews: '1.8k',
+    image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=600&auto=format&fit=crop',
+    description: '100% authentic Brazilian rose quartz stone tools designed to reduce facial puffiness, boost lymphatic drainage, and relax jaw tension.',
+    features: ['100% natural Grade-A rose quartz', 'Reinforced noiseless zinc frame', 'Ergonomic scalloped gua sha tool', 'Includes velvet storage pouch']
+  },
+  {
+    id: '26',
+    name: 'Japanese Uji Matcha Purifying Clay Mask',
+    price: 32,
+    oldPrice: 45,
+    category: 'Beauty',
+    stock: 60,
+    tag: 'Detox',
+    tagColor: 'bg-emerald-700',
+    rating: 4.7,
+    reviews: '510',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop',
+    description: 'Mineral-rich Kaolin clay blended with ceremonial grade organic Japanese green tea matcha to decongest pores without stripping moisture.',
+    features: ['Ceremonial organic Uji matcha', 'Kaolin and Bentonite purifying clays', 'Niacinamide pore refining complex', 'Sulfate and phthalate free']
+  },
+  {
+    id: '27',
+    name: 'Retro Polarized Classic Tortoise Sunglasses',
+    price: 65,
+    oldPrice: 90,
+    category: 'Men',
+    stock: 45,
+    rating: 4.7,
+    reviews: '820',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop',
+    description: 'Handcrafted Italian acetate frames fitted with Category 3 polarized TAC lenses for 100% UV400 solar glare protection.',
+    features: ['Handcrafted cellulose acetate frame', 'UV400 Category 3 polarized lenses', 'Durable 5-barrel German hinges', 'Includes hard case and microfiber cloth']
+  },
+  {
+    id: '28',
+    name: '14K Gold Minimalist Chunky Huggie Hoops',
+    price: 48,
+    oldPrice: 68,
+    category: 'Women',
+    stock: 35,
+    tag: 'Jewelry',
+    tagColor: 'bg-yellow-600',
+    rating: 4.9,
+    reviews: '1.1k',
+    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop',
+    description: 'Timeless small thick hoop earrings dipped in thick 14K yellow gold over solid 925 sterling silver.',
+    features: ['14K yellow gold vermeil (2.5 microns)', 'Solid 925 hypoallergenic sterling silver base', 'Secure click-top closure', 'Nickel and lead-free']
+  },
+  {
+    id: '29',
+    name: 'Heavyweight French Terry Casual Hoodie',
+    price: 75,
+    oldPrice: 95,
+    category: 'Men',
+    stock: 40,
+    rating: 4.8,
+    reviews: '960',
+    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop',
+    description: '450 GSM ultra-heavyweight combed organic cotton fleece. Features a structured double-layered hood and ribbed side gussets.',
+    features: ['450 GSM combed organic cotton', 'Ribbed side panels for flexibility', 'Double-needle flatlock coverstitching', 'Preshrunk to retain perfect fit']
+  },
+  {
+    id: '30',
+    name: 'Ambient Sunrise Simulation Smart Alarm Clock',
+    price: 59,
+    oldPrice: 79,
+    category: 'Electronics',
+    stock: 36,
+    tag: 'Wellness Tech',
+    tagColor: 'bg-amber-500',
+    rating: 4.8,
+    reviews: '640',
+    image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop',
+    description: 'Wakes you gently by simulating natural morning dawn from red to warm white, accompanied by soothing natural sounds or FM radio.',
+    features: ['Gradual 30-min sunrise light simulator', '7 soothing nature alarm melodies', 'Dual alarm with tap snooze function', 'Built-in bedside reading lamp & nightlight']
   }
 ];
 
@@ -362,6 +668,35 @@ export const INITIAL_BANNERS: BannerSettings = {
     ctaLink: '/products',
     image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80'
   },
+  heroSlides: [
+    {
+      id: 'slide-1',
+      tag: 'Live a better everyday',
+      headline: 'Essentials for a Happier You',
+      subheadline: 'Discover thoughtfully curated products that fit your lifestyle, your way.',
+      ctaText: 'Shop the Collection',
+      ctaLink: '/products',
+      image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'slide-2',
+      tag: 'Modern Living & Workspace',
+      headline: 'Upgrade Your Daily Routine',
+      subheadline: 'Engineered performance meets timeless Scandinavian design. Built for peak focus and comfort.',
+      ctaText: 'Explore Electronics',
+      ctaLink: '/products/category/electronics',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'slide-3',
+      tag: 'Sustainable Luxury',
+      headline: 'Curated Elegance for Every Moment',
+      subheadline: 'Ethically crafted organic apparel and artisanal essentials designed to last a lifetime.',
+      ctaText: 'Shop New Arrivals',
+      ctaLink: '/products/category/women',
+      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80'
+    }
+  ],
   sideBanners: [
     {
       id: 'side-1',
@@ -444,6 +779,7 @@ interface StoreContextType {
   banners: BannerSettings;
   updateAllBanners: (newBanners: BannerSettings) => void;
   updateHeroBanner: (heroUpdates: Partial<HeroBanner>) => void;
+  updateHeroSlide: (index: number, updates: Partial<HeroSlide>) => void;
   updateSideBanner: (id: string, updates: Partial<SideBanner>) => void;
   updateHighlightsBanner: (updates: Partial<HighlightsBanner>) => void;
   updateLifestyleBanner: (id: string, updates: Partial<LifestyleBanner>) => void;
@@ -487,7 +823,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const savedProducts = localStorage.getItem('haven_products');
-      if (savedProducts) setProducts(JSON.parse(savedProducts));
+      if (savedProducts) {
+        try {
+          const parsed = JSON.parse(savedProducts);
+          if (Array.isArray(parsed) && parsed.length >= 25) {
+            setProducts(parsed);
+          } else {
+            setProducts(INITIAL_PRODUCTS);
+            localStorage.setItem('haven_products', JSON.stringify(INITIAL_PRODUCTS));
+          }
+        } catch {
+          setProducts(INITIAL_PRODUCTS);
+        }
+      } else {
+        setProducts(INITIAL_PRODUCTS);
+      }
 
       const savedWishlist = localStorage.getItem('haven_wishlist');
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
@@ -505,7 +855,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedSettings) setSettings(JSON.parse(savedSettings));
 
       const savedBanners = localStorage.getItem('haven_banners');
-      if (savedBanners) setBanners(JSON.parse(savedBanners));
+      if (savedBanners) {
+        try {
+          const parsedB = JSON.parse(savedBanners);
+          if (!parsedB.heroSlides || !Array.isArray(parsedB.heroSlides) || parsedB.heroSlides.length < 3) {
+            parsedB.heroSlides = INITIAL_BANNERS.heroSlides;
+          }
+          setBanners({ ...INITIAL_BANNERS, ...parsedB });
+        } catch {
+          setBanners(INITIAL_BANNERS);
+        }
+      }
 
       const savedUser = localStorage.getItem('haven_user');
       if (savedUser) setUser(JSON.parse(savedUser));
@@ -759,6 +1119,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     showToast('Hero banner updated!');
   };
 
+  const updateHeroSlide = (index: number, updates: Partial<HeroSlide>) => {
+    setBanners(prev => {
+      const slides = [...(prev.heroSlides || INITIAL_BANNERS.heroSlides)];
+      if (slides[index]) {
+        slides[index] = { ...slides[index], ...updates };
+      }
+      return {
+        ...prev,
+        hero: index === 0 ? { ...prev.hero, ...updates } : prev.hero,
+        heroSlides: slides
+      };
+    });
+    showToast(`Hero Slide #${index + 1} updated!`);
+  };
+
   const updateSideBanner = (id: string, updates: Partial<SideBanner>) => {
     setBanners(prev => ({
       ...prev,
@@ -906,6 +1281,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       banners,
       updateAllBanners,
       updateHeroBanner,
+      updateHeroSlide,
       updateSideBanner,
       updateHighlightsBanner,
       updateLifestyleBanner,

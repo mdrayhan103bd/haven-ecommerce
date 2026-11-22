@@ -18,7 +18,7 @@ import {
   Sliders,
   Compass
 } from 'lucide-react';
-import { BannerSettings, HeroBanner, SideBanner, HighlightsBanner, LifestyleBanner } from '@/types';
+import { BannerSettings, HeroBanner, HeroSlide, SideBanner, HighlightsBanner, LifestyleBanner } from '@/types';
 import Link from 'next/link';
 
 // Curated high quality presets for quick 1-click selection
@@ -61,6 +61,7 @@ const LIFESTYLE_PRESETS = [
 export default function ContentPage() {
   const { banners, updateAllBanners, resetBannersToDefault, showToast } = useStore();
   const [activeTab, setActiveTab] = useState<'hero' | 'side' | 'highlights' | 'lifestyle' | 'faqs'>('hero');
+  const [selectedSlide, setSelectedSlide] = useState(0);
   
   // Local editable copy of banners
   const [formData, setFormData] = useState<BannerSettings>(banners);
@@ -208,191 +209,231 @@ export default function ContentPage() {
         </button>
       </div>
 
-      {/* TAB 1: HERO MAIN BANNER */}
-      {activeTab === 'hero' && (
-        <div className="space-y-6">
-          {/* Live Preview Card */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Eye className="w-3.5 h-3.5" /> Live Hero Preview
-              </span>
-              <span className="text-[11px] text-gray-500">How it looks on desktop</span>
+      {/* TAB 1: HERO MAIN BANNER (3 SLIDES) */}
+      {activeTab === 'hero' && (() => {
+        const currentSlideData = (formData.heroSlides && formData.heroSlides[selectedSlide])
+          ? formData.heroSlides[selectedSlide]
+          : {
+              id: `slide-${selectedSlide + 1}`,
+              tag: formData.hero.tag,
+              headline: formData.hero.headline,
+              subheadline: formData.hero.subheadline,
+              ctaText: formData.hero.ctaText,
+              ctaLink: formData.hero.ctaLink,
+              image: formData.hero.image
+            };
+
+        const updateSelectedSlideField = (field: keyof HeroSlide, value: string) => {
+          const defaultSlides = [
+            { id: 'slide-1', ...formData.hero },
+            { id: 'slide-2', ...formData.hero },
+            { id: 'slide-3', ...formData.hero }
+          ];
+          const updatedSlides = [...(formData.heroSlides || defaultSlides)];
+          while (updatedSlides.length < 3) {
+            updatedSlides.push({ ...formData.hero, id: `slide-${updatedSlides.length + 1}` });
+          }
+          updatedSlides[selectedSlide] = {
+            ...updatedSlides[selectedSlide],
+            [field]: value
+          };
+
+          setFormData({
+            ...formData,
+            hero: selectedSlide === 0 ? { ...formData.hero, [field]: value } : formData.hero,
+            heroSlides: updatedSlides
+          });
+        };
+
+        return (
+          <div className="space-y-6">
+            {/* Slide Switcher */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-gray-700">Hero Carousel Slides:</span>
+                <span className="text-xs text-gray-500">(Slider auto-rotates across these 3 slides)</span>
+              </div>
+              <div className="flex gap-2">
+                {[0, 1, 2].map((sIdx) => (
+                  <button
+                    key={sIdx}
+                    type="button"
+                    onClick={() => setSelectedSlide(sIdx)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                      selectedSlide === sIdx 
+                        ? 'bg-black text-white shadow-md' 
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span>Slide 0{sIdx + 1}</span>
+                    {selectedSlide === sIdx && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>}
+                  </button>
+                ))}
+              </div>
             </div>
-            
-            <div className="relative rounded-2xl overflow-hidden bg-[#F6F4EF] min-h-[300px] flex items-center border border-gray-200">
-              <div 
-                className="absolute right-0 top-0 bottom-0 w-1/2 bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black_20%)] transition-all duration-500"
-                style={{ backgroundImage: `url(${formData.hero.image})` }}
-              />
-              <div className="relative z-10 p-8 w-full md:w-3/5">
-                <span className="uppercase text-[11px] tracking-[0.2em] mb-2 font-semibold text-gray-500 block">
-                  {formData.hero.tag || 'Live a better everyday'}
+
+            {/* Live Preview Card */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5" /> Live Preview — Slide 0{selectedSlide + 1}
                 </span>
-                <h2 className="text-3xl font-serif text-[#2C2927] leading-tight mb-2">
-                  {formData.hero.headline || 'Essentials for a Happier You'}
-                </h2>
-                <p className="text-gray-600 text-xs leading-relaxed max-w-sm mb-5">
-                  {formData.hero.subheadline || 'Discover thoughtfully curated products that fit your lifestyle, your way.'}
-                </p>
-                <div className="inline-flex bg-[#2c2a29] text-white px-5 py-2.5 rounded-full items-center gap-2 text-xs font-medium shadow-sm">
-                  {formData.hero.ctaText || 'Shop the Collection'}
+                <span className="text-[11px] text-gray-500">Live preview of selected slide</span>
+              </div>
+              
+              <div className="relative rounded-2xl overflow-hidden bg-[#F6F4EF] min-h-[300px] flex items-center border border-gray-200">
+                <div 
+                  className="absolute right-0 top-0 bottom-0 w-1/2 bg-cover bg-center [mask-image:linear-gradient(to_right,transparent,black_20%)] transition-all duration-500"
+                  style={{ backgroundImage: `url(${currentSlideData.image})` }}
+                />
+                <div className="relative z-10 p-8 w-full md:w-3/5">
+                  <span className="uppercase text-[11px] tracking-[0.2em] mb-2 font-semibold text-gray-500 block">
+                    {currentSlideData.tag || 'Live a better everyday'}
+                  </span>
+                  <h2 className="text-3xl font-serif text-[#2C2927] leading-tight mb-2">
+                    {currentSlideData.headline || 'Essentials for a Happier You'}
+                  </h2>
+                  <p className="text-gray-600 text-xs leading-relaxed max-w-sm mb-5">
+                    {currentSlideData.subheadline || 'Discover thoughtfully curated products that fit your lifestyle, your way.'}
+                  </p>
+                  <div className="inline-flex bg-[#2c2a29] text-white px-5 py-2.5 rounded-full items-center gap-2 text-xs font-medium shadow-sm">
+                    {currentSlideData.ctaText || 'Shop the Collection'}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Edit Form */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-5">
-            <h3 className="text-sm font-bold text-gray-900 border-b border-gray-100 pb-3 flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-gray-700" /> Hero Banner Settings
-            </h3>
+            {/* Edit Form */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-5">
+              <h3 className="text-sm font-bold text-gray-900 border-b border-gray-100 pb-3 flex items-center gap-2">
+                <Sliders className="w-4 h-4 text-gray-700" /> Slide 0{selectedSlide + 1} Settings
+              </h3>
 
-            {/* Image URL input */}
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                Hero Image URL (Direct image link or Unsplash)
-              </label>
-              <div className="flex gap-2">
-                <input 
-                  type="text" 
-                  value={formData.hero.image}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, image: e.target.value }
+              {/* Image URL input */}
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  Slide 0{selectedSlide + 1} Image URL (Direct image link or Unsplash)
+                </label>
+                <div className="flex gap-2">
+                  <input 
+                    type="text" 
+                    value={currentSlideData.image}
+                    onChange={e => updateSelectedSlideField('image', e.target.value)}
+                    placeholder="https://images.unsplash.com/..."
+                    className="flex-1 border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleSaveAll()}
+                    className="bg-black text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-800"
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+
+              {/* Quick Image Presets */}
+              <div>
+                <span className="block text-xs font-bold text-gray-700 mb-2">
+                  Or pick a curated preset (Click to apply to Slide 0{selectedSlide + 1}):
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+                  {HERO_PRESETS.map((preset, idx) => {
+                    const isSelected = currentSlideData.image === preset.url;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          updateSelectedSlideField('image', preset.url);
+                          showToast(`Preset "${preset.name}" applied to Slide 0${selectedSlide + 1}!`);
+                        }}
+                        className={`group relative rounded-xl overflow-hidden border-2 transition-all aspect-[4/3] text-left ${
+                          isSelected ? 'border-black ring-2 ring-black/20' : 'border-gray-200 hover:border-gray-400'
+                        }`}
+                      >
+                        <img src={preset.url} alt={preset.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                        <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+                          <span className="text-[10px] text-white font-semibold leading-tight line-clamp-1">{preset.name}</span>
+                        </div>
+                        {isSelected && (
+                          <div className="absolute top-1.5 right-1.5 bg-black text-white p-0.5 rounded-full">
+                            <Check className="w-3 h-3" />
+                          </div>
+                        )}
+                      </button>
+                    );
                   })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="flex-1 border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-mono"
-                />
-                <button
-                  type="button"
+                </div>
+              </div>
+
+              {/* Text and Button Inputs */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Tagline Pill</label>
+                  <input 
+                    type="text" 
+                    value={currentSlideData.tag}
+                    onChange={e => updateSelectedSlideField('tag', e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Main Headline</label>
+                  <input 
+                    type="text" 
+                    value={currentSlideData.headline}
+                    onChange={e => updateSelectedSlideField('headline', e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-semibold"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Subheadline Description</label>
+                  <textarea 
+                    rows={2}
+                    value={currentSlideData.subheadline}
+                    onChange={e => updateSelectedSlideField('subheadline', e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl p-3 text-xs outline-none focus:border-black resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Button Call-to-Action Text</label>
+                  <input 
+                    type="text" 
+                    value={currentSlideData.ctaText}
+                    onChange={e => updateSelectedSlideField('ctaText', e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Button Destination Link</label>
+                  <input 
+                    type="text" 
+                    value={currentSlideData.ctaLink}
+                    onChange={e => updateSelectedSlideField('ctaLink', e.target.value)}
+                    placeholder="/products"
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2 flex justify-end">
+                <button 
+                  type="button" 
                   onClick={() => handleSaveAll()}
-                  className="bg-black text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-800"
+                  className="bg-black text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors flex items-center gap-2"
                 >
-                  Apply
+                  <Save className="w-4 h-4" /> Save Hero Carousel
                 </button>
               </div>
             </div>
-
-            {/* Quick Image Presets */}
-            <div>
-              <span className="block text-xs font-bold text-gray-700 mb-2">
-                Or pick a curated preset (Click to apply):
-              </span>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                {HERO_PRESETS.map((preset, idx) => {
-                  const isSelected = formData.hero.image === preset.url;
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => {
-                        setFormData({
-                          ...formData,
-                          hero: { ...formData.hero, image: preset.url }
-                        });
-                        showToast(`Hero preset "${preset.name}" selected!`);
-                      }}
-                      className={`group relative rounded-xl overflow-hidden border-2 transition-all aspect-[4/3] text-left ${
-                        isSelected ? 'border-black ring-2 ring-black/20' : 'border-gray-200 hover:border-gray-400'
-                      }`}
-                    >
-                      <img src={preset.url} alt={preset.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                      <div className="absolute inset-0 bg-black/40 flex items-end p-2">
-                        <span className="text-[10px] text-white font-semibold leading-tight line-clamp-1">{preset.name}</span>
-                      </div>
-                      {isSelected && (
-                        <div className="absolute top-1.5 right-1.5 bg-black text-white p-0.5 rounded-full">
-                          <Check className="w-3 h-3" />
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Text and Button Inputs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Tagline Pill</label>
-                <input 
-                  type="text" 
-                  value={formData.hero.tag}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, tag: e.target.value }
-                  })}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Main Headline</label>
-                <input 
-                  type="text" 
-                  value={formData.hero.headline}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, headline: e.target.value }
-                  })}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-semibold"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-gray-700 mb-1">Subheadline Description</label>
-                <textarea 
-                  rows={2}
-                  value={formData.hero.subheadline}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, subheadline: e.target.value }
-                  })}
-                  className="w-full border border-gray-200 rounded-xl p-3 text-xs outline-none focus:border-black resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Button Call-to-Action Text</label>
-                <input 
-                  type="text" 
-                  value={formData.hero.ctaText}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, ctaText: e.target.value }
-                  })}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Button Destination Link</label>
-                <input 
-                  type="text" 
-                  value={formData.hero.ctaLink}
-                  onChange={e => setFormData({
-                    ...formData,
-                    hero: { ...formData.hero, ctaLink: e.target.value }
-                  })}
-                  placeholder="/products"
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black"
-                />
-              </div>
-            </div>
-
-            <div className="pt-2 flex justify-end">
-              <button 
-                type="button" 
-                onClick={() => handleSaveAll()}
-                className="bg-black text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors flex items-center gap-2"
-              >
-                <Save className="w-4 h-4" /> Save Hero Banner
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* TAB 2: HERO SIDE PROMOS (3 Cards) */}
       {activeTab === 'side' && (
