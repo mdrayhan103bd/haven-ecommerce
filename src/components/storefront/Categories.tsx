@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shirt, ShoppingBag, Monitor, Search, Coffee, Gift, Dumbbell, Sparkles } from 'lucide-react';
+import { Shirt, ShoppingBag, Monitor, Coffee, Gift, Dumbbell, Sparkles } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -28,7 +28,7 @@ export default function Categories() {
         ))}
         
         <div className="flex-1 min-w-[220px] ml-4">
-          <div className="bg-[#FEF5F5] border border-[#FCE8E8] rounded-full p-2.5 flex items-center justify-between cursor-pointer group hover:bg-[#FCE8E8] transition-colors">
+          <Link href="/products" className="bg-[#FEF5F5] border border-[#FCE8E8] rounded-full p-2.5 flex items-center justify-between cursor-pointer group hover:bg-[#FCE8E8] transition-colors">
             <div className="flex items-center gap-3 pl-2">
               <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-red-500">
                 <span className="text-xl">🔥</span>
@@ -41,7 +41,7 @@ export default function Categories() {
             <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-400 group-hover:text-red-500 transition-colors">
               <ArrowRight className="w-4 h-4" />
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

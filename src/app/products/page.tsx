@@ -1,23 +1,45 @@
 'use client';
 
-import React from 'react';
-import { Product } from '@/types';
-import { Heart, ShoppingCart, Check } from 'lucide-react';
+import React, { useState, useMemo, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useStore } from '@/context/StoreContext';
 import { useCart } from '@/context/CartContext';
+import { Product } from '@/types';
+import { Heart, ShoppingCart, Check, Filter, Search, SlidersHorizontal } from 'lucide-react';
 import Link from 'next/link';
 
-const allProducts: Product[] = [
-  { id: '1', name: 'UrbanEase Sneakers', rating: 4.8, reviews: '2.1k', price: 79, oldPrice: 99, tag: 'Best Seller', tagColor: 'bg-[#FF6B6B]', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop' },
-  { id: '2', name: 'BrewMaster Coffee Machine', rating: 4.7, reviews: '890', price: 129, oldPrice: 199, tag: 'Limited Time', tagColor: 'bg-[#FF9F43]', image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500&auto=format&fit=crop' },
-  { id: '3', name: 'Luxe Curve Handbag', rating: 4.9, reviews: '1.4k', price: 89, oldPrice: 129, tag: 'Trending', tagColor: 'bg-[#FF9F43]', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&auto=format&fit=crop' },
-  { id: '4', name: 'Minimalist Desk Lamp', rating: 4.6, reviews: '420', price: 45, oldPrice: 65, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop' },
-  { id: '5', name: 'Ergonomic Office Chair', rating: 4.9, reviews: '3.2k', price: 299, tag: 'Top Rated', tagColor: 'bg-green-500', image: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&auto=format&fit=crop' },
-  { id: '6', name: 'Wireless Noise-Cancelling Headphones', rating: 4.8, reviews: '1.1k', price: 199, oldPrice: 249, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop' },
-];
+function ProductsContent() {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+  const initialCategory = searchParams.get('category') || 'All';
 
-export default function ProductsPage() {
+  const { products, toggleWishlist, isInWishlist } = useStore();
   const { addToCart } = useCart();
-  const [added, setAdded] = React.useState<Record<string, boolean>>({});
+
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [sortBy, setSortBy] = useState('featured');
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [added, setAdded] = useState<Record<string, boolean>>({});
+
+  const categories = ['All', 'Men', 'Women', 'Electronics', 'Home & Living', 'Beauty', 'Sports'];
+
+  const filteredProducts = useMemo(() => {
+    return products
+      .filter(p => {
+        const matchesCategory = selectedCategory === 'All' || p.category.toLowerCase() === selectedCategory.toLowerCase();
+        const matchesSearch = !searchTerm || 
+          p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+          p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.category.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
+      })
+      .sort((a, b) => {
+        if (sortBy === 'price-low') return a.price - b.price;
+        if (sortBy === 'price-high') return b.price - a.price;
+        if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+        return 0; // featured
+      });
+  }, [products, selectedCategory, searchTerm, sortBy]);
 
   const handleAdd = (p: Product) => {
     addToCart(p);
@@ -26,61 +48,162 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-8">
+    <div className="container mx-auto px-4 lg:px-8 py-10 font-sans min-h-[70vh]">
+      {/* Title & Filter Bar */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
         <div>
-          <h1 className="text-4xl font-serif mb-2">All Products</h1>
-          <p className="text-gray-500">Showing {allProducts.length} results</p>
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2">
+            {searchTerm ? `Search Results for "${searchTerm}"` : selectedCategory === 'All' ? 'All Products' : `${selectedCategory} Collection`}
+          </h1>
+          <p className="text-gray-500 text-sm">
+            Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+          </p>
         </div>
-        <div className="mt-4 md:mt-0 flex gap-4">
-          <select className="border border-gray-200 rounded-full px-4 py-2 outline-none focus:border-black text-sm cursor-pointer">
-            <option>Sort by: Featured</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Newest Arrivals</option>
-          </select>
+
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          {/* Quick Search */}
+          <div className="relative flex-1 md:w-60">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input 
+              type="text" 
+              placeholder="Filter by name..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 text-xs border border-gray-200 rounded-full outline-none focus:border-black"
+            />
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="w-4 h-4 text-gray-400 hidden sm:block" />
+            <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="border border-gray-200 rounded-full px-4 py-2 outline-none focus:border-black text-xs font-medium cursor-pointer bg-white"
+            >
+              <option value="featured">Sort by: Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {allProducts.map(p => (
-          <div key={p.id} className="group flex flex-col">
-            <Link href={`/products/${p.id}`} className="relative bg-[#F5F5F5] rounded-2xl aspect-[4/3] mb-4 overflow-hidden flex items-center justify-center cursor-pointer">
-              <img src={p.image} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-              {p.tag && (
-                <div className={`absolute top-3 left-3 ${p.tagColor} text-white text-[10px] font-bold px-2 py-1 rounded-full`}>{p.tag}</div>
-              )}
-            </Link>
-            
-            <Link href={`/products/${p.id}`} className="font-bold text-gray-900 mb-1.5 hover:underline decoration-2 underline-offset-2">{p.name}</Link>
-            
-            <div className="flex items-center gap-1 mb-2">
-              <div className="flex text-yellow-400 text-[10px]">★★★★★</div>
-              <span className="text-xs font-bold text-gray-900">{p.rating}</span>
-              <span className="text-xs text-gray-500">({p.reviews})</span>
-            </div>
-            
-            <div className="flex items-center gap-2 mb-4">
-              <span className="font-bold text-red-500 text-lg">${p.price}</span>
-              {p.oldPrice && <span className="text-xs text-gray-400 line-through font-medium">${p.oldPrice}</span>}
-            </div>
-            
-            <div className="mt-auto pt-2">
-              <button 
-                onClick={(e) => { e.preventDefault(); handleAdd(p); }}
-                disabled={added[p.id]}
-                className={`w-full border-2 rounded-full py-2.5 flex items-center justify-center gap-2 text-sm font-bold transition-all ${
-                  added[p.id] 
-                    ? 'bg-green-500 border-green-500 text-white' 
-                    : 'border-gray-100 text-gray-900 hover:border-black hover:bg-black hover:text-white'
-                }`}
-              >
-                {added[p.id] ? <><Check className="w-4 h-4" /> Added</> : <><ShoppingCart className="w-4 h-4" /> Add to Cart</>}
-              </button>
-            </div>
-          </div>
+      {/* Category Filter Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 text-xs font-semibold no-scrollbar">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
+              selectedCategory.toLowerCase() === cat.toLowerCase()
+                ? 'bg-black text-white shadow-sm'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {cat}
+          </button>
         ))}
       </div>
+
+      {/* Products Grid */}
+      {filteredProducts.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredProducts.map(p => {
+            const inWish = isInWishlist(p.id);
+            return (
+              <div 
+                key={p.id} 
+                className="group flex flex-col bg-white rounded-2xl border border-gray-100 p-4 transition-all hover:shadow-lg hover:border-gray-200"
+              >
+                <div className="relative bg-[#F5F5F5] rounded-xl aspect-[4/3] mb-4 overflow-hidden flex items-center justify-center">
+                  <Link href={`/products/${p.id}`} className="w-full h-full flex items-center justify-center">
+                    <img 
+                      src={p.image} 
+                      alt={p.name} 
+                      className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+                    />
+                  </Link>
+                  {p.tag && (
+                    <div className={`absolute top-2.5 left-2.5 ${p.tagColor || 'bg-black'} text-white text-[10px] font-bold px-2 py-0.5 rounded-full`}>
+                      {p.tag}
+                    </div>
+                  )}
+                  {/* Wishlist Heart Button */}
+                  <button 
+                    onClick={() => toggleWishlist(p)}
+                    aria-label="Save to wishlist"
+                    className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                      inWish 
+                        ? 'bg-red-50 text-red-500' 
+                        : 'bg-white/80 text-gray-500 hover:text-black hover:bg-white'
+                    }`}
+                  >
+                    <Heart className={`w-4 h-4 ${inWish ? 'fill-current' : ''}`} />
+                  </button>
+                </div>
+
+                <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  {p.category}
+                </div>
+
+                <Link 
+                  href={`/products/${p.id}`} 
+                  className="font-bold text-gray-900 text-sm mb-1.5 hover:underline decoration-1 underline-offset-2 line-clamp-1"
+                >
+                  {p.name}
+                </Link>
+
+                <div className="flex items-center gap-1 mb-2">
+                  <div className="flex text-yellow-400 text-xs">★★★★★</div>
+                  <span className="text-xs font-bold text-gray-900">{p.rating}</span>
+                  <span className="text-xs text-gray-400">({p.reviews})</span>
+                </div>
+
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="font-bold text-red-600 text-lg">${p.price}</span>
+                  {p.oldPrice && (
+                    <span className="text-xs text-gray-400 line-through font-medium">${p.oldPrice}</span>
+                  )}
+                </div>
+
+                <button 
+                  onClick={() => handleAdd(p)}
+                  disabled={added[p.id]}
+                  className={`mt-auto w-full border-2 rounded-full py-2.5 flex items-center justify-center gap-2 text-xs font-bold transition-all ${
+                    added[p.id] 
+                      ? 'bg-green-600 border-green-600 text-white' 
+                      : 'border-gray-200 text-gray-900 hover:border-black hover:bg-black hover:text-white'
+                  }`}
+                >
+                  {added[p.id] ? <><Check className="w-4 h-4" /> Added</> : <><ShoppingCart className="w-4 h-4" /> Add to Cart</>}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="text-center py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200 max-w-md mx-auto">
+          <Filter className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+          <h3 className="text-lg font-bold text-gray-900 mb-1">No products found</h3>
+          <p className="text-xs text-gray-500 mb-6">Try clearing your filters or search keywords.</p>
+          <button 
+            onClick={() => { setSelectedCategory('All'); setSearchTerm(''); }}
+            className="bg-black text-white px-6 py-2.5 rounded-full text-xs font-bold hover:bg-gray-800"
+          >
+            Reset All Filters
+          </button>
+        </div>
+      )}
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-20 text-center text-gray-500">Loading products...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 }

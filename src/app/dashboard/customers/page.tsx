@@ -1,99 +1,149 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Search, Mail, Phone, MapPin } from 'lucide-react';
-
-const mockCustomers = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', phone: '+1 234 567 890', location: 'New York, USA', orders: 12, spent: 1250, status: 'Active' },
-  { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '+44 20 7123 4567', location: 'London, UK', orders: 5, spent: 450, status: 'Active' },
-  { id: '3', name: 'Robert Johnson', email: 'robert.j@example.com', phone: '+1 555 123 4567', location: 'San Francisco, USA', orders: 1, spent: 89, status: 'Inactive' },
-  { id: '4', name: 'Emily Davis', email: 'emily.d@example.com', phone: '+61 2 9876 5432', location: 'Sydney, AU', orders: 24, spent: 3450, status: 'VIP' },
-  { id: '5', name: 'Michael Wilson', email: 'm.wilson@example.com', phone: '+1 415 987 6543', location: 'Chicago, USA', orders: 3, spent: 210, status: 'Active' },
-];
+import React, { useState, useMemo } from 'react';
+import { useStore } from '@/context/StoreContext';
+import { Customer } from '@/types';
+import { Search, Mail, Phone, MapPin, Eye, X, ShoppingBag } from 'lucide-react';
 
 export default function DashboardCustomersPage() {
+  const { orders } = useStore();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
-  const filtered = mockCustomers.filter(c => 
+  // Compute customers from all orders
+  const customersList: Customer[] = useMemo(() => {
+    const customerMap = new Map<string, Customer>();
+
+    // Initial mock base customers
+    const baseCustomers: Customer[] = [
+      { id: 'c-1', name: 'Sarah Jenkins', email: 'sarah.j@example.com', phone: '+1 555 382 9102', location: 'Springfield, USA', orders: 4, spent: 489, status: 'Active' },
+      { id: 'c-2', name: 'Michael Chen', email: 'm.chen@example.com', phone: '+1 415 882 1902', location: 'San Francisco, USA', orders: 8, spent: 1120, status: 'VIP' },
+      { id: 'c-3', name: 'Emily Davis', email: 'emily.d@example.com', phone: '+1 212 994 2018', location: 'New York, USA', orders: 12, spent: 1840, status: 'VIP' },
+      { id: 'c-4', name: 'Marcus Vance', email: 'marcus.v@example.com', phone: '+1 555 491 0293', location: 'Chicago, USA', orders: 2, spent: 178, status: 'Active' },
+      { id: 'c-5', name: 'Clara Oswald', email: 'clara.o@example.com', phone: '+44 20 7946 0912', location: 'London, UK', orders: 1, spent: 89, status: 'Inactive' }
+    ];
+
+    baseCustomers.forEach(c => customerMap.set(c.email.toLowerCase(), c));
+
+    // Aggregate from actual placed orders
+    orders.forEach(o => {
+      const email = o.shippingDetails.email.toLowerCase();
+      if (customerMap.has(email)) {
+        const existing = customerMap.get(email)!;
+        existing.orders += 1;
+        existing.spent += o.total;
+        if (existing.spent > 1000) existing.status = 'VIP';
+      } else {
+        customerMap.set(email, {
+          id: `cust-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+          name: o.shippingDetails.name,
+          email: o.shippingDetails.email,
+          phone: o.shippingDetails.phone || '+1 555 000 0000',
+          location: `${o.shippingDetails.city}, ${o.shippingDetails.country || 'USA'}`,
+          orders: 1,
+          spent: o.total,
+          status: o.total > 500 ? 'VIP' : 'Active'
+        });
+      }
+    });
+
+    return Array.from(customerMap.values());
+  }, [orders]);
+
+  const filtered = customersList.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    c.email.toLowerCase().includes(searchTerm.toLowerCase())
+    c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Active': return 'bg-green-50 text-green-600 border-green-100';
-      case 'Inactive': return 'bg-gray-50 text-gray-600 border-gray-200';
-      case 'VIP': return 'bg-purple-50 text-purple-600 border-purple-100';
-      default: return 'bg-gray-50 text-gray-600 border-gray-200';
+      case 'Active': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      case 'VIP': return 'bg-purple-50 text-purple-700 border-purple-200';
+      default: return 'bg-gray-100 text-gray-700 border-gray-200';
     }
   };
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Customers</h1>
-        <p className="text-sm text-gray-500">View and manage your customer database.</p>
+    <div className="font-sans space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-serif font-bold text-gray-900 mb-1">Customers</h1>
+          <p className="text-xs text-gray-500">View customer database, spending insights, and purchase history</p>
+        </div>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex gap-4">
-          <div className="flex-1 max-w-md relative">
+      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+        {/* Search header */}
+        <div className="p-4 border-b border-gray-100">
+          <div className="max-w-md relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input 
               type="text" 
-              placeholder="Search customers by name or email..." 
+              placeholder="Search customers by name, email, or city..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:border-black transition-colors"
+              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs outline-none focus:border-black"
             />
           </div>
         </div>
 
+        {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50/50 text-gray-500 border-b border-gray-100">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-gray-50/70 text-gray-400 border-b border-gray-100 uppercase font-bold">
               <tr>
-                <th className="px-6 py-4 font-medium">Customer</th>
-                <th className="px-6 py-4 font-medium">Location</th>
-                <th className="px-6 py-4 font-medium">Orders</th>
-                <th className="px-6 py-4 font-medium">Total Spent</th>
-                <th className="px-6 py-4 font-medium">Status</th>
+                <th className="px-5 py-3.5">Customer</th>
+                <th className="px-5 py-3.5">Location</th>
+                <th className="px-5 py-3.5">Orders</th>
+                <th className="px-5 py-3.5">Total Spent</th>
+                <th className="px-5 py-3.5">Status</th>
+                <th className="px-5 py-3.5 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((c) => (
                 <tr key={c.id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4">
+                  <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                      <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs shrink-0">
                         {c.name.charAt(0)}
                       </div>
                       <div>
                         <div className="font-bold text-gray-900">{c.name}</div>
-                        <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
+                        <div className="text-[11px] text-gray-400 flex items-center gap-1 mt-0.5">
                           <Mail className="w-3 h-3" /> {c.email}
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-1.5 text-gray-600">
-                      <MapPin className="w-4 h-4 text-gray-400" /> {c.location}
+                  <td className="px-5 py-3.5 text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-gray-400" /> {c.location}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-900 font-medium">{c.orders}</td>
-                  <td className="px-6 py-4 font-bold text-gray-900">${c.spent}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(c.status)}`}>
+                  <td className="px-5 py-3.5 font-bold text-gray-900">{c.orders}</td>
+                  <td className="px-5 py-3.5 font-bold text-gray-900">${c.spent.toFixed(2)}</td>
+                  <td className="px-5 py-3.5">
+                    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${getStatusColor(c.status)}`}>
                       {c.status}
                     </span>
+                  </td>
+                  <td className="px-5 py-3.5 text-right">
+                    <button 
+                      onClick={() => setSelectedCustomer(c)}
+                      className="p-1.5 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors"
+                      title="View customer profile"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
-                    No customers found matching "{searchTerm}"
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-400 text-xs">
+                    No customers found matching "{searchTerm}".
                   </td>
                 </tr>
               )}
@@ -101,6 +151,62 @@ export default function DashboardCustomersPage() {
           </table>
         </div>
       </div>
+
+      {/* Customer Modal */}
+      {selectedCustomer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button 
+              onClick={() => setSelectedCustomer(null)}
+              className="absolute top-5 right-5 p-1 text-gray-400 hover:text-black"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-base">
+                {selectedCustomer.name.charAt(0)}
+              </div>
+              <div>
+                <h3 className="font-bold text-base text-gray-900">{selectedCustomer.name}</h3>
+                <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold border ${getStatusColor(selectedCustomer.status)}`}>
+                  {selectedCustomer.status} Customer
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-2 text-xs mb-5">
+              <div className="flex items-center gap-2 text-gray-600">
+                <Mail className="w-3.5 h-3.5 text-gray-400" /> {selectedCustomer.email}
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <Phone className="w-3.5 h-3.5 text-gray-400" /> {selectedCustomer.phone}
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <MapPin className="w-3.5 h-3.5 text-gray-400" /> {selectedCustomer.location}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 text-center">
+                <span className="text-[10px] uppercase text-gray-400 font-bold block">Total Purchases</span>
+                <span className="text-xl font-bold text-gray-900">{selectedCustomer.orders} Orders</span>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 text-center">
+                <span className="text-[10px] uppercase text-gray-400 font-bold block">Lifetime Value</span>
+                <span className="text-xl font-bold text-emerald-600">${selectedCustomer.spent.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedCustomer(null)}
+              className="w-full bg-black text-white py-2.5 rounded-full text-xs font-bold hover:bg-gray-800"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
