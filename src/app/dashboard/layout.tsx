@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { label: 'Customers', href: '/dashboard/customers', icon: Users },
     { label: 'Marketing', href: '/dashboard/marketing', icon: Megaphone },
     { label: 'Discounts', href: '/dashboard/discounts', icon: Tag },
-    { label: 'Content', href: '/dashboard/content', icon: FileText },
+    { label: 'Banners & Content', href: '/dashboard/content', icon: FileText },
     { label: 'Messages', href: '/dashboard/messages', icon: MessageSquare, badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined, badgeColor: 'bg-blue-600 text-white' },
   ];
 

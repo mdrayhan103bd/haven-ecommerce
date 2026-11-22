@@ -122,3 +122,43 @@ export interface UserProfile {
   avatar?: string;
   bio?: string;
 }
+
+export interface HeroBanner {
+  tag: string;
+  headline: string;
+  subheadline: string;
+  ctaText: string;
+  ctaLink: string;
+  image: string;
+}
+
+export interface SideBanner {
+  id: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  link: string;
+}
+
+export interface HighlightsBanner {
+  tag: string;
+  title: string;
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+  image: string;
+}
+
+export interface LifestyleBanner {
+  id: string;
+  title: string;
+  img: string;
+  link: string;
+}
+
+export interface BannerSettings {
+  hero: HeroBanner;
+  sideBanners: SideBanner[];
+  highlightsBanner: HighlightsBanner;
+  lifestyles: LifestyleBanner[];
+}

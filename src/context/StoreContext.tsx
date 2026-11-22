@@ -9,7 +9,12 @@ import {
   StoreSettings, 
   UserProfile, 
   Address, 
-  PaymentCard 
+  PaymentCard,
+  BannerSettings,
+  HeroBanner,
+  SideBanner,
+  HighlightsBanner,
+  LifestyleBanner
 } from '@/types';
 
 // Initial Mock Products
@@ -348,6 +353,56 @@ export const INITIAL_PAYMENT_CARDS: PaymentCard[] = [
   }
 ];
 
+export const INITIAL_BANNERS: BannerSettings = {
+  hero: {
+    tag: 'Live a better everyday',
+    headline: 'Essentials for a Happier You',
+    subheadline: 'Discover thoughtfully curated products that fit your lifestyle, your way.',
+    ctaText: 'Shop the Collection',
+    ctaLink: '/products',
+    image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80'
+  },
+  sideBanners: [
+    {
+      id: 'side-1',
+      title: 'New Arrivals',
+      subtitle: 'Fresh finds, just for you.',
+      image: 'https://images.unsplash.com/photo-1543459176-4426b36f23ac?auto=format&fit=crop',
+      link: '/products'
+    },
+    {
+      id: 'side-2',
+      title: 'Up to 50% Off',
+      subtitle: 'On selected items',
+      image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop',
+      link: '/products'
+    },
+    {
+      id: 'side-3',
+      title: 'Sustainable Choices',
+      subtitle: 'Good for you, better for tomorrow.',
+      image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop',
+      link: '/products'
+    }
+  ],
+  highlightsBanner: {
+    tag: 'Curated Space',
+    title: 'Transform Your Home',
+    description: 'Timeless Scandinavian designs made with sustainable materials.',
+    ctaText: 'Shop Collection',
+    ctaLink: '/products/category/home%20%26%20living',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80'
+  },
+  lifestyles: [
+    { id: 'life-1', title: 'Work Smarter', img: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=500&auto=format&fit=crop', link: '/products' },
+    { id: 'life-2', title: 'Look Good', img: 'https://images.unsplash.com/photo-1512496015851-a1cfb38ba1fc?w=500&auto=format&fit=crop', link: '/products' },
+    { id: 'life-3', title: 'Stay Active', img: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500&auto=format&fit=crop', link: '/products' },
+    { id: 'life-4', title: 'Feel Your Best', img: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=500&auto=format&fit=crop', link: '/products' },
+    { id: 'life-5', title: 'Better Living', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&auto=format&fit=crop', link: '/products' },
+    { id: 'life-6', title: 'On the Go', img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=500&auto=format&fit=crop', link: '/products' }
+  ]
+};
+
 interface Toast {
   id: string;
   message: string;
@@ -386,6 +441,14 @@ interface StoreContextType {
   settings: StoreSettings;
   updateSettings: (newSettings: Partial<StoreSettings>) => void;
 
+  banners: BannerSettings;
+  updateAllBanners: (newBanners: BannerSettings) => void;
+  updateHeroBanner: (heroUpdates: Partial<HeroBanner>) => void;
+  updateSideBanner: (id: string, updates: Partial<SideBanner>) => void;
+  updateHighlightsBanner: (updates: Partial<HighlightsBanner>) => void;
+  updateLifestyleBanner: (id: string, updates: Partial<LifestyleBanner>) => void;
+  resetBannersToDefault: () => void;
+
   user: UserProfile | null;
   addresses: Address[];
   paymentCards: PaymentCard[];
@@ -413,6 +476,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [discounts, setDiscounts] = useState<Discount[]>(INITIAL_DISCOUNTS);
   const [messages, setMessages] = useState<SupportMessage[]>(INITIAL_MESSAGES);
   const [settings, setSettings] = useState<StoreSettings>(INITIAL_SETTINGS);
+  const [banners, setBanners] = useState<BannerSettings>(INITIAL_BANNERS);
   const [user, setUser] = useState<UserProfile | null>(INITIAL_USER);
   const [addresses, setAddresses] = useState<Address[]>(INITIAL_ADDRESSES);
   const [paymentCards, setPaymentCards] = useState<PaymentCard[]>(INITIAL_PAYMENT_CARDS);
@@ -439,6 +503,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
       const savedSettings = localStorage.getItem('haven_settings');
       if (savedSettings) setSettings(JSON.parse(savedSettings));
+
+      const savedBanners = localStorage.getItem('haven_banners');
+      if (savedBanners) setBanners(JSON.parse(savedBanners));
 
       const savedUser = localStorage.getItem('haven_user');
       if (savedUser) setUser(JSON.parse(savedUser));
@@ -484,6 +551,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     if (!isLoaded) return;
     localStorage.setItem('haven_settings', JSON.stringify(settings));
   }, [settings, isLoaded]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    localStorage.setItem('haven_banners', JSON.stringify(banners));
+  }, [banners, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -673,6 +745,49 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     showToast('Store settings saved successfully!');
   };
 
+  // Banners
+  const updateAllBanners = (newBanners: BannerSettings) => {
+    setBanners(newBanners);
+    showToast('All banner settings saved successfully!');
+  };
+
+  const updateHeroBanner = (heroUpdates: Partial<HeroBanner>) => {
+    setBanners(prev => ({
+      ...prev,
+      hero: { ...prev.hero, ...heroUpdates }
+    }));
+    showToast('Hero banner updated!');
+  };
+
+  const updateSideBanner = (id: string, updates: Partial<SideBanner>) => {
+    setBanners(prev => ({
+      ...prev,
+      sideBanners: prev.sideBanners.map(b => b.id === id ? { ...b, ...updates } : b)
+    }));
+    showToast('Side banner updated!');
+  };
+
+  const updateHighlightsBanner = (updates: Partial<HighlightsBanner>) => {
+    setBanners(prev => ({
+      ...prev,
+      highlightsBanner: { ...prev.highlightsBanner, ...updates }
+    }));
+    showToast('Highlights banner updated!');
+  };
+
+  const updateLifestyleBanner = (id: string, updates: Partial<LifestyleBanner>) => {
+    setBanners(prev => ({
+      ...prev,
+      lifestyles: prev.lifestyles.map(l => l.id === id ? { ...l, ...updates } : l)
+    }));
+    showToast('Lifestyle banner updated!');
+  };
+
+  const resetBannersToDefault = () => {
+    setBanners(INITIAL_BANNERS);
+    showToast('All banners restored to default', 'info');
+  };
+
   // User Profile & Addresses
   const updateUserProfile = (updates: Partial<UserProfile>) => {
     if (user) {
@@ -787,6 +902,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
       settings,
       updateSettings,
+
+      banners,
+      updateAllBanners,
+      updateHeroBanner,
+      updateSideBanner,
+      updateHighlightsBanner,
+      updateLifestyleBanner,
+      resetBannersToDefault,
 
       user,
       addresses,
