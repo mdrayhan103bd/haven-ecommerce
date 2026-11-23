@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Upload, Link as LinkIcon, Image as ImageIcon, X, Check, Loader2 } from 'lucide-react';
+import { uploadDataUrl } from '@/lib/storageHelper';
 
 interface ImageUploadInputProps {
   label?: string;
@@ -77,7 +78,13 @@ export default function ImageUploadInput({
     setLoading(true);
     try {
       const compressedDataUrl = await compressImage(file);
-      onChange(compressedDataUrl);
+      // Upload to Firebase Storage for global persistent cloud URL
+      try {
+        const cloudUrl = await uploadDataUrl(compressedDataUrl, 'storefront');
+        onChange(cloudUrl);
+      } catch {
+        onChange(compressedDataUrl);
+      }
     } catch (err) {
       console.error('Image compression failed:', err);
       // Fallback to direct FileReader
@@ -101,7 +108,7 @@ export default function ImageUploadInput({
     }
   };
 
-  const isUploadedDataUrl = value && value.startsWith('data:image/');
+  const isUploadedImage = value && (value.startsWith('data:image/') || value.includes('firebasestorage.googleapis.com'));
 
   return (
     <div className={`space-y-2 font-sans ${className}`}>
@@ -175,7 +182,7 @@ export default function ImageUploadInput({
                   <div className="min-w-0">
                     <div className="text-xs font-bold text-gray-900 flex items-center gap-1">
                       <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>{isUploadedDataUrl ? 'Uploaded from device' : 'Active Image'}</span>
+                      <span>{isUploadedImage ? 'Uploaded to Cloud' : 'Active Image'}</span>
                     </div>
                     <p className="text-[11px] text-gray-400 truncate max-w-xs mt-0.5">
                       Click to choose another photo or drop a file here

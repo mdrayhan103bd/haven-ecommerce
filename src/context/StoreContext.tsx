@@ -1,6 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { 
   Product, 
   Order, 
@@ -944,10 +946,94 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setIsLoaded(true);
   }, []);
 
-  // Sync back to LocalStorage
+  // Cloud Firestore Real-time Multi-device Sync
+  useEffect(() => {
+    let unsubBanners: () => void = () => {};
+    let unsubProducts: () => void = () => {};
+    let unsubSettings: () => void = () => {};
+    let unsubOrders: () => void = () => {};
+    let unsubDiscounts: () => void = () => {};
+
+    try {
+      // 1. Banners Sync
+      const bannersRef = doc(db, 'store', 'banners');
+      unsubBanners = onSnapshot(bannersRef, (snap) => {
+        if (!snap.metadata.hasPendingWrites && snap.exists()) {
+          const data = snap.data() as BannerSettings;
+          if (data && Array.isArray(data.heroSlides) && data.heroSlides.length >= 3) {
+            setBanners(data);
+            try { localStorage.setItem('haven_banners', JSON.stringify(data)); } catch {}
+          }
+        }
+      }, (err) => console.log('Firestore banners listener info:', err.message));
+
+      // 2. Products Sync
+      const productsRef = doc(db, 'store', 'products');
+      unsubProducts = onSnapshot(productsRef, (snap) => {
+        if (!snap.metadata.hasPendingWrites && snap.exists()) {
+          const data = snap.data();
+          if (data && Array.isArray(data.items) && data.items.length > 0) {
+            setProducts(data.items);
+            try { localStorage.setItem('haven_products', JSON.stringify(data.items)); } catch {}
+          }
+        }
+      }, (err) => console.log('Firestore products listener info:', err.message));
+
+      // 3. Store Settings Sync
+      const settingsRef = doc(db, 'store', 'settings');
+      unsubSettings = onSnapshot(settingsRef, (snap) => {
+        if (!snap.metadata.hasPendingWrites && snap.exists()) {
+          const data = snap.data() as StoreSettings;
+          if (data && data.storeName) {
+            setSettings(data);
+            try { localStorage.setItem('haven_settings', JSON.stringify(data)); } catch {}
+          }
+        }
+      }, (err) => console.log('Firestore settings listener info:', err.message));
+
+      // 4. Orders Sync
+      const ordersRef = doc(db, 'store', 'orders');
+      unsubOrders = onSnapshot(ordersRef, (snap) => {
+        if (!snap.metadata.hasPendingWrites && snap.exists()) {
+          const data = snap.data();
+          if (data && Array.isArray(data.items)) {
+            setOrders(data.items);
+            try { localStorage.setItem('haven_orders', JSON.stringify(data.items)); } catch {}
+          }
+        }
+      }, (err) => console.log('Firestore orders listener info:', err.message));
+
+      // 5. Discounts Sync
+      const discountsRef = doc(db, 'store', 'discounts');
+      unsubDiscounts = onSnapshot(discountsRef, (snap) => {
+        if (!snap.metadata.hasPendingWrites && snap.exists()) {
+          const data = snap.data();
+          if (data && Array.isArray(data.items)) {
+            setDiscounts(data.items);
+            try { localStorage.setItem('haven_discounts', JSON.stringify(data.items)); } catch {}
+          }
+        }
+      }, (err) => console.log('Firestore discounts listener info:', err.message));
+    } catch (e) {
+      console.log('Firestore real-time sync offline fallback');
+    }
+
+    return () => {
+      unsubBanners();
+      unsubProducts();
+      unsubSettings();
+      unsubOrders();
+      unsubDiscounts();
+    };
+  }, []);
+
+  // Sync back to LocalStorage AND Cloud Firestore
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_products', JSON.stringify(products));
+    try {
+      setDoc(doc(db, 'store', 'products'), { items: products }, { merge: true }).catch(() => {});
+    } catch {}
   }, [products, isLoaded]);
 
   useEffect(() => {
@@ -958,26 +1044,41 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_orders', JSON.stringify(orders));
+    try {
+      setDoc(doc(db, 'store', 'orders'), { items: orders }, { merge: true }).catch(() => {});
+    } catch {}
   }, [orders, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_discounts', JSON.stringify(discounts));
+    try {
+      setDoc(doc(db, 'store', 'discounts'), { items: discounts }, { merge: true }).catch(() => {});
+    } catch {}
   }, [discounts, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_messages', JSON.stringify(messages));
+    try {
+      setDoc(doc(db, 'store', 'messages'), { items: messages }, { merge: true }).catch(() => {});
+    } catch {}
   }, [messages, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_settings', JSON.stringify(settings));
+    try {
+      setDoc(doc(db, 'store', 'settings'), settings, { merge: true }).catch(() => {});
+    } catch {}
   }, [settings, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
     localStorage.setItem('haven_banners', JSON.stringify(banners));
+    try {
+      setDoc(doc(db, 'store', 'banners'), banners, { merge: true }).catch(() => {});
+    } catch {}
   }, [banners, isLoaded]);
 
   useEffect(() => {
