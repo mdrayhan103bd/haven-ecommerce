@@ -604,16 +604,8 @@ export const INITIAL_SETTINGS: StoreSettings = {
   announcementEnabled: true
 };
 
-// Initial User Profile
-export const INITIAL_USER: UserProfile = {
-  id: 'usr-admin-1',
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  phone: '+1 (555) 234-5678',
-  role: 'admin',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop',
-  bio: 'Product Designer & Haven Store Manager. Enthusiast of clean aesthetics and sustainable lifestyle.'
-};
+// Initial User Profile (Default unauthenticated for visitors)
+export const INITIAL_USER: UserProfile | null = null;
 
 export const INITIAL_ADDRESSES: Address[] = [
   {
@@ -798,6 +790,10 @@ interface StoreContextType {
   signup: (name: string, email: string, pass: string) => boolean;
   logout: () => void;
 
+  isAdminAuthenticated: boolean;
+  adminLogin: (email: string, pass: string) => boolean;
+  adminLogout: () => void;
+
   toasts: Toast[];
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
   dismissToast: (id: string) => void;
@@ -814,6 +810,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<StoreSettings>(INITIAL_SETTINGS);
   const [banners, setBanners] = useState<BannerSettings>(INITIAL_BANNERS);
   const [user, setUser] = useState<UserProfile | null>(INITIAL_USER);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [addresses, setAddresses] = useState<Address[]>(INITIAL_ADDRESSES);
   const [paymentCards, setPaymentCards] = useState<PaymentCard[]>(INITIAL_PAYMENT_CARDS);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -875,6 +872,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
       const savedCards = localStorage.getItem('haven_cards');
       if (savedCards) setPaymentCards(JSON.parse(savedCards));
+
+      const savedAdminAuth = localStorage.getItem('cavrozone_admin_auth');
+      if (savedAdminAuth === 'true') {
+        setIsAdminAuthenticated(true);
+      }
     } catch (e) {
       console.error('Failed to load store data from localStorage', e);
     }
@@ -1245,6 +1247,36 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     showToast('Signed out successfully', 'info');
   };
 
+  const adminLogin = (email: string, pass: string) => {
+    const cleanEmail = email.trim().toLowerCase();
+    if (cleanEmail === 'cavrozone@gmail.com' && pass === '@#23#@') {
+      setIsAdminAuthenticated(true);
+      localStorage.setItem('cavrozone_admin_auth', 'true');
+      const adminUser: UserProfile = {
+        id: 'admin-cavrozone',
+        name: 'Cavrozone Admin',
+        email: 'cavrozone@gmail.com',
+        role: 'admin',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop',
+        bio: 'Cavrozone Store Administrator'
+      };
+      setUser(adminUser);
+      localStorage.setItem('haven_user', JSON.stringify(adminUser));
+      showToast('Admin authentication successful! Welcome to Cavrozone Dashboard.');
+      return true;
+    }
+    showToast('Invalid admin credentials. Please try again.', 'error');
+    return false;
+  };
+
+  const adminLogout = () => {
+    setIsAdminAuthenticated(false);
+    localStorage.removeItem('cavrozone_admin_auth');
+    setUser(null);
+    localStorage.removeItem('haven_user');
+    showToast('Admin signed out successfully', 'info');
+  };
+
   return (
     <StoreContext.Provider value={{
       products,
@@ -1299,6 +1331,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       login,
       signup,
       logout,
+      isAdminAuthenticated,
+      adminLogin,
+      adminLogout,
 
       toasts,
       showToast,

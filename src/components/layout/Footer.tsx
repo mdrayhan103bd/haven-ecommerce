@@ -111,7 +111,7 @@ export default function Footer() {
               <li><Link href="/help" className="hover:text-white transition-colors">Help Center & FAQ</Link></li>
               <li><Link href="/wishlist" className="hover:text-white transition-colors">My Wishlist</Link></li>
               <li><Link href="/help" className="hover:text-white transition-colors">Shipping & Returns</Link></li>
-              <li><Link href="/dashboard" className="text-blue-400 hover:text-blue-300 font-semibold">Admin Panel</Link></li>
+              <li><Link href="/help" className="hover:text-white transition-colors">Contact Support</Link></li>
             </ul>
           </div>
 

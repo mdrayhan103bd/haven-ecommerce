@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Home, 
   ShoppingBag, 
@@ -18,16 +18,40 @@ import {
   Search, 
   Menu, 
   X, 
-  ExternalLink 
+  ExternalLink,
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useStore } from '@/context/StoreContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { orders, messages, user, settings } = useStore();
+  const router = useRouter();
+  const { orders, messages, user, settings, isAdminAuthenticated, adminLogout } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // Guard: Protect dashboard routes from unauthorized public visitors
+  useEffect(() => {
+    const storedAuth = typeof window !== 'undefined' ? localStorage.getItem('cavrozone_admin_auth') : null;
+    if (!isAdminAuthenticated && storedAuth !== 'true') {
+      router.replace('/admin');
+    } else {
+      setAuthChecked(true);
+    }
+  }, [isAdminAuthenticated, router]);
+
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center p-4 font-sans">
+        <div className="w-10 h-10 border-3 border-black border-t-transparent rounded-full animate-spin mb-4" />
+        <div className="text-sm font-bold text-gray-800">Verifying Admin Access...</div>
+        <div className="text-xs text-gray-500 mt-1">Redirecting to secure login if unauthorized</div>
+      </div>
+    );
+  }
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
   const pendingOrdersCount = orders.filter(o => o.status === 'Pending' || o.status === 'Processing').length;
@@ -105,6 +129,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           >
             <HelpCircle className="w-4 h-4" /> Help Center
           </Link>
+          <button 
+            onClick={() => {
+              adminLogout();
+              router.replace('/admin');
+            }}
+            className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 w-full text-left transition-colors"
+          >
+            <LogOut className="w-4 h-4" /> Sign Out
+          </button>
         </div>
       </aside>
 
@@ -144,10 +177,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </Link>
                 );
               })}
-              <div className="pt-4 border-t border-gray-100">
-                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-xs font-bold text-blue-600">
+              <div className="pt-4 border-t border-gray-100 space-y-2">
+                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-xs font-bold text-gray-700">
                   ← Back to Storefront
                 </Link>
+                <button 
+                  onClick={() => {
+                    adminLogout();
+                    router.replace('/admin');
+                  }}
+                  className="block w-full py-2 text-left text-xs font-bold text-red-600"
+                >
+                  Sign Out
+                </button>
               </div>
             </nav>
           </div>
@@ -200,6 +242,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <div className="font-bold text-gray-900">{user?.name || 'Admin'}</div>
                 <div className="text-gray-400 text-[10px]">Store Manager</div>
               </div>
+              <button 
+                onClick={() => {
+                  adminLogout();
+                  router.replace('/admin');
+                }}
+                className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors ml-1"
+                title="Sign Out from Admin"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </header>

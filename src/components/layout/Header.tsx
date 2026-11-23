@@ -121,9 +121,6 @@ export default function Header() {
               <Link href="/products" className="hidden lg:block text-sm font-semibold text-gray-700 hover:text-black">
                 Shop
               </Link>
-              <Link href="/dashboard" className="hidden lg:flex items-center gap-1.5 text-xs font-bold bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-full transition-colors">
-                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Admin
-              </Link>
 
               {/* Wishlist Link with Live Badge */}
               <Link href="/wishlist" className="text-gray-700 hover:text-black relative p-1" title="Wishlist">
@@ -194,13 +191,15 @@ export default function Header() {
                         >
                           <User className="w-4 h-4 text-gray-400" /> Personal Info
                         </Link>
-                        <Link 
-                          href="/dashboard" 
-                          onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-black"
-                        >
-                          <ShieldCheck className="w-4 h-4 text-blue-600" /> Admin Dashboard
-                        </Link>
+                        {user?.role === 'admin' && (
+                          <Link 
+                            href="/dashboard" 
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="flex items-center gap-2 px-3 py-2 rounded-xl text-blue-600 font-semibold hover:bg-blue-50"
+                          >
+                            <ShieldCheck className="w-4 h-4 text-blue-600" /> Admin Dashboard
+                          </Link>
+                        )}
                         <div className="border-t border-gray-100 mt-1 pt-1">
                           <button 
                             onClick={() => {
@@ -308,7 +307,6 @@ export default function Header() {
                     <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full font-bold">{wishlistCount}</span>
                   </Link>
                   <Link href="/account" onClick={() => setMobileMenuOpen(false)}>My Account</Link>
-                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-blue-600 font-bold">Admin Dashboard</Link>
                   <Link href="/help" onClick={() => setMobileMenuOpen(false)}>Help & Support</Link>
                 </div>
               </div>
