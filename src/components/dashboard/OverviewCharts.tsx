@@ -33,8 +33,9 @@ export function SalesChart() {
           </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#888'}} />
-          <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#888'}} tickFormatter={(v) => `${v/1000}k`} />
+          <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#888'}} tickFormatter={(v) => `৳${v/1000}k`} />
           <Tooltip 
+            formatter={(value: any) => [`৳${Number(value).toLocaleString()}`, 'Revenue']}
             contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             labelStyle={{ fontWeight: 'bold', color: '#333' }}
           />

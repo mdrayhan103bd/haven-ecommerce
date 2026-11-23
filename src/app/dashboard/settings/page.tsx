@@ -103,7 +103,7 @@ export default function DashboardSettingsPage() {
         {/* 2. Currency & Shipping */}
         <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-            <DollarSign className="w-4 h-4 text-gray-700" />
+            <span className="w-5 h-5 rounded-md bg-black text-white flex items-center justify-center font-bold text-xs">৳</span>
             <h2 className="text-sm font-bold text-gray-900">Currency & Shipping Rates</h2>
           </div>
 

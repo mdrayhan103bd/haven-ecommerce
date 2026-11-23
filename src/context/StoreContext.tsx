@@ -23,8 +23,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '1',
     name: 'UrbanEase Minimalist Sneakers',
-    price: 89,
-    oldPrice: 120,
+    price: 2450,
+    oldPrice: 3200,
     category: 'Men',
     stock: 45,
     tag: 'Best Seller',
@@ -38,8 +38,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '2',
     name: 'BrewMaster Precision Espresso Machine',
-    price: 149,
-    oldPrice: 199,
+    price: 14500,
+    oldPrice: 18500,
     category: 'Home & Living',
     stock: 18,
     tag: 'Trending',
@@ -53,8 +53,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '3',
     name: 'Luxe Curve Leather Handbag',
-    price: 99,
-    oldPrice: 145,
+    price: 3200,
+    oldPrice: 4500,
     category: 'Women',
     stock: 30,
     tag: 'New Arrival',
@@ -68,8 +68,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '4',
     name: 'Nordic Minimalist Desk Lamp',
-    price: 49,
-    oldPrice: 65,
+    price: 1850,
+    oldPrice: 2400,
     category: 'Home & Living',
     stock: 62,
     rating: 4.7,
@@ -81,8 +81,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '5',
     name: 'Ergonomic Mesh Executive Chair',
-    price: 289,
-    oldPrice: 349,
+    price: 16500,
+    oldPrice: 19500,
     category: 'Home & Living',
     stock: 14,
     tag: 'Top Rated',
@@ -96,8 +96,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '6',
     name: 'AcousticPro ANC Wireless Headphones',
-    price: 179,
-    oldPrice: 229,
+    price: 7500,
+    oldPrice: 9800,
     category: 'Electronics',
     stock: 25,
     tag: '20% OFF',
@@ -111,8 +111,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '7',
     name: 'Classic Linen Relaxed Shirt',
-    price: 59,
-    oldPrice: 85,
+    price: 1650,
+    oldPrice: 2200,
     category: 'Men',
     stock: 50,
     rating: 4.6,
@@ -124,8 +124,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '8',
     name: 'Velvet Matte Hydrating Lip Tint',
-    price: 24,
-    oldPrice: 32,
+    price: 850,
+    oldPrice: 1200,
     category: 'Beauty',
     stock: 80,
     tag: 'Organic',
@@ -139,8 +139,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '9',
     name: 'ProFit Aerobic Smart Fitness Band',
-    price: 69,
-    oldPrice: 99,
+    price: 2850,
+    oldPrice: 3800,
     category: 'Sports',
     stock: 35,
     tag: 'New',
@@ -154,8 +154,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '10',
     name: 'Ultra-Slim Mechanical Wireless Keyboard',
-    price: 119,
-    oldPrice: 149,
+    price: 4500,
+    oldPrice: 5800,
     category: 'Electronics',
     stock: 40,
     tag: 'Popular',
@@ -169,8 +169,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '11',
     name: 'Artisan Ceramic Pour-Over Coffee Dripper',
-    price: 39,
-    oldPrice: 55,
+    price: 1250,
+    oldPrice: 1750,
     category: 'Home & Living',
     stock: 55,
     tag: 'Artisan',
@@ -184,8 +184,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '12',
     name: 'Cashmere Wool Oversized Wrap Coat',
-    price: 219,
-    oldPrice: 280,
+    price: 8500,
+    oldPrice: 11000,
     category: 'Women',
     stock: 22,
     tag: 'Luxury',
@@ -199,8 +199,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '13',
     name: 'Vintage Washed Denim Trucker Jacket',
-    price: 85,
-    oldPrice: 110,
+    price: 2950,
+    oldPrice: 3800,
     category: 'Men',
     stock: 38,
     rating: 4.7,
@@ -212,8 +212,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '14',
     name: 'Pure Silk Floral Summer Midi Dress',
-    price: 129,
-    oldPrice: 165,
+    price: 4200,
+    oldPrice: 5500,
     category: 'Women',
     stock: 28,
     tag: 'Trending',
@@ -227,8 +227,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '15',
     name: 'Ultrasonic Bamboo Aromatherapy Diffuser',
-    price: 45,
-    oldPrice: 60,
+    price: 1750,
+    oldPrice: 2300,
     category: 'Home & Living',
     stock: 65,
     rating: 4.7,
@@ -240,8 +240,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '16',
     name: 'Falcon 4K GPS Ultra-Light Drone',
-    price: 349,
-    oldPrice: 429,
+    price: 28500,
+    oldPrice: 35000,
     category: 'Electronics',
     stock: 15,
     tag: 'Flagship',
@@ -255,8 +255,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '17',
     name: 'Eco-Grip Natural Tree Rubber Yoga Mat',
-    price: 55,
-    oldPrice: 75,
+    price: 1650,
+    oldPrice: 2250,
     category: 'Sports',
     stock: 44,
     tag: 'Eco-Friendly',
@@ -270,8 +270,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '18',
     name: 'ChronoMaster Titanium Minimalist Watch',
-    price: 169,
-    oldPrice: 220,
+    price: 6500,
+    oldPrice: 8500,
     category: 'Men',
     stock: 24,
     tag: 'Premium',
@@ -285,8 +285,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '19',
     name: 'Botanical Glow Restorative Face Serum',
-    price: 38,
-    oldPrice: 50,
+    price: 1450,
+    oldPrice: 1950,
     category: 'Beauty',
     stock: 75,
     tag: 'Clean Beauty',
@@ -300,8 +300,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '20',
     name: 'Handcrafted Italian Leather Oxford Shoes',
-    price: 145,
-    oldPrice: 195,
+    price: 5200,
+    oldPrice: 6800,
     category: 'Men',
     stock: 19,
     tag: 'Classic',
@@ -315,8 +315,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '21',
     name: 'Compact 360 Waterproof Bluetooth Speaker',
-    price: 79,
-    oldPrice: 109,
+    price: 3200,
+    oldPrice: 4200,
     category: 'Electronics',
     stock: 52,
     tag: 'Hot Deal',
@@ -330,8 +330,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '22',
     name: 'Sculptural Ceramic Tabletop Flower Vase',
-    price: 34,
-    oldPrice: 48,
+    price: 1150,
+    oldPrice: 1600,
     category: 'Home & Living',
     stock: 48,
     rating: 4.6,
@@ -343,8 +343,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '23',
     name: 'Thermal Double-Wall Vacuum Water Bottle 750ml',
-    price: 29,
-    oldPrice: 39,
+    price: 950,
+    oldPrice: 1350,
     category: 'Sports',
     stock: 90,
     tag: 'Essential',
@@ -358,8 +358,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '24',
     name: 'Cloud Quilted Nylon Crossbody Bag',
-    price: 54,
-    oldPrice: 75,
+    price: 1850,
+    oldPrice: 2500,
     category: 'Women',
     stock: 42,
     tag: 'Trending',
@@ -373,8 +373,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '25',
     name: 'Rose Quartz Gua Sha & Facial Roller Set',
-    price: 22,
-    oldPrice: 35,
+    price: 850,
+    oldPrice: 1250,
     category: 'Beauty',
     stock: 85,
     tag: 'Self Care',
@@ -388,8 +388,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '26',
     name: 'Japanese Uji Matcha Purifying Clay Mask',
-    price: 32,
-    oldPrice: 45,
+    price: 1150,
+    oldPrice: 1650,
     category: 'Beauty',
     stock: 60,
     tag: 'Detox',
@@ -403,8 +403,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '27',
     name: 'Retro Polarized Classic Tortoise Sunglasses',
-    price: 65,
-    oldPrice: 90,
+    price: 2100,
+    oldPrice: 2800,
     category: 'Men',
     stock: 45,
     rating: 4.7,
@@ -416,8 +416,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '28',
     name: '14K Gold Minimalist Chunky Huggie Hoops',
-    price: 48,
-    oldPrice: 68,
+    price: 1850,
+    oldPrice: 2600,
     category: 'Women',
     stock: 35,
     tag: 'Jewelry',
@@ -431,8 +431,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '29',
     name: 'Heavyweight French Terry Casual Hoodie',
-    price: 75,
-    oldPrice: 95,
+    price: 2650,
+    oldPrice: 3400,
     category: 'Men',
     stock: 40,
     rating: 4.8,
@@ -444,8 +444,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: '30',
     name: 'Ambient Sunrise Simulation Smart Alarm Clock',
-    price: 59,
-    oldPrice: 79,
+    price: 2450,
+    oldPrice: 3200,
     category: 'Electronics',
     stock: 36,
     tag: 'Wellness Tech',
@@ -467,21 +467,21 @@ export const INITIAL_ORDERS: Order[] = [
       { product: INITIAL_PRODUCTS[0], quantity: 1 },
       { product: INITIAL_PRODUCTS[3], quantity: 1 }
     ],
-    subtotal: 138,
-    discount: 10,
+    subtotal: 4300,
+    discount: 300,
     shippingFee: 0,
-    total: 128,
+    total: 4000,
     status: 'Processing',
-    paymentMethod: 'Credit Card (Visa)',
+    paymentMethod: 'Cash on Delivery',
     trackingNumber: 'TRK-9823412',
     shippingDetails: {
       name: 'Sarah Jenkins',
       email: 'sarah.j@example.com',
-      phone: '+1 555 382 9102',
-      address: '742 Evergreen Terrace',
-      city: 'Springfield',
-      zip: '97477',
-      country: 'United States'
+      phone: '+880 1711-234567',
+      address: 'House 42, Road 11, Banani',
+      city: 'Dhaka',
+      zip: '1213',
+      country: 'Bangladesh'
     }
   },
   {
@@ -490,21 +490,21 @@ export const INITIAL_ORDERS: Order[] = [
     items: [
       { product: INITIAL_PRODUCTS[1], quantity: 1 }
     ],
-    subtotal: 149,
+    subtotal: 14500,
     discount: 0,
     shippingFee: 0,
-    total: 149,
+    total: 14500,
     status: 'Shipped',
-    paymentMethod: 'Credit Card (Mastercard)',
+    paymentMethod: 'Cash on Delivery',
     trackingNumber: 'TRK-9821903',
     shippingDetails: {
       name: 'Michael Chen',
       email: 'm.chen@example.com',
-      phone: '+1 415 882 1902',
-      address: '1048 Market St, Suite 400',
-      city: 'San Francisco',
-      zip: '94103',
-      country: 'United States'
+      phone: '+880 1819-876543',
+      address: 'GEC Circle, Nasirabad',
+      city: 'Chittagong',
+      zip: '4000',
+      country: 'Bangladesh'
     }
   },
   {
@@ -514,21 +514,21 @@ export const INITIAL_ORDERS: Order[] = [
       { product: INITIAL_PRODUCTS[2], quantity: 1 },
       { product: INITIAL_PRODUCTS[7], quantity: 2 }
     ],
-    subtotal: 147,
-    discount: 15,
+    subtotal: 4900,
+    discount: 400,
     shippingFee: 0,
-    total: 132,
+    total: 4500,
     status: 'Delivered',
     paymentMethod: 'Cash on Delivery',
     trackingNumber: 'TRK-9810481',
     shippingDetails: {
       name: 'Emily Davis',
       email: 'emily.d@example.com',
-      phone: '+1 212 994 2018',
-      address: '350 5th Avenue, Apt 12B',
-      city: 'New York',
-      zip: '10118',
-      country: 'United States'
+      phone: '+880 1912-345678',
+      address: 'Zindabazar Point',
+      city: 'Sylhet',
+      zip: '3100',
+      country: 'Bangladesh'
     }
   }
 ];
@@ -540,7 +540,7 @@ export const INITIAL_DISCOUNTS: Discount[] = [
     code: 'WELCOME10',
     type: 'percentage',
     value: 10,
-    minPurchase: 50,
+    minPurchase: 1000,
     expiresAt: '2026-12-31',
     active: true,
     usageCount: 142
@@ -550,7 +550,7 @@ export const INITIAL_DISCOUNTS: Discount[] = [
     code: 'HAVEN20',
     type: 'percentage',
     value: 20,
-    minPurchase: 100,
+    minPurchase: 2000,
     expiresAt: '2026-12-31',
     active: true,
     usageCount: 89
@@ -559,11 +559,11 @@ export const INITIAL_DISCOUNTS: Discount[] = [
     id: 'disc-3',
     code: 'FREESHIP',
     type: 'fixed',
-    value: 15,
-    minPurchase: 40,
+    value: 60,
+    minPurchase: 1000,
     expiresAt: '2026-12-31',
     active: true,
-    usageCount: 215
+    usageCount: 230
   }
 ];
 
@@ -783,7 +783,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedProducts) {
         try {
           const parsed = JSON.parse(savedProducts);
-          if (Array.isArray(parsed) && parsed.length >= 25) {
+          // Auto-migrate if any product still has old USD price (< 400) or missing items
+          const hasOldUsdPrices = Array.isArray(parsed) && parsed.some((p: Product) => p.price < 400);
+          if (Array.isArray(parsed) && parsed.length >= 25 && !hasOldUsdPrices) {
             setProducts(parsed);
           } else {
             setProducts(INITIAL_PRODUCTS);
@@ -800,10 +802,40 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
       const savedOrders = localStorage.getItem('haven_orders');
-      if (savedOrders) setOrders(JSON.parse(savedOrders));
+      if (savedOrders) {
+        try {
+          const parsedO = JSON.parse(savedOrders);
+          const hasOldOrders = Array.isArray(parsedO) && parsedO.some((o: Order) => o.total < 400);
+          if (Array.isArray(parsedO) && !hasOldOrders) {
+            setOrders(parsedO);
+          } else {
+            setOrders(INITIAL_ORDERS);
+            localStorage.setItem('haven_orders', JSON.stringify(INITIAL_ORDERS));
+          }
+        } catch {
+          setOrders(INITIAL_ORDERS);
+        }
+      } else {
+        setOrders(INITIAL_ORDERS);
+      }
 
       const savedDiscounts = localStorage.getItem('haven_discounts');
-      if (savedDiscounts) setDiscounts(JSON.parse(savedDiscounts));
+      if (savedDiscounts) {
+        try {
+          const parsedD = JSON.parse(savedDiscounts);
+          const hasOldDiscounts = Array.isArray(parsedD) && parsedD.some((d: Discount) => d.minPurchase < 100);
+          if (Array.isArray(parsedD) && !hasOldDiscounts) {
+            setDiscounts(parsedD);
+          } else {
+            setDiscounts(INITIAL_DISCOUNTS);
+            localStorage.setItem('haven_discounts', JSON.stringify(INITIAL_DISCOUNTS));
+          }
+        } catch {
+          setDiscounts(INITIAL_DISCOUNTS);
+        }
+      } else {
+        setDiscounts(INITIAL_DISCOUNTS);
+      }
 
       const savedMessages = localStorage.getItem('haven_messages');
       if (savedMessages) setMessages(JSON.parse(savedMessages));

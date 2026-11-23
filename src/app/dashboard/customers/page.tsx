@@ -16,11 +16,11 @@ export default function DashboardCustomersPage() {
 
     // Initial mock base customers
     const baseCustomers: Customer[] = [
-      { id: 'c-1', name: 'Sarah Jenkins', email: 'sarah.j@example.com', phone: '+1 555 382 9102', location: 'Springfield, USA', orders: 4, spent: 489, status: 'Active' },
-      { id: 'c-2', name: 'Michael Chen', email: 'm.chen@example.com', phone: '+1 415 882 1902', location: 'San Francisco, USA', orders: 8, spent: 1120, status: 'VIP' },
-      { id: 'c-3', name: 'Emily Davis', email: 'emily.d@example.com', phone: '+1 212 994 2018', location: 'New York, USA', orders: 12, spent: 1840, status: 'VIP' },
-      { id: 'c-4', name: 'Marcus Vance', email: 'marcus.v@example.com', phone: '+1 555 491 0293', location: 'Chicago, USA', orders: 2, spent: 178, status: 'Active' },
-      { id: 'c-5', name: 'Clara Oswald', email: 'clara.o@example.com', phone: '+44 20 7946 0912', location: 'London, UK', orders: 1, spent: 89, status: 'Inactive' }
+      { id: 'c-1', name: 'Sarah Jenkins', email: 'sarah.j@example.com', phone: '+880 1711-234567', location: 'Dhaka, Bangladesh', orders: 4, spent: 14890, status: 'Active' },
+      { id: 'c-2', name: 'Michael Chen', email: 'm.chen@example.com', phone: '+880 1819-876543', location: 'Chittagong, Bangladesh', orders: 8, spent: 42500, status: 'VIP' },
+      { id: 'c-3', name: 'Emily Davis', email: 'emily.d@example.com', phone: '+880 1912-345678', location: 'Sylhet, Bangladesh', orders: 12, spent: 68400, status: 'VIP' },
+      { id: 'c-4', name: 'Marcus Vance', email: 'marcus.v@example.com', phone: '+880 1610-987654', location: 'Dhaka, Bangladesh', orders: 2, spent: 7800, status: 'Active' },
+      { id: 'c-5', name: 'Clara Oswald', email: 'clara.o@example.com', phone: '+880 1515-123456', location: 'Khulna, Bangladesh', orders: 1, spent: 2450, status: 'Active' }
     ];
 
     baseCustomers.forEach(c => customerMap.set(c.email.toLowerCase(), c));
@@ -32,17 +32,17 @@ export default function DashboardCustomersPage() {
         const existing = customerMap.get(email)!;
         existing.orders += 1;
         existing.spent += o.total;
-        if (existing.spent > 1000) existing.status = 'VIP';
+        if (existing.spent > 15000) existing.status = 'VIP';
       } else {
         customerMap.set(email, {
           id: `cust-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
           name: o.shippingDetails.name,
           email: o.shippingDetails.email,
-          phone: o.shippingDetails.phone || '+1 555 000 0000',
-          location: `${o.shippingDetails.city}, ${o.shippingDetails.country || 'USA'}`,
+          phone: o.shippingDetails.phone || '+880 1700-000000',
+          location: `${o.shippingDetails.city}, ${o.shippingDetails.country || 'Bangladesh'}`,
           orders: 1,
           spent: o.total,
-          status: o.total > 500 ? 'VIP' : 'Active'
+          status: o.total > 10000 ? 'VIP' : 'Active'
         });
       }
     });

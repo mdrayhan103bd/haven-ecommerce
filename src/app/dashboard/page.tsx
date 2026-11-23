@@ -76,8 +76,8 @@ export default function DashboardPage() {
         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Revenue</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-              <DollarSign className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-base">
+              ৳
             </div>
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-1">৳{totalRevenue.toLocaleString()}</div>
