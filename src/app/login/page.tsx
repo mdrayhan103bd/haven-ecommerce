@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Mail, Lock, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Mail, Lock } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 
 export default function LoginPage() {
@@ -21,26 +21,8 @@ export default function LoginPage() {
     setTimeout(() => {
       login(email, password);
       setLoading(false);
-      if (email.includes('admin')) {
-        router.push('/dashboard');
-      } else {
-        router.push('/account');
-      }
+      router.push('/account');
     }, 600);
-  };
-
-  const handleDemoAdmin = () => {
-    setEmail('admin@cavrozone.com');
-    setPassword('admin123');
-    login('admin@cavrozone.com', 'admin123');
-    router.push('/dashboard');
-  };
-
-  const handleDemoCustomer = () => {
-    setEmail('customer@cavrozone.com');
-    setPassword('customer123');
-    login('customer@cavrozone.com', 'customer123');
-    router.push('/account');
   };
 
   return (
@@ -103,29 +85,6 @@ export default function LoginPage() {
             {loading ? 'Signing in...' : 'Sign In'} <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </form>
-
-        {/* Quick Demo Logins for Testing */}
-        <div className="mt-6 pt-5 border-t border-gray-100">
-          <div className="text-[11px] font-bold text-gray-400 uppercase text-center mb-3">
-            Quick 1-Click Demo Login
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={handleDemoAdmin}
-              type="button"
-              className="flex-1 py-2 rounded-xl border border-gray-200 hover:border-black text-[11px] font-bold text-gray-800 bg-gray-50 hover:bg-white transition-all flex items-center justify-center gap-1.5"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Demo Admin
-            </button>
-            <button
-              onClick={handleDemoCustomer}
-              type="button"
-              className="flex-1 py-2 rounded-xl border border-gray-200 hover:border-black text-[11px] font-bold text-gray-800 bg-gray-50 hover:bg-white transition-all flex items-center justify-center gap-1.5"
-            >
-              Demo Customer
-            </button>
-          </div>
-        </div>
 
         <p className="text-center text-xs text-gray-500 mt-6">
           Don't have an account?{' '}

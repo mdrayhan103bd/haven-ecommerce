@@ -37,10 +37,10 @@ export default function CheckoutPage() {
   // Payment Method - Cash on Delivery active, others temporarily disabled
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'card' | 'bkash'>('cod');
   const [cardDetails, setCardDetails] = useState({
-    number: '•••• •••• •••• 4242',
-    holder: user?.name || 'John Doe',
-    expiry: '12/28',
-    cvv: '123'
+    number: '',
+    holder: user?.name || '',
+    expiry: '',
+    cvv: ''
   });
 
   // Promo Code State

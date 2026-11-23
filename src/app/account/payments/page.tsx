@@ -54,50 +54,64 @@ export default function PaymentsPage() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {paymentCards.map((card) => (
-            <div 
-              key={card.id}
-              className={`p-5 rounded-2xl border transition-all ${
-                card.isDefault 
-                  ? 'border-black bg-gray-950 text-white shadow-md' 
-                  : 'border-gray-100 hover:border-gray-200 bg-white'
-              }`}
+        {paymentCards.length === 0 ? (
+          <div className="text-center py-12 border border-dashed border-gray-200 rounded-2xl p-6">
+            <CreditCard className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+            <p className="text-sm font-semibold text-gray-700">No payment methods saved</p>
+            <p className="text-xs text-gray-400 mt-1 mb-4">You can save card details for convenient reordering.</p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-black text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-gray-800 transition-colors inline-flex items-center gap-1.5"
             >
-              <div className="flex justify-between items-start mb-6">
-                <CreditCard className={`w-6 h-6 ${card.isDefault ? 'text-white' : 'text-gray-700'}`} />
-                <div className="flex items-center gap-2">
-                  {card.isDefault && (
-                    <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                      Default
-                    </span>
-                  )}
-                  <button 
-                    onClick={() => deletePaymentCard(card.id)}
-                    className={`p-1 transition-colors ${card.isDefault ? 'text-gray-400 hover:text-red-400' : 'text-gray-400 hover:text-red-500'}`}
-                    title="Remove card"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+              <Plus className="w-3.5 h-3.5" /> Add Payment Method
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {paymentCards.map((card) => (
+              <div 
+                key={card.id}
+                className={`p-5 rounded-2xl border transition-all ${
+                  card.isDefault 
+                    ? 'border-black bg-gray-950 text-white shadow-md' 
+                    : 'border-gray-100 hover:border-gray-200 bg-white'
+                }`}
+              >
+                <div className="flex justify-between items-start mb-6">
+                  <CreditCard className={`w-6 h-6 ${card.isDefault ? 'text-white' : 'text-gray-700'}`} />
+                  <div className="flex items-center gap-2">
+                    {card.isDefault && (
+                      <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        Default
+                      </span>
+                    )}
+                    <button 
+                      onClick={() => deletePaymentCard(card.id)}
+                      className={`p-1 transition-colors ${card.isDefault ? 'text-gray-400 hover:text-red-400' : 'text-gray-400 hover:text-red-500'}`}
+                      title="Remove card"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <div className="font-mono text-base tracking-widest">{card.cardNumber}</div>
-                <div className="flex justify-between items-end text-xs">
-                  <div>
-                    <span className={`text-[10px] uppercase block ${card.isDefault ? 'text-gray-400' : 'text-gray-400'}`}>Card Holder</span>
-                    <span className="font-bold">{card.cardHolder}</span>
-                  </div>
-                  <div>
-                    <span className={`text-[10px] uppercase block ${card.isDefault ? 'text-gray-400' : 'text-gray-400'}`}>Expires</span>
-                    <span className="font-bold">{card.expiry}</span>
+                <div className="space-y-2">
+                  <div className="font-mono text-base tracking-widest">{card.cardNumber}</div>
+                  <div className="flex justify-between items-end text-xs">
+                    <div>
+                      <span className={`text-[10px] uppercase block ${card.isDefault ? 'text-gray-400' : 'text-gray-400'}`}>Card Holder</span>
+                      <span className="font-bold">{card.cardHolder}</span>
+                    </div>
+                    <div>
+                      <span className={`text-[10px] uppercase block ${card.isDefault ? 'text-gray-400' : 'text-gray-400'}`}>Expires</span>
+                      <span className="font-bold">{card.expiry}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex items-center gap-3 text-xs text-gray-500">
           <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
@@ -125,7 +139,7 @@ export default function PaymentsPage() {
                   type="text" 
                   value={newCard.cardHolder}
                   onChange={e => setNewCard({ ...newCard, cardHolder: e.target.value })}
-                  placeholder="e.g. John Doe"
+                  placeholder="e.g. Cardholder Name"
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-black"
                   required
                 />

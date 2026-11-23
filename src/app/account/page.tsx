@@ -9,9 +9,14 @@ import { Order } from '@/types';
 import AccountLayout from '@/components/account/AccountLayout';
 
 export default function AccountOrdersPage() {
-  const { orders } = useStore();
+  const { orders, user } = useStore();
   const { addToCart } = useCart();
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  // Normal customers only see their own orders; admins can see all orders
+  const displayOrders = user?.role === 'admin' 
+    ? orders 
+    : orders.filter(o => o.shippingDetails?.email?.toLowerCase() === user?.email?.toLowerCase());
 
   const getStatusBadge = (status: Order['status']) => {
     switch(status) {
@@ -50,9 +55,9 @@ export default function AccountOrdersPage() {
 
   return (
     <AccountLayout title="My Orders" subtitle="Track orders, view receipts, and reorder items">
-      {orders.length > 0 ? (
+      {displayOrders.length > 0 ? (
         <div className="space-y-4">
-          {orders.map((order) => (
+          {displayOrders.map((order) => (
             <div 
               key={order.id} 
               className="border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 transition-colors shadow-sm"

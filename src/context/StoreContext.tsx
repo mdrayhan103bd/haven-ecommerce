@@ -607,49 +607,9 @@ export const INITIAL_SETTINGS: StoreSettings = {
 // Initial User Profile (Default unauthenticated for visitors)
 export const INITIAL_USER: UserProfile | null = null;
 
-export const INITIAL_ADDRESSES: Address[] = [
-  {
-    id: 'addr-1',
-    title: 'Home Address',
-    name: 'John Doe',
-    phone: '+1 (555) 234-5678',
-    street: '742 Evergreen Terrace',
-    city: 'Springfield',
-    zip: '97477',
-    country: 'United States',
-    isDefault: true
-  },
-  {
-    id: 'addr-2',
-    title: 'Studio / Office',
-    name: 'John Doe',
-    phone: '+1 (555) 890-1234',
-    street: '120 Broadway, Floor 4',
-    city: 'New York',
-    zip: '10005',
-    country: 'United States',
-    isDefault: false
-  }
-];
+export const INITIAL_ADDRESSES: Address[] = [];
 
-export const INITIAL_PAYMENT_CARDS: PaymentCard[] = [
-  {
-    id: 'card-1',
-    type: 'card',
-    cardNumber: '•••• •••• •••• 4242',
-    cardHolder: 'John Doe',
-    expiry: '12/28',
-    isDefault: true
-  },
-  {
-    id: 'card-2',
-    type: 'card',
-    cardNumber: '•••• •••• •••• 8891',
-    cardHolder: 'John Doe',
-    expiry: '08/27',
-    isDefault: false
-  }
-];
+export const INITIAL_PAYMENT_CARDS: PaymentCard[] = [];
 
 export const INITIAL_BANNERS: BannerSettings = {
   hero: {
@@ -865,13 +825,60 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }
 
       const savedUser = localStorage.getItem('haven_user');
-      if (savedUser) setUser(JSON.parse(savedUser));
+      if (savedUser) {
+        try {
+          const parsedU = JSON.parse(savedUser);
+          if (
+            parsedU?.id === 'usr-admin-1' || 
+            parsedU?.email === 'john.doe@example.com' || 
+            parsedU?.name === 'John Doe' ||
+            parsedU?.email?.includes('admin@cavrozone.com') ||
+            parsedU?.email?.includes('customer@cavrozone.com')
+          ) {
+            localStorage.removeItem('haven_user');
+            setUser(null);
+          } else {
+            setUser(parsedU);
+          }
+        } catch {
+          localStorage.removeItem('haven_user');
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
 
       const savedAddresses = localStorage.getItem('haven_addresses');
-      if (savedAddresses) setAddresses(JSON.parse(savedAddresses));
+      if (savedAddresses) {
+        try {
+          const parsedA = JSON.parse(savedAddresses);
+          const cleanAddresses = Array.isArray(parsedA)
+            ? parsedA.filter((a: Address) => a.name !== 'John Doe' && !a.street?.includes('742 Evergreen'))
+            : [];
+          setAddresses(cleanAddresses);
+          localStorage.setItem('haven_addresses', JSON.stringify(cleanAddresses));
+        } catch {
+          setAddresses([]);
+        }
+      } else {
+        setAddresses([]);
+      }
 
       const savedCards = localStorage.getItem('haven_cards');
-      if (savedCards) setPaymentCards(JSON.parse(savedCards));
+      if (savedCards) {
+        try {
+          const parsedC = JSON.parse(savedCards);
+          const cleanCards = Array.isArray(parsedC)
+            ? parsedC.filter((c: PaymentCard) => c.cardHolder !== 'John Doe')
+            : [];
+          setPaymentCards(cleanCards);
+          localStorage.setItem('haven_cards', JSON.stringify(cleanCards));
+        } catch {
+          setPaymentCards([]);
+        }
+      } else {
+        setPaymentCards([]);
+      }
 
       const savedAdminAuth = localStorage.getItem('cavrozone_admin_auth');
       if (savedAdminAuth === 'true') {
@@ -1170,6 +1177,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     if (user) {
       const updated = { ...user, ...updates };
       setUser(updated);
+      try {
+        localStorage.setItem('haven_user', JSON.stringify(updated));
+      } catch {}
       showToast('Profile updated!');
     }
   };
@@ -1216,15 +1226,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const login = (email: string, pass: string) => {
-    // Immediate mock login allowing instant testing
+    const rawName = email.split('@')[0];
+    const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
     const loggedUser: UserProfile = {
       id: 'usr-' + Date.now(),
-      name: email.split('@')[0].toUpperCase(),
+      name: formattedName,
       email: email,
-      role: email.includes('admin') ? 'admin' : 'customer',
-      avatar: `https://ui-avatars.com/api/?name=${email}&background=random`
+      role: 'customer',
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(formattedName)}&background=random`
     };
     setUser(loggedUser);
+    try {
+      localStorage.setItem('haven_user', JSON.stringify(loggedUser));
+    } catch {}
     showToast(`Welcome back, ${loggedUser.name}!`);
     return true;
   };
@@ -1238,12 +1252,18 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`
     };
     setUser(newUser);
-    showToast(`Account created! Welcome to Haven, ${name}.`);
+    try {
+      localStorage.setItem('haven_user', JSON.stringify(newUser));
+    } catch {}
+    showToast(`Account created! Welcome to Cavrozone, ${name}.`);
     return true;
   };
 
   const logout = () => {
     setUser(null);
+    try {
+      localStorage.removeItem('haven_user');
+    } catch {}
     showToast('Signed out successfully', 'info');
   };
 

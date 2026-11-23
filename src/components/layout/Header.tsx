@@ -217,9 +217,10 @@ export default function Header() {
                 ) : (
                   <Link 
                     href="/login" 
-                    className="flex items-center gap-1.5 text-xs font-bold bg-black text-white px-3.5 py-2 rounded-full hover:bg-gray-800 transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-bold bg-black text-white px-3.5 py-2 rounded-full hover:bg-gray-800 transition-colors shadow-sm"
                   >
-                    Sign In
+                    <User className="w-3.5 h-3.5" />
+                    <span>Sign In</span>
                   </Link>
                 )}
               </div>

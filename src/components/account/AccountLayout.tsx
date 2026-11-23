@@ -25,6 +25,36 @@ export default function AccountLayout({
     { label: 'Payment Methods', href: '/account/payments', icon: CreditCard },
   ];
 
+  if (!user) {
+    return (
+      <div className="container mx-auto px-4 lg:px-8 py-16 font-sans min-h-[70vh] flex items-center justify-center">
+        <div className="max-w-md w-full bg-white border border-gray-100 rounded-3xl p-8 shadow-sm text-center">
+          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600">
+            <User className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Sign in to your account</h2>
+          <p className="text-xs text-gray-500 mb-6 leading-relaxed">
+            Please sign in or create an account to view your orders, track shipments, and manage saved shipping addresses.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link 
+              href="/login" 
+              className="flex-1 py-2.5 px-6 bg-black text-white rounded-full text-xs font-bold hover:bg-gray-800 transition-colors shadow-sm text-center"
+            >
+              Sign In
+            </Link>
+            <Link 
+              href="/signup" 
+              className="flex-1 py-2.5 px-6 border border-gray-200 text-gray-800 rounded-full text-xs font-bold hover:bg-gray-50 transition-colors text-center"
+            >
+              Create Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 lg:px-8 py-10 font-sans min-h-[75vh]">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -33,15 +63,15 @@ export default function AccountLayout({
           <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm mb-4">
             <div className="flex items-center gap-4 mb-6">
               <img 
-                src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=random`} 
-                alt={user?.name || 'User'} 
+                src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`} 
+                alt={user.name} 
                 className="w-14 h-14 rounded-full object-cover border border-gray-200" 
               />
               <div className="min-w-0">
-                <h3 className="font-bold text-gray-900 truncate">{user?.name || 'John Doe'}</h3>
-                <p className="text-xs text-gray-500 truncate">{user?.email || 'user@example.com'}</p>
+                <h3 className="font-bold text-gray-900 truncate">{user.name}</h3>
+                <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">
-                  {user?.role === 'admin' ? 'Store Administrator' : 'Customer Member'}
+                  {user.role === 'admin' ? 'Store Administrator' : 'Customer Member'}
                 </span>
               </div>
             </div>

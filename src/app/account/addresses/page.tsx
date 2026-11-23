@@ -49,53 +49,67 @@ export default function AddressesPage() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {addresses.map((addr) => (
-            <div 
-              key={addr.id}
-              className={`p-5 rounded-2xl border transition-all ${
-                addr.isDefault 
-                  ? 'border-black bg-gray-50/50 shadow-sm' 
-                  : 'border-gray-100 hover:border-gray-200 bg-white'
-              }`}
+        {addresses.length === 0 ? (
+          <div className="text-center py-12 border border-dashed border-gray-200 rounded-2xl p-6">
+            <MapPin className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+            <p className="text-sm font-semibold text-gray-700">No addresses saved yet</p>
+            <p className="text-xs text-gray-400 mt-1 mb-4">Add your shipping destination for faster checkout.</p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-black text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-gray-800 transition-colors inline-flex items-center gap-1.5"
             >
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-sm text-gray-900">{addr.title}</span>
-                  {addr.isDefault && (
-                    <span className="bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                      Default
-                    </span>
-                  )}
+              <Plus className="w-3.5 h-3.5" /> Add Address
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {addresses.map((addr) => (
+              <div 
+                key={addr.id}
+                className={`p-5 rounded-2xl border transition-all ${
+                  addr.isDefault 
+                    ? 'border-black bg-gray-50/50 shadow-sm' 
+                    : 'border-gray-100 hover:border-gray-200 bg-white'
+                }`}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sm text-gray-900">{addr.title}</span>
+                    {addr.isDefault && (
+                      <span className="bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        Default
+                      </span>
+                    )}
+                  </div>
+                  <button 
+                    onClick={() => deleteAddress(addr.id)}
+                    className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                    title="Delete address"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => deleteAddress(addr.id)}
-                  className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                  title="Delete address"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
 
-              <div className="text-xs text-gray-600 space-y-1 mb-4">
-                <div className="font-semibold text-gray-900">{addr.name}</div>
-                <div>{addr.street}</div>
-                <div>{addr.city}, {addr.zip}</div>
-                <div>{addr.country}</div>
-                <div className="text-gray-400">{addr.phone}</div>
-              </div>
+                <div className="text-xs text-gray-600 space-y-1 mb-4">
+                  <div className="font-semibold text-gray-900">{addr.name}</div>
+                  <div>{addr.street}</div>
+                  <div>{addr.city}, {addr.zip}</div>
+                  <div>{addr.country}</div>
+                  <div className="text-gray-400">{addr.phone}</div>
+                </div>
 
-              {!addr.isDefault && (
-                <button
-                  onClick={() => setDefaultAddress(addr.id)}
-                  className="text-xs font-bold text-black hover:underline"
-                >
-                  Set as Default Address
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
+                {!addr.isDefault && (
+                  <button
+                    onClick={() => setDefaultAddress(addr.id)}
+                    className="text-xs font-bold text-black hover:underline"
+                  >
+                    Set as Default Address
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Add Address Modal */}
