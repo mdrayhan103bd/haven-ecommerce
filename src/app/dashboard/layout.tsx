@@ -233,13 +233,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Link>
 
             <div className="flex items-center gap-2.5 border-l border-gray-100 pl-4">
-              <img 
-                src={user?.avatar || 'https://ui-avatars.com/api/?name=Admin&background=random'} 
-                alt="Admin" 
-                className="w-8 h-8 rounded-full object-cover border border-gray-200"
-              />
+              <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                C
+              </div>
               <div className="text-xs leading-tight hidden md:block">
-                <div className="font-bold text-gray-900">{user?.name || 'Admin'}</div>
+                <div className="font-bold text-gray-900">Cavrozone Admin</div>
                 <div className="text-gray-400 text-[10px]">Store Manager</div>
               </div>
               <button 

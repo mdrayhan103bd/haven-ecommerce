@@ -120,12 +120,17 @@ export default function Hero() {
                 {/* Social Proof Badge */}
                 <div className="mt-8 sm:mt-12 flex items-center gap-3 sm:gap-4">
                   <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
+                    {[
+                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80',
+                      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80',
+                      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=80',
+                      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&auto=format&fit=crop&q=80'
+                    ].map((avatarUrl, i) => (
                       <img 
                         key={i} 
-                        src={`https://ui-avatars.com/api/?name=User+${i}&background=random`} 
-                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#F6F4EF]" 
-                        alt="customer avatar" 
+                        src={avatarUrl} 
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#F6F4EF] object-cover" 
+                        alt="Happy customer" 
                       />
                     ))}
                   </div>

@@ -15,7 +15,7 @@ export default function AddressesPage() {
     street: '',
     city: '',
     zip: '',
-    country: 'United States',
+    country: 'Bangladesh',
     isDefault: false
   });
 
@@ -31,7 +31,7 @@ export default function AddressesPage() {
       street: '',
       city: '',
       zip: '',
-      country: 'United States',
+      country: 'Bangladesh',
       isDefault: false
     });
   };

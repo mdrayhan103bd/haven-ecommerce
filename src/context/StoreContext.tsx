@@ -846,11 +846,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         try {
           const parsedU = JSON.parse(savedUser);
           if (
-            parsedU?.id === 'usr-admin-1' || 
-            parsedU?.email === 'john.doe@example.com' || 
-            parsedU?.name === 'John Doe' ||
-            parsedU?.email?.includes('admin@cavrozone.com') ||
-            parsedU?.email?.includes('customer@cavrozone.com')
+            !parsedU ||
+            parsedU.id === 'usr-admin-1' || 
+            parsedU.id === 'admin-cavrozone' ||
+            parsedU.role === 'admin' ||
+            parsedU.name === 'John Doe' || 
+            parsedU.name === 'Cavrozone Admin' ||
+            parsedU.email === 'john.doe@example.com' || 
+            parsedU.email === 'cavrozone@gmail.com' ||
+            parsedU.email?.includes('admin@cavrozone.com') ||
+            parsedU.email?.includes('customer@cavrozone.com')
           ) {
             localStorage.removeItem('haven_user');
             setUser(null);
@@ -945,7 +950,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isLoaded) return;
-    localStorage.setItem('haven_user', JSON.stringify(user));
+    try {
+      if (user) {
+        localStorage.setItem('haven_user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('haven_user');
+      }
+    } catch {}
   }, [user, isLoaded]);
 
   useEffect(() => {
@@ -1288,17 +1299,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const cleanEmail = email.trim().toLowerCase();
     if (cleanEmail === 'cavrozone@gmail.com' && pass === '@#23#@') {
       setIsAdminAuthenticated(true);
-      localStorage.setItem('cavrozone_admin_auth', 'true');
-      const adminUser: UserProfile = {
-        id: 'admin-cavrozone',
-        name: 'Cavrozone Admin',
-        email: 'cavrozone@gmail.com',
-        role: 'admin',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop',
-        bio: 'Cavrozone Store Administrator'
-      };
-      setUser(adminUser);
-      localStorage.setItem('haven_user', JSON.stringify(adminUser));
+      try {
+        localStorage.setItem('cavrozone_admin_auth', 'true');
+      } catch {}
       showToast('Admin authentication successful! Welcome to Cavrozone Dashboard.');
       return true;
     }
@@ -1308,9 +1311,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const adminLogout = () => {
     setIsAdminAuthenticated(false);
-    localStorage.removeItem('cavrozone_admin_auth');
-    setUser(null);
-    localStorage.removeItem('haven_user');
+    try {
+      localStorage.removeItem('cavrozone_admin_auth');
+    } catch {}
     showToast('Admin signed out successfully', 'info');
   };
 

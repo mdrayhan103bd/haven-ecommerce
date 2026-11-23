@@ -95,16 +95,6 @@ export default function AccountLayout({
                   </Link>
                 );
               })}
-
-              {user?.role === 'admin' && (
-                <Link
-                  href="/dashboard"
-                  className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-blue-600 hover:bg-blue-50 transition-all mt-2"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Admin Dashboard</span>
-                </Link>
-              )}
             </nav>
 
             <div className="mt-6 pt-4 border-t border-gray-100">

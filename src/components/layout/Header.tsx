@@ -191,15 +191,6 @@ export default function Header() {
                         >
                           <User className="w-4 h-4 text-gray-400" /> Personal Info
                         </Link>
-                        {user?.role === 'admin' && (
-                          <Link 
-                            href="/dashboard" 
-                            onClick={() => setUserDropdownOpen(false)}
-                            className="flex items-center gap-2 px-3 py-2 rounded-xl text-blue-600 font-semibold hover:bg-blue-50"
-                          >
-                            <ShieldCheck className="w-4 h-4 text-blue-600" /> Admin Dashboard
-                          </Link>
-                        )}
                         <div className="border-t border-gray-100 mt-1 pt-1">
                           <button 
                             onClick={() => {
