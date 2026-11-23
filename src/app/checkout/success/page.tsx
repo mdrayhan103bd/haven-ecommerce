@@ -54,10 +54,16 @@ function SuccessContent() {
         )}
 
         <div className="pt-3 flex justify-between items-center text-xs">
-          <span className="font-bold text-gray-700">Total Paid:</span>
-          <span className="text-base font-bold text-gray-900">
-            ${currentOrder ? currentOrder.total.toFixed(2) : '128.00'}
-          </span>
+          <div>
+            <span className="text-gray-400 block text-[11px]">Payment Method</span>
+            <span className="font-bold text-emerald-700">{currentOrder?.paymentMethod || 'Cash on Delivery'}</span>
+          </div>
+          <div className="text-right">
+            <span className="text-gray-400 block text-[11px]">Total Due on Delivery:</span>
+            <span className="text-base font-bold text-gray-900">
+              ${currentOrder ? currentOrder.total.toFixed(2) : '128.00'}
+            </span>
+          </div>
         </div>
       </div>
 

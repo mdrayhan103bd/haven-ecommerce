@@ -40,6 +40,10 @@ export default function PaymentsPage() {
   return (
     <AccountLayout title="Payment Methods" subtitle="Manage your saved credit/debit cards and payment accounts">
       <div className="space-y-6">
+        <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200/80 text-xs text-amber-900 flex items-center justify-between">
+          <span>ⓘ Currently, store checkout is exclusively accepting <strong>Cash on Delivery (COD)</strong>. Online card processing is temporarily offline.</span>
+        </div>
+
         <div className="flex justify-between items-center">
           <p className="text-xs text-gray-500">You have {paymentCards.length} saved payment methods.</p>
           <button 

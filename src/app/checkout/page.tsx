@@ -34,8 +34,8 @@ export default function CheckoutPage() {
     country: defaultAddr?.country || 'United States'
   });
 
-  // Payment Method
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'cod' | 'bkash'>('card');
+  // Payment Method - Cash on Delivery active, others temporarily disabled
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'card' | 'bkash'>('cod');
   const [cardDetails, setCardDetails] = useState({
     number: '•••• •••• •••• 4242',
     holder: user?.name || 'John Doe',
@@ -258,98 +258,76 @@ export default function CheckoutPage() {
 
             {/* Step 3: Payment Method */}
             <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-              <h2 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-xs">3</span>
-                Payment Options
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-xs">3</span>
+                  Payment Method
+                </h2>
+                <span className="text-[11px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  Cash on Delivery Active
+                </span>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('card')}
-                  className={`p-3.5 rounded-xl border text-left flex flex-col justify-between transition-all ${
-                    paymentMethod === 'card' ? 'border-black bg-gray-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <CreditCard className="w-5 h-5 mb-2 text-gray-700" />
-                  <div>
-                    <div className="text-xs font-bold text-gray-900">Credit / Debit Card</div>
-                    <div className="text-[10px] text-gray-500">Instant & Secure</div>
-                  </div>
-                </button>
-
+                {/* 1. Cash on Delivery - ACTIVE & SELECTED */}
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('cod')}
-                  className={`p-3.5 rounded-xl border text-left flex flex-col justify-between transition-all ${
-                    paymentMethod === 'cod' ? 'border-black bg-gray-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                  className="p-4 rounded-xl border-2 border-black bg-emerald-50/30 text-left flex flex-col justify-between transition-all relative ring-2 ring-black/5 cursor-pointer"
                 >
-                  <Truck className="w-5 h-5 mb-2 text-gray-700" />
+                  <div className="flex items-center justify-between w-full mb-3">
+                    <Truck className="w-5 h-5 text-black" />
+                    <span className="w-4 h-4 rounded-full bg-black text-white flex items-center justify-center text-[10px]">✓</span>
+                  </div>
                   <div>
-                    <div className="text-xs font-bold text-gray-900">Cash on Delivery</div>
-                    <div className="text-[10px] text-gray-500">Pay when receiving</div>
+                    <div className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                      Cash on Delivery
+                    </div>
+                    <div className="text-[10px] text-emerald-700 font-medium mt-0.5">Pay when receiving parcel</div>
                   </div>
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('bkash')}
-                  className={`p-3.5 rounded-xl border text-left flex flex-col justify-between transition-all ${
-                    paymentMethod === 'bkash' ? 'border-black bg-gray-50 shadow-sm' : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                {/* 2. Credit / Debit Card - TEMPORARILY OFF */}
+                <div
+                  className="p-4 rounded-xl border border-gray-200 bg-gray-50/70 text-left flex flex-col justify-between opacity-50 cursor-not-allowed select-none"
+                  title="Card payment is temporarily disabled"
                 >
-                  <DollarSign className="w-5 h-5 mb-2 text-pink-600" />
-                  <div>
-                    <div className="text-xs font-bold text-gray-900">Mobile Wallet</div>
-                    <div className="text-[10px] text-gray-500">bKash / Nagad</div>
+                  <div className="flex items-center justify-between w-full mb-3">
+                    <CreditCard className="w-5 h-5 text-gray-400" />
+                    <span className="text-[9px] bg-gray-200 text-gray-600 font-bold px-1.5 py-0.5 rounded uppercase">Temporarily Off</span>
                   </div>
-                </button>
+                  <div>
+                    <div className="text-xs font-semibold text-gray-500">Credit / Debit Card</div>
+                    <div className="text-[10px] text-gray-400 mt-0.5">Currently unavailable</div>
+                  </div>
+                </div>
+
+                {/* 3. Mobile Wallet - TEMPORARILY OFF */}
+                <div
+                  className="p-4 rounded-xl border border-gray-200 bg-gray-50/70 text-left flex flex-col justify-between opacity-50 cursor-not-allowed select-none"
+                  title="Mobile payment is temporarily disabled"
+                >
+                  <div className="flex items-center justify-between w-full mb-3">
+                    <DollarSign className="w-5 h-5 text-gray-400" />
+                    <span className="text-[9px] bg-gray-200 text-gray-600 font-bold px-1.5 py-0.5 rounded uppercase">Temporarily Off</span>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-gray-500">bKash / Nagad Wallet</div>
+                    <div className="text-[10px] text-gray-400 mt-0.5">Currently unavailable</div>
+                  </div>
+                </div>
               </div>
 
-              {/* Card Inputs if selected */}
-              {paymentMethod === 'card' && (
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
-                  <div>
-                    <label className="block text-[11px] font-semibold text-gray-600 mb-1">Card Number</label>
-                    <input 
-                      type="text" 
-                      defaultValue={cardDetails.number}
-                      className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs outline-none focus:border-black font-mono"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[11px] font-semibold text-gray-600 mb-1">Expiry Date</label>
-                      <input 
-                        type="text" 
-                        defaultValue={cardDetails.expiry}
-                        className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs outline-none focus:border-black"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-semibold text-gray-600 mb-1">CVV / CVC</label>
-                      <input 
-                        type="password" 
-                        defaultValue={cardDetails.cvv}
-                        className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs outline-none focus:border-black"
-                      />
-                    </div>
-                  </div>
+              {/* Informative COD Banner */}
+              <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200/80 text-xs text-emerald-900 flex items-start gap-3">
+                <Truck className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-bold mb-0.5">Cash on Delivery (ক্যাশ অন ডেলিভারি) সক্রিয় আছে</div>
+                  <p className="text-emerald-800 text-[11px] leading-relaxed">
+                    ডেলিভারি ম্যানের কাছ থেকে আপনার পার্সেলটি রিসিভ করে সরাসরি ক্যাশে মূল্য পরিশোধ করুন। অন্য সকল অনলাইন পেমেন্ট অপশন সাময়িকভাবে বন্ধ রাখা হয়েছে।
+                  </p>
                 </div>
-              )}
-
-              {paymentMethod === 'cod' && (
-                <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-800">
-                  ⓘ You can pay with cash or card upon delivery right at your doorstep.
-                </div>
-              )}
-
-              {paymentMethod === 'bkash' && (
-                <div className="p-3 bg-pink-50 rounded-xl border border-pink-200 text-xs text-pink-900">
-                  ⓘ You will receive an SMS prompt on your phone to approve the mobile payment after placing order.
-                </div>
-              )}
+              </div>
             </div>
 
             {/* Place Order CTA Button */}
