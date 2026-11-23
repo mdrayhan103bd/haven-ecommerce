@@ -20,7 +20,8 @@ export default function DashboardSettingsPage() {
   });
 
   const handleCurrencyChange = (curr: string) => {
-    let symbol = '$';
+    let symbol = '৳';
+    if (curr === 'USD') symbol = '$';
     if (curr === 'EUR') symbol = '€';
     if (curr === 'GBP') symbol = '£';
     if (curr === 'BDT') symbol = '৳';
@@ -114,14 +115,14 @@ export default function DashboardSettingsPage() {
                 onChange={e => handleCurrencyChange(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black bg-white cursor-pointer font-bold"
               >
+                <option value="BDT">BDT (৳) - Bangladeshi Taka (Default)</option>
                 <option value="USD">USD ($) - US Dollar</option>
                 <option value="EUR">EUR (€) - Euro</option>
                 <option value="GBP">GBP (£) - British Pound</option>
-                <option value="BDT">BDT (৳) - Bangladeshi Taka</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">Standard Shipping Fee ($)</label>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">Standard Shipping Fee ({formData.currencySymbol})</label>
               <input 
                 type="number" 
                 min={0}
@@ -135,7 +136,7 @@ export default function DashboardSettingsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">Free Shipping Order Minimum ($)</label>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">Free Shipping Order Minimum ({formData.currencySymbol})</label>
               <input 
                 type="number" 
                 min={0}

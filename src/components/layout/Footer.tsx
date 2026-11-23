@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
             <div>
               <div className="font-bold text-white text-sm">Free Express Shipping</div>
-              <div className="text-gray-400">On all orders over ${settings.freeShippingThreshold}</div>
+              <div className="text-gray-400">On all orders over ৳{settings.freeShippingThreshold.toLocaleString()}</div>
             </div>
           </div>
 

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { BannerSettings, HeroBanner, HeroSlide, SideBanner, HighlightsBanner, LifestyleBanner } from '@/types';
 import Link from 'next/link';
+import ImageUploadInput from '@/components/ui/ImageUploadInput';
 
 // Curated high quality presets for quick 1-click selection
 const HERO_PRESETS = [
@@ -309,28 +310,14 @@ export default function ContentPage() {
                 <Sliders className="w-4 h-4 text-gray-700" /> Slide 0{selectedSlide + 1} Settings
               </h3>
 
-              {/* Image URL input */}
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                  Slide 0{selectedSlide + 1} Image URL (Direct image link or Unsplash)
-                </label>
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    value={currentSlideData.image}
-                    onChange={e => updateSelectedSlideField('image', e.target.value)}
-                    placeholder="https://images.unsplash.com/..."
-                    className="flex-1 border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-mono"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleSaveAll()}
-                    className="bg-black text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-800"
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div>
+              {/* Image Upload / URL input */}
+              <ImageUploadInput
+                label={`Slide 0${selectedSlide + 1} Image`}
+                aspectHint="16:9 widescreen recommended"
+                value={currentSlideData.image}
+                onChange={url => updateSelectedSlideField('image', url)}
+                helperText="Upload any picture from your device or paste an external image link."
+              />
 
               {/* Quick Image Presets */}
               <div>
@@ -515,16 +502,15 @@ export default function ContentPage() {
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label className="block text-xs font-semibold text-gray-700 mb-1">Banner Image URL</label>
-                        <input 
-                          type="text" 
+                        <ImageUploadInput
+                          label="Banner Image"
+                          aspectHint="4:3 recommended"
                           value={card.image}
-                          onChange={e => {
+                          onChange={url => {
                             const updated = [...formData.sideBanners];
-                            updated[idx].image = e.target.value;
+                            updated[idx].image = url;
                             setFormData({ ...formData, sideBanners: updated });
                           }}
-                          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-black bg-white font-mono"
                         />
                       </div>
 
@@ -612,18 +598,15 @@ export default function ContentPage() {
 
             {/* Form Fields */}
             <div className="space-y-4 pt-2 border-t border-gray-100">
-              <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">Banner Background Image URL</label>
-                <input 
-                  type="text" 
-                  value={formData.highlightsBanner.image}
-                  onChange={e => setFormData({
-                    ...formData,
-                    highlightsBanner: { ...formData.highlightsBanner, image: e.target.value }
-                  })}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-2 text-xs outline-none focus:border-black font-mono"
-                />
-              </div>
+              <ImageUploadInput
+                label="Banner Background Image"
+                aspectHint="16:9 widescreen recommended"
+                value={formData.highlightsBanner.image}
+                onChange={url => setFormData({
+                  ...formData,
+                  highlightsBanner: { ...formData.highlightsBanner, image: url }
+                })}
+              />
 
               {/* Presets */}
               <div>
@@ -770,16 +753,15 @@ export default function ContentPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-gray-700 mb-1">Image URL</label>
-                    <input 
-                      type="text" 
+                    <ImageUploadInput
+                      label="Card Photo"
+                      aspectHint="Square or portrait"
                       value={item.img}
-                      onChange={e => {
+                      onChange={url => {
                         const updated = [...formData.lifestyles];
-                        updated[idx].img = e.target.value;
+                        updated[idx].img = url;
                         setFormData({ ...formData, lifestyles: updated });
                       }}
-                      className="w-full border border-gray-200 rounded-xl px-3 py-1.5 text-xs outline-none focus:border-black bg-white font-mono text-[11px]"
                     />
                   </div>
 

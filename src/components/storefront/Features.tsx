@@ -2,7 +2,7 @@ import React from 'react';
 import { Truck, RotateCcw, ShieldCheck, Headset, Leaf } from 'lucide-react';
 
 const features = [
-  { title: 'Free Shipping', desc: 'On orders over $50', icon: Truck },
+  { title: 'Free Shipping', desc: 'On orders over ৳1,000', icon: Truck },
   { title: 'Easy Returns', desc: 'Hassle-free within 30 days', icon: RotateCcw },
   { title: 'Secure Payments', desc: '100% protected', icon: ShieldCheck },
   { title: '24/7 Support', desc: 'We\'re here to help', icon: Headset },

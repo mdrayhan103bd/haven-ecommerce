@@ -18,7 +18,7 @@ export default function HelpPage() {
   const [submitted, setSubmitted] = useState(false);
 
   const faqs = [
-    { q: 'How long does shipping take?', a: `Standard domestic delivery takes 3 to 5 business days. Express next-day shipping is also available at checkout. Orders over $${settings.freeShippingThreshold} ship free!` },
+    { q: 'How long does shipping take?', a: `Standard domestic delivery takes 2 to 4 business days. Express shipping is also available. Orders over ৳${settings.freeShippingThreshold.toLocaleString()} ship free!` },
     { q: 'What is your return and exchange policy?', a: 'We offer a 30-day no-questions-asked return and exchange policy on all unworn items in original packaging. We provide pre-paid return labels.' },
     { q: 'Do you deliver internationally?', a: 'Yes! We ship worldwide across Europe, Asia, Australia, and the Americas with tracking provided on every shipment.' },
     { q: 'How can I track my order status?', a: 'After ordering, you will receive a confirmation email with your order ID. You can also track shipment status anytime under My Account > My Orders.' },

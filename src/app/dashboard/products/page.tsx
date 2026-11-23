@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Product } from '@/types';
 import { useStore } from '@/context/StoreContext';
 import { Plus, Search, Edit2, Trash2, X, Image as ImageIcon } from 'lucide-react';
+import ImageUploadInput from '@/components/ui/ImageUploadInput';
 
 export default function DashboardProductsPage() {
   const { products, addProduct, updateProduct, deleteProduct } = useStore();
@@ -153,7 +154,7 @@ export default function DashboardProductsPage() {
                     </div>
                   </td>
                   <td className="px-5 py-3.5 text-gray-600 font-medium">{p.category}</td>
-                  <td className="px-5 py-3.5 font-bold text-gray-900">${p.price}</td>
+                  <td className="px-5 py-3.5 font-bold text-gray-900">৳{p.price}</td>
                   <td className="px-5 py-3.5">
                     {p.stock > 0 ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -254,7 +255,7 @@ export default function DashboardProductsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Sale Price ($) *</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Sale Price (৳) *</label>
                   <input 
                     type="number" 
                     required
@@ -265,7 +266,7 @@ export default function DashboardProductsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Original Price ($)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Original Price (৳)</label>
                   <input 
                     type="number" 
                     value={newProduct.oldPrice}
@@ -275,30 +276,32 @@ export default function DashboardProductsPage() {
                 </div>
               </div>
 
-              {/* Quick Pick Preset Images */}
+              {/* Image Upload Component */}
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">Select Preset Image or enter URL</label>
-                <div className="flex gap-2 overflow-x-auto pb-2 mb-2">
-                  {presetImages.map(img => (
-                    <button
-                      key={img.label}
-                      type="button"
-                      onClick={() => setNewProduct({ ...newProduct, image: img.url })}
-                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border whitespace-nowrap transition-colors ${
-                        newProduct.image === img.url ? 'bg-black text-white border-black' : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                      }`}
-                    >
-                      {img.label}
-                    </button>
-                  ))}
-                </div>
-                <input 
-                  type="url" 
+                <ImageUploadInput
+                  label="Product Photo"
+                  aspectHint="Square recommended"
                   value={newProduct.image}
-                  onChange={e => setNewProduct({ ...newProduct, image: e.target.value })}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-black"
-                  placeholder="https://images.unsplash.com/..."
+                  onChange={url => setNewProduct({ ...newProduct, image: url })}
+                  helperText="Upload a product photo from your device or paste an image URL."
                 />
+                <div className="mt-2.5">
+                  <span className="block text-[11px] font-semibold text-gray-500 mb-1.5">Or choose a sample preset:</span>
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {presetImages.map(img => (
+                      <button
+                        key={img.label}
+                        type="button"
+                        onClick={() => setNewProduct({ ...newProduct, image: img.url })}
+                        className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border whitespace-nowrap transition-colors ${
+                          newProduct.image === img.url ? 'bg-black text-white border-black' : 'bg-gray-50 border-gray-200 hover:bg-gray-100 text-gray-700'
+                        }`}
+                      >
+                        {img.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div>
@@ -349,7 +352,7 @@ export default function DashboardProductsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Price ($)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Price (৳)</label>
                   <input 
                     type="number" 
                     value={editingProduct.price}
@@ -369,6 +372,14 @@ export default function DashboardProductsPage() {
                   />
                 </div>
               </div>
+
+              <ImageUploadInput
+                label="Product Photo"
+                aspectHint="Square recommended"
+                value={editingProduct.image}
+                onChange={url => setEditingProduct({ ...editingProduct, image: url })}
+                helperText="Upload a new photo from your device or paste an image URL."
+              />
 
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">Description</label>

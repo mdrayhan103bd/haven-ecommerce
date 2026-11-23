@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import AccountLayout from '@/components/account/AccountLayout';
 import { useStore } from '@/context/StoreContext';
 import { Save, Lock, User, Mail, Phone, FileText } from 'lucide-react';
+import ImageUploadInput from '@/components/ui/ImageUploadInput';
 
 export default function ProfilePage() {
   const { user, updateUserProfile, showToast } = useStore();
@@ -81,13 +82,12 @@ export default function ProfilePage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">Avatar Image URL</label>
-              <input 
-                type="url" 
+              <ImageUploadInput
+                label="Profile Avatar Photo"
+                aspectHint="Square recommended"
                 value={formData.avatar}
-                onChange={e => setFormData({ ...formData, avatar: e.target.value })}
-                placeholder="https://..."
-                className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black"
+                onChange={url => setFormData({ ...formData, avatar: url })}
+                helperText="Upload a profile picture from your device or paste an image URL."
               />
             </div>
           </div>

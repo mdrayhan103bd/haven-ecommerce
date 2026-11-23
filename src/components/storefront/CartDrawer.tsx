@@ -48,7 +48,7 @@ export default function CartDrawer() {
                           <X className="w-4 h-4" />
                         </button>
                       </div>
-                      <p className="text-red-500 font-bold text-sm">${item.product.price}</p>
+                      <p className="text-red-500 font-bold text-sm">৳{item.product.price}</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="flex items-center border border-gray-200 rounded-full">
@@ -72,7 +72,7 @@ export default function CartDrawer() {
           <div className="p-6 border-t border-gray-100 bg-gray-50">
             <div className="flex justify-between items-center mb-4 text-lg font-bold">
               <span>Subtotal</span>
-              <span>${cartTotal.toFixed(2)}</span>
+              <span>৳{cartTotal.toLocaleString()}</span>
             </div>
             <p className="text-xs text-gray-500 mb-6 text-center">Shipping and taxes calculated at checkout.</p>
             <Link href="/checkout" onClick={toggleCart} className="w-full bg-[#2C2927] text-white py-4 rounded-full flex items-center justify-center font-bold hover:bg-black transition-colors">

@@ -336,7 +336,7 @@ export default function CheckoutPage() {
               type="submit" 
               className="w-full bg-black text-white py-4 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors disabled:opacity-50 shadow-lg"
             >
-              {isSubmitting ? 'Confirming Order...' : `Pay $${finalTotal.toFixed(2)} & Complete Order`} 
+              {isSubmitting ? 'Confirming Order...' : `Confirm Order (৳${finalTotal.toLocaleString()} - Cash on Delivery)`} 
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -363,10 +363,10 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-xs font-bold text-gray-900 truncate">{item.product.name}</h4>
-                    <p className="text-[11px] text-gray-500">${item.product.price} each</p>
+                    <p className="text-[11px] text-gray-500">৳{item.product.price} each</p>
                   </div>
                   <div className="font-bold text-xs text-gray-900 shrink-0">
-                    ${(item.product.price * item.quantity).toFixed(2)}
+                    ৳{(item.product.price * item.quantity).toLocaleString()}
                   </div>
                 </div>
               ))}
@@ -378,7 +378,7 @@ export default function CheckoutPage() {
                 <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2 text-green-800 font-bold">
                     <Tag className="w-4 h-4" />
-                    <span>Coupon: {appliedCoupon.code} (-${appliedCoupon.amount.toFixed(2)})</span>
+                    <span>Coupon: {appliedCoupon.code} (-৳{appliedCoupon.amount.toLocaleString()})</span>
                   </div>
                   <button 
                     onClick={handleRemoveCoupon} 
@@ -411,30 +411,30 @@ export default function CheckoutPage() {
             <div className="border-t border-gray-200 pt-4 space-y-2.5 text-xs text-gray-600 mb-6">
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
-                <span className="font-semibold text-gray-900">${cartTotal.toFixed(2)}</span>
+                <span className="font-semibold text-gray-900">৳{cartTotal.toLocaleString()}</span>
               </div>
               {appliedCoupon && (
                 <div className="flex justify-between text-green-600 font-semibold">
                   <span>Discount Applied</span>
-                  <span>-${appliedCoupon.amount.toFixed(2)}</span>
+                  <span>-৳{appliedCoupon.amount.toLocaleString()}</span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span>Shipping</span>
                 <span className={`font-semibold ${shippingFee === 0 ? 'text-green-600' : 'text-gray-900'}`}>
-                  {shippingFee === 0 ? 'FREE' : `$${shippingFee.toFixed(2)}`}
+                  {shippingFee === 0 ? 'FREE' : `৳${shippingFee}`}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>Estimated Taxes</span>
-                <span className="font-semibold text-gray-900">${taxAmount.toFixed(2)}</span>
+                <span className="font-semibold text-gray-900">৳{taxAmount.toFixed(2)}</span>
               </div>
             </div>
 
             {/* Final Total */}
             <div className="border-t border-gray-200 pt-4 flex justify-between items-center">
               <span className="text-base font-bold text-gray-900">Total</span>
-              <span className="text-2xl font-bold text-gray-900">${finalTotal.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-gray-900">৳{finalTotal.toLocaleString()}</span>
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-gray-400">

@@ -594,13 +594,13 @@ export const INITIAL_SETTINGS: StoreSettings = {
   storeName: 'Cavrozone',
   tagline: 'Good Things. Brighter Days.',
   contactEmail: 'support@cavrozone.com',
-  contactPhone: '+1 (800) 428-3601',
-  currency: 'USD',
-  currencySymbol: '$',
-  shippingFee: 10,
-  freeShippingThreshold: 50,
+  contactPhone: '+880 1700-000000',
+  currency: 'BDT',
+  currencySymbol: '৳',
+  shippingFee: 60,
+  freeShippingThreshold: 1000,
   taxRate: 0,
-  announcementText: '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over $50!',
+  announcementText: '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over ৳1,000!',
   announcementEnabled: true
 };
 
@@ -809,7 +809,24 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedMessages) setMessages(JSON.parse(savedMessages));
 
       const savedSettings = localStorage.getItem('haven_settings');
-      if (savedSettings) setSettings(JSON.parse(savedSettings));
+      if (savedSettings) {
+        try {
+          const parsedS = JSON.parse(savedSettings);
+          if (parsedS.currency === 'USD' || parsedS.currencySymbol === '$') {
+            parsedS.currency = 'BDT';
+            parsedS.currencySymbol = '৳';
+            parsedS.shippingFee = 60;
+            parsedS.freeShippingThreshold = 1000;
+            parsedS.announcementText = '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over ৳1,000!';
+            localStorage.setItem('haven_settings', JSON.stringify(parsedS));
+          }
+          setSettings({ ...INITIAL_SETTINGS, ...parsedS });
+        } catch {
+          setSettings(INITIAL_SETTINGS);
+        }
+      } else {
+        setSettings(INITIAL_SETTINGS);
+      }
 
       const savedBanners = localStorage.getItem('haven_banners');
       if (savedBanners) {
@@ -1064,7 +1081,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return {
         valid: false,
         discountAmount: 0,
-        message: `Requires minimum purchase of $${match.minPurchase}.`
+        message: `Requires minimum purchase of ৳${match.minPurchase}.`
       };
     }
 
@@ -1081,7 +1098,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return {
       valid: true,
       discountAmount,
-      message: `Coupon ${clean} applied: $${discountAmount.toFixed(2)} off!`,
+      message: `Coupon ${clean} applied: ৳${discountAmount.toFixed(2)} off!`,
       discount: match
     };
   };

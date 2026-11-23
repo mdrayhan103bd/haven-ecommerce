@@ -80,7 +80,7 @@ export default function DashboardPage() {
               <DollarSign className="w-5 h-5" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-1">${totalRevenue.toFixed(2)}</div>
+          <div className="text-2xl font-bold text-gray-900 mb-1">৳{totalRevenue.toLocaleString()}</div>
           <div className="flex items-center gap-1 text-xs text-emerald-600 font-semibold">
             <TrendingUp className="w-3.5 h-3.5" /> +14.2% <span className="text-gray-400 font-normal">from last week</span>
           </div>
@@ -201,7 +201,7 @@ export default function DashboardPage() {
                         )}
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 font-bold text-gray-900">${order.total.toFixed(2)}</td>
+                    <td className="px-4 py-3.5 font-bold text-gray-900">৳{order.total.toLocaleString()}</td>
                     <td className="px-4 py-3.5">
                       <select
                         value={order.status}
@@ -265,7 +265,7 @@ export default function DashboardPage() {
                     <img src={item.product.image} className="w-8 h-8 rounded-lg object-contain bg-gray-50" />
                     <span>{item.product.name} (x{item.quantity})</span>
                   </div>
-                  <span className="font-bold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-bold">৳{(item.product.price * item.quantity).toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -273,7 +273,7 @@ export default function DashboardPage() {
             <div className="text-xs space-y-1.5 border-t border-gray-100 pt-3 mb-6">
               <div className="flex justify-between font-bold text-sm text-gray-900">
                 <span>Total Paid:</span>
-                <span>${selectedOrder.total.toFixed(2)}</span>
+                <span>৳{selectedOrder.total.toLocaleString()}</span>
               </div>
             </div>
 

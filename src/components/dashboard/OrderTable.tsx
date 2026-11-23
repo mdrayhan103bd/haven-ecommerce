@@ -110,7 +110,7 @@ export default function OrderTable() {
                     </div>
                   </td>
                   <td className="px-5 py-4 font-bold text-gray-900">
-                    ${order.total.toFixed(2)}
+                    ৳{order.total.toLocaleString()}
                   </td>
                   <td className="px-5 py-4">
                     <select 
@@ -197,10 +197,10 @@ export default function OrderTable() {
                     <img src={item.product.image} className="w-10 h-10 rounded-lg object-contain bg-gray-50 border border-gray-100" />
                     <div>
                       <div className="font-semibold text-gray-900">{item.product.name}</div>
-                      <div className="text-gray-400">${item.product.price} × {item.quantity}</div>
+                      <div className="text-gray-400">৳{item.product.price} × {item.quantity}</div>
                     </div>
                   </div>
-                  <span className="font-bold text-gray-900">${(item.product.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-bold text-gray-900">৳{(item.product.price * item.quantity).toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -208,21 +208,21 @@ export default function OrderTable() {
             <div className="space-y-1.5 text-xs border-t border-gray-100 pt-3 mb-6 text-gray-600">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${(selectedOrder.subtotal || selectedOrder.total).toFixed(2)}</span>
+                <span>৳{(selectedOrder.subtotal || selectedOrder.total).toLocaleString()}</span>
               </div>
               {selectedOrder.discount > 0 && (
                 <div className="flex justify-between text-green-600 font-semibold">
                   <span>Discount</span>
-                  <span>-${selectedOrder.discount.toFixed(2)}</span>
+                  <span>-৳{selectedOrder.discount.toLocaleString()}</span>
                 </div>
               )}
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>{selectedOrder.shippingFee === 0 ? 'FREE' : `$${selectedOrder.shippingFee?.toFixed(2)}`}</span>
+                <span>{selectedOrder.shippingFee === 0 ? 'FREE' : `৳${selectedOrder.shippingFee}`}</span>
               </div>
               <div className="flex justify-between font-bold text-sm text-gray-900 pt-2 border-t border-gray-100">
                 <span>Total Paid</span>
-                <span>${selectedOrder.total.toFixed(2)}</span>
+                <span>৳{selectedOrder.total.toLocaleString()}</span>
               </div>
             </div>
 

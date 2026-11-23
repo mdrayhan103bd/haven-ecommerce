@@ -110,7 +110,7 @@ export default function MarketingPage() {
               Automated
             </span>
             <h4 className="font-bold text-sm text-gray-900 mt-2 mb-1">Free Delivery Threshold</h4>
-            <p className="text-xs text-gray-500">Free shipping automatically applied on orders over ${settings.freeShippingThreshold}.</p>
+            <p className="text-xs text-gray-500">Free shipping automatically applied on orders over ৳{settings.freeShippingThreshold}.</p>
           </div>
 
           <div className="border border-gray-200 rounded-xl p-4 bg-gray-50/50">
@@ -118,7 +118,7 @@ export default function MarketingPage() {
               Seasonal
             </span>
             <h4 className="font-bold text-sm text-gray-900 mt-2 mb-1">HAVEN20 Flash Sale</h4>
-            <p className="text-xs text-gray-500">20% off high ticket items over $100 with code HAVEN20.</p>
+            <p className="text-xs text-gray-500">20% off high ticket items over ৳1,000 with code HAVEN20.</p>
           </div>
         </div>
       </div>

@@ -74,8 +74,8 @@ export default function Highlights() {
               </div>
 
               <div className="flex items-center gap-2 mb-4">
-                <span className="font-bold text-red-600 text-lg">${p.price}</span>
-                {p.oldPrice && <span className="text-xs text-gray-400 line-through font-medium">${p.oldPrice}</span>}
+                <span className="font-bold text-red-600 text-lg">৳{p.price}</span>
+                {p.oldPrice && <span className="text-xs text-gray-400 line-through font-medium">৳{p.oldPrice}</span>}
               </div>
 
               <button 

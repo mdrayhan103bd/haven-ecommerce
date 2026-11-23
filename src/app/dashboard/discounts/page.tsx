@@ -88,10 +88,10 @@ export default function DiscountsPage() {
               </div>
 
               <div className="text-xl font-bold text-gray-900 mb-1">
-                {disc.type === 'percentage' ? `${disc.value}% OFF` : `$${disc.value} OFF`}
+                {disc.type === 'percentage' ? `${disc.value}% OFF` : `৳${disc.value} OFF`}
               </div>
               <p className="text-xs text-gray-500 mb-4">
-                Applies to cart orders over ${disc.minPurchase}.
+                Applies to cart orders over ৳{disc.minPurchase}.
               </p>
             </div>
 
@@ -142,7 +142,7 @@ export default function DiscountsPage() {
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs outline-none focus:border-black bg-white"
                   >
                     <option value="percentage">Percentage (%)</option>
-                    <option value="fixed">Fixed Amount ($)</option>
+                    <option value="fixed">Fixed Amount (৳)</option>
                   </select>
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default function DiscountsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Minimum Order ($)</label>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">Minimum Order (৳)</label>
                   <input 
                     type="number" 
                     min={0}

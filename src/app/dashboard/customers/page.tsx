@@ -123,7 +123,7 @@ export default function DashboardCustomersPage() {
                     </div>
                   </td>
                   <td className="px-5 py-3.5 font-bold text-gray-900">{c.orders}</td>
-                  <td className="px-5 py-3.5 font-bold text-gray-900">${c.spent.toFixed(2)}</td>
+                  <td className="px-5 py-3.5 font-bold text-gray-900">৳{c.spent.toLocaleString()}</td>
                   <td className="px-5 py-3.5">
                     <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${getStatusColor(c.status)}`}>
                       {c.status}
@@ -194,7 +194,7 @@ export default function DashboardCustomersPage() {
               </div>
               <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 text-center">
                 <span className="text-[10px] uppercase text-gray-400 font-bold block">Lifetime Value</span>
-                <span className="text-xl font-bold text-emerald-600">${selectedCustomer.spent.toFixed(2)}</span>
+                <span className="text-xl font-bold text-emerald-600">৳{selectedCustomer.spent.toLocaleString()}</span>
               </div>
             </div>
 

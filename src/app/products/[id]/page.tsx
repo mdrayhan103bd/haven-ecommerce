@@ -131,13 +131,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
           {/* Pricing */}
           <div className="flex items-baseline gap-3 mb-6">
-            <span className="text-3xl font-bold text-red-600">${product.price}</span>
+            <span className="text-3xl font-bold text-red-600">৳{product.price}</span>
             {product.oldPrice && (
-              <span className="text-lg text-gray-400 line-through font-medium">${product.oldPrice}</span>
+              <span className="text-lg text-gray-400 line-through font-medium">৳{product.oldPrice}</span>
             )}
             {product.oldPrice && (
               <span className="text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-md ml-2">
-                Save ${(product.oldPrice - product.price).toFixed(2)}
+                Save ৳{(product.oldPrice - product.price).toFixed(2)}
               </span>
             )}
           </div>
@@ -163,7 +163,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 +
               </button>
             </div>
-            <span className="text-xs text-gray-500">Subtotal: <strong className="text-gray-900">${(product.price * quantity).toFixed(2)}</strong></span>
+            <span className="text-xs text-gray-500">Subtotal: <strong className="text-gray-900">৳{(product.price * quantity).toLocaleString()}</strong></span>
           </div>
 
           {/* Add to Cart & Wishlist Actions */}
@@ -206,7 +206,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           {/* Value Props */}
           <div className="border-t border-gray-100 pt-6 space-y-3 text-xs text-gray-600">
             <div className="flex items-center gap-3">
-              <Truck className="w-4 h-4 text-emerald-600 shrink-0" /> Free express delivery on orders over $50
+              <Truck className="w-4 h-4 text-emerald-600 shrink-0" /> Free express delivery on orders over ৳1,000
             </div>
             <div className="flex items-center gap-3">
               <RotateCcw className="w-4 h-4 text-blue-600 shrink-0" /> 30-day hassle-free return and exchange policy
@@ -361,7 +361,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   <img src={p.image} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" />
                 </div>
                 <div className="font-bold text-sm text-gray-900 truncate mb-1">{p.name}</div>
-                <div className="text-xs font-bold text-red-600">${p.price}</div>
+                <div className="text-xs font-bold text-red-600">৳{p.price}</div>
               </Link>
             ))}
           </div>

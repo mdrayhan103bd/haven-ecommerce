@@ -75,7 +75,7 @@ export default function AccountOrdersPage() {
                   </div>
                   <div>
                     <span className="text-gray-400 block text-[10px] uppercase font-bold">Total</span>
-                    <span className="font-bold text-gray-900 text-sm">${order.total.toFixed(2)}</span>
+                    <span className="font-bold text-gray-900 text-sm">৳{order.total.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -104,11 +104,11 @@ export default function AccountOrdersPage() {
                         />
                         <div>
                           <h4 className="font-bold text-gray-900 text-xs line-clamp-1">{item.product.name}</h4>
-                          <span className="text-[11px] text-gray-400">Qty: {item.quantity} • ${item.product.price} each</span>
+                          <span className="text-[11px] text-gray-400">Qty: {item.quantity} • ৳{item.product.price} each</span>
                         </div>
                       </div>
                       <div className="font-bold text-xs text-gray-900 shrink-0">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        ৳{(item.product.price * item.quantity).toLocaleString()}
                       </div>
                     </div>
                   ))}
@@ -173,7 +173,7 @@ export default function AccountOrdersPage() {
                       <span className="text-gray-400 ml-1">x{item.quantity}</span>
                     </div>
                   </div>
-                  <span className="font-bold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                  <span className="font-bold">৳{(item.product.price * item.quantity).toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -181,21 +181,21 @@ export default function AccountOrdersPage() {
             <div className="space-y-2 text-xs border-t border-gray-100 pt-3 mb-6">
               <div className="flex justify-between text-gray-500">
                 <span>Subtotal</span>
-                <span>${selectedOrder.subtotal?.toFixed(2) || selectedOrder.total.toFixed(2)}</span>
+                <span>৳{(selectedOrder.subtotal || selectedOrder.total).toLocaleString()}</span>
               </div>
               {selectedOrder.discount > 0 && (
                 <div className="flex justify-between text-green-600 font-medium">
                   <span>Discount</span>
-                  <span>-${selectedOrder.discount.toFixed(2)}</span>
+                  <span>-৳{selectedOrder.discount.toLocaleString()}</span>
                 </div>
               )}
               <div className="flex justify-between text-gray-500">
                 <span>Shipping</span>
-                <span>{selectedOrder.shippingFee === 0 ? 'FREE' : `$${selectedOrder.shippingFee?.toFixed(2)}`}</span>
+                <span>{selectedOrder.shippingFee === 0 ? 'FREE' : `৳${selectedOrder.shippingFee}`}</span>
               </div>
               <div className="flex justify-between font-bold text-sm text-gray-900 pt-1 border-t border-gray-100">
                 <span>Total Amount</span>
-                <span>${selectedOrder.total.toFixed(2)}</span>
+                <span>৳{selectedOrder.total.toLocaleString()}</span>
               </div>
             </div>
 

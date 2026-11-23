@@ -61,7 +61,7 @@ function SuccessContent() {
           <div className="text-right">
             <span className="text-gray-400 block text-[11px]">Total Due on Delivery:</span>
             <span className="text-base font-bold text-gray-900">
-              ${currentOrder ? currentOrder.total.toFixed(2) : '128.00'}
+              ৳{currentOrder ? currentOrder.total.toLocaleString() : '1,280'}
             </span>
           </div>
         </div>

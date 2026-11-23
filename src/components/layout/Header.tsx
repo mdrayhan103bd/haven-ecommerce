@@ -100,7 +100,7 @@ export default function Header() {
                       <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded-lg bg-gray-100" />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-bold text-gray-900 truncate">{p.name}</div>
-                        <div className="text-xs text-gray-500">{p.category} • ${p.price}</div>
+                        <div className="text-xs text-gray-500">{p.category} • ৳{p.price}</div>
                       </div>
                     </Link>
                   ))}
