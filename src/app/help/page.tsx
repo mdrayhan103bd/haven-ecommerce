@@ -18,11 +18,11 @@ export default function HelpPage() {
   const [submitted, setSubmitted] = useState(false);
 
   const faqs = [
-    { q: 'How long does shipping take?', a: `Standard domestic delivery takes 2 to 4 business days. Express shipping is also available. Orders over ৳${settings.freeShippingThreshold.toLocaleString()} ship free!` },
-    { q: 'What is your return and exchange policy?', a: 'We offer a 30-day no-questions-asked return and exchange policy on all unworn items in original packaging. We provide pre-paid return labels.' },
-    { q: 'Do you deliver internationally?', a: 'Yes! We ship worldwide across Europe, Asia, Australia, and the Americas with tracking provided on every shipment.' },
-    { q: 'How can I track my order status?', a: 'After ordering, you will receive a confirmation email with your order ID. You can also track shipment status anytime under My Account > My Orders.' },
-    { q: 'Can I apply promotional coupon codes?', a: 'Yes, you can enter any active discount code (such as WELCOME10 or HAVEN20) in the promo code box during checkout.' }
+    { q: 'How long does shipping take in Bangladesh?', a: `Delivery in Dhaka takes 24 to 48 hours. Outside Dhaka, delivery takes 2 to 4 business days. Orders over ৳${settings.freeShippingThreshold.toLocaleString()} qualify for 100% Free Shipping nationwide!` },
+    { q: 'What is your return and exchange policy?', a: 'We offer a 7-day hassle-free return and exchange guarantee. If there is any size or defect issue, contact our support team and we will arrange a replacement or refund.' },
+    { q: 'Can I pay via Cash on Delivery (COD)?', a: 'Yes! Cash on Delivery is supported across all 64 districts in Bangladesh. You can inspect your package when the courier arrives before paying.' },
+    { q: 'How can I track my order status?', a: 'You can track your order status in real-time anytime by clicking "Track Order" in the menu and entering your Order ID (e.g. HV-8919) or phone number.' },
+    { q: 'Can I apply promotional coupon codes?', a: 'Yes, you can enter any active discount code (such as WELCOME10 or HAVEN20) in the promo code box during checkout or in the cart drawer.' }
   ];
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -58,7 +58,7 @@ export default function HelpPage() {
         <div className="bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm">
           <Phone className="w-6 h-6 text-gray-700 mx-auto mb-3" />
           <h3 className="font-bold text-sm mb-1">Phone Line</h3>
-          <p className="text-xs text-gray-400 mb-3">Mon-Fri from 9am to 6pm EST</p>
+          <p className="text-xs text-gray-400 mb-3">Sat-Thu from 9am to 10pm (BST)</p>
           <a href={`tel:${settings.contactPhone}`} className="text-xs font-bold text-black hover:underline">
             {settings.contactPhone}
           </a>

@@ -594,15 +594,15 @@ export const INITIAL_MESSAGES: SupportMessage[] = [
 // Initial Store Settings
 export const INITIAL_SETTINGS: StoreSettings = {
   storeName: 'Cavrozone',
-  tagline: 'Good Things. Brighter Days.',
-  contactEmail: 'support@cavrozone.com',
-  contactPhone: '+880 1700-000000',
+  tagline: 'Premium Lifestyle & Everyday Essentials',
+  contactEmail: 'cavrozone@gmail.com',
+  contactPhone: '+880 1711-234567',
   currency: 'BDT',
   currencySymbol: '৳',
   shippingFee: 60,
   freeShippingThreshold: 1000,
   taxRate: 0,
-  announcementText: '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over ৳1,000!',
+  announcementText: '✨ Welcome to Cavrozone: Cash on Delivery available nationwide | Free Shipping over ৳1,000!',
   announcementEnabled: true
 };
 
@@ -846,12 +846,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedSettings) {
         try {
           const parsedS = JSON.parse(savedSettings);
-          if (parsedS.currency === 'USD' || parsedS.currencySymbol === '$') {
+          if (
+            parsedS.currency === 'USD' || 
+            parsedS.currencySymbol === '$' || 
+            parsedS.contactEmail?.includes('haven.com') || 
+            parsedS.contactEmail?.includes('support@cavrozone.com') ||
+            parsedS.contactPhone?.includes('+880 1700-000000')
+          ) {
             parsedS.currency = 'BDT';
             parsedS.currencySymbol = '৳';
             parsedS.shippingFee = 60;
             parsedS.freeShippingThreshold = 1000;
-            parsedS.announcementText = '✨ Welcome to Cavrozone: Enjoy 20% off with coupon HAVEN20 | Free Shipping over ৳1,000!';
+            parsedS.contactEmail = 'cavrozone@gmail.com';
+            parsedS.contactPhone = '+880 1711-234567';
+            parsedS.storeName = 'Cavrozone';
+            parsedS.announcementText = '✨ Welcome to Cavrozone: Cash on Delivery available nationwide | Free Shipping over ৳1,000!';
             localStorage.setItem('haven_settings', JSON.stringify(parsedS));
           }
           setSettings({ ...INITIAL_SETTINGS, ...parsedS });

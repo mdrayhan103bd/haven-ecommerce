@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                     setEmail(e.target.value);
                     if (error) setError('');
                   }}
-                  placeholder="admin@example.com"
+                  placeholder="cavrozone@gmail.com"
                   className="w-full pl-10 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-xs outline-none focus:border-black focus:bg-white transition-all font-medium text-gray-900"
                 />
               </div>

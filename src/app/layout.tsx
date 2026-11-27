@@ -5,11 +5,11 @@ import StoreLayoutWrapper from "@/components/layout/StoreLayoutWrapper";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cavrozone.com"),
-  title: "Cavrozone | Good Things. Brighter Days.",
-  description: "Discover curated lifestyle essentials, modern electronics, fashion, and home goods at Cavrozone.",
+  title: "Cavrozone | Premium Lifestyle & Online Shopping in Bangladesh",
+  description: "Shop premium lifestyle products, trending footwear, fashion, audio, electronics, and home decor online in Bangladesh with 100% Cash on Delivery at Cavrozone.",
   openGraph: {
-    title: "Cavrozone | Modern E-Commerce Store",
-    description: "Shop quality essentials with fast shipping and seamless checkout at Cavrozone.",
+    title: "Cavrozone | Premium Lifestyle Store Bangladesh",
+    description: "Shop quality lifestyle essentials with express Cash on Delivery shipping across Bangladesh at Cavrozone.",
     url: "https://www.cavrozone.com",
     siteName: "Cavrozone",
     type: "website",
