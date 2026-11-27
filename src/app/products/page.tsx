@@ -223,9 +223,9 @@ function ProductsContent() {
         )}
       </div>
 
-      {/* Products Grid */}
+      {/* Products Grid - Single product view on mobile */}
       {filteredProducts.length > 0 ? (
-        <div className={`grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3.5 sm:gap-6`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-4 sm:gap-6`}>
           {filteredProducts.map(p => (
             <ProductCard key={p.id} product={p} />
           ))}

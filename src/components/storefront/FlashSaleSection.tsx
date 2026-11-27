@@ -79,8 +79,8 @@ export default function FlashSaleSection() {
           </div>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
+        {/* Product Cards Grid - Single product view on mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {flashProducts.map((p, idx) => (
             <div key={p.id} className="flex flex-col">
               <ProductCard product={p} className="h-full" />

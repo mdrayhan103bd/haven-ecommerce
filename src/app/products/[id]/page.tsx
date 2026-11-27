@@ -377,7 +377,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Recommended</span>
             <h2 className="text-2xl font-bold font-serif text-gray-900 mt-1">You May Also Like</h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {relatedProducts.map(p => (
               <ProductCard key={p.id} product={p} />
             ))}

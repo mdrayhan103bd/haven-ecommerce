@@ -49,11 +49,11 @@ export default function ProductCard({ product, className = '', showCategory = tr
   return (
     <>
       <div 
-        className={`group relative flex flex-col bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-gray-200/80 font-sans ${className}`}
+        className={`group relative flex flex-col bg-white rounded-3xl border border-gray-100 p-4 sm:p-4.5 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-gray-200/80 font-sans ${className}`}
       >
         {/* Product Image Canvas */}
-        <div className="relative bg-[#F7F7F8] rounded-xl aspect-[4/3] sm:aspect-square mb-3.5 overflow-hidden flex items-center justify-center">
-          <Link href={`/products/${product.id}`} className="w-full h-full flex items-center justify-center p-3">
+        <div className="relative bg-[#F7F7F8] rounded-2xl aspect-[4/3] sm:aspect-square max-h-[340px] mb-4 overflow-hidden flex items-center justify-center">
+          <Link href={`/products/${product.id}`} className="w-full h-full flex items-center justify-center p-4">
             <img
               src={product.image}
               alt={product.name}
@@ -63,26 +63,26 @@ export default function ProductCard({ product, className = '', showCategory = tr
           </Link>
 
           {/* Badges Overlay */}
-          <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10 pointer-events-none">
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10 pointer-events-none max-w-[65%]">
             {discountPercent > 0 && (
-              <span className="bg-red-500 text-white text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
+              <span className="bg-red-500 text-white text-[10px] sm:text-[11px] font-extrabold px-2.5 py-0.5 rounded-full shadow-sm">
                 -{discountPercent}%
               </span>
             )}
             {product.tag && (
-              <span className={`${product.tagColor || 'bg-black'} text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm`}>
+              <span className={`${product.tagColor || 'bg-black'} text-white text-[9px] sm:text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm`}>
                 {product.tag}
               </span>
             )}
           </div>
 
           {/* Quick Action Floating Buttons (Wishlist & Quick View) */}
-          <div className="absolute top-2.5 right-2.5 flex flex-col gap-1.5 z-10">
+          <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
             {/* Wishlist Button */}
             <button
               onClick={handleToggleWishlist}
               aria-label={inWish ? 'Remove from wishlist' : 'Add to wishlist'}
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm ${
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm ${
                 inWish
                   ? 'bg-red-50 text-red-500 scale-105'
                   : 'bg-white/90 text-gray-500 hover:text-black hover:bg-white hover:scale-105'
@@ -96,7 +96,7 @@ export default function ProductCard({ product, className = '', showCategory = tr
               onClick={handleOpenQuickView}
               aria-label="Quick preview product"
               title="Quick View"
-              className="w-8 h-8 rounded-full bg-white/90 text-gray-500 hover:text-black hover:bg-white flex items-center justify-center shadow-sm transition-all hover:scale-105 opacity-80 sm:opacity-0 sm:group-hover:opacity-100"
+              className="w-9 h-9 rounded-full bg-white/90 text-gray-500 hover:text-black hover:bg-white flex items-center justify-center shadow-sm transition-all hover:scale-105 opacity-90 sm:opacity-0 sm:group-hover:opacity-100"
             >
               <Eye className="w-4 h-4" />
             </button>
@@ -104,7 +104,7 @@ export default function ProductCard({ product, className = '', showCategory = tr
 
           {/* Low Stock Alert if stock < 10 */}
           {product.stock > 0 && product.stock <= 8 && (
-            <div className="absolute bottom-2 left-2 right-2 text-center bg-amber-500/90 text-white text-[9px] font-bold py-0.5 rounded-md backdrop-blur-xs">
+            <div className="absolute bottom-2.5 left-3 right-3 text-center bg-amber-500/90 text-white text-[10px] font-bold py-1 rounded-lg backdrop-blur-xs">
               ⚡ Only {product.stock} left in stock
             </div>
           )}
@@ -120,28 +120,28 @@ export default function ProductCard({ product, className = '', showCategory = tr
 
           <Link
             href={`/products/${product.id}`}
-            className="font-bold text-gray-900 text-sm mb-1 line-clamp-1 hover:underline hover:text-black decoration-1 underline-offset-2 transition-colors"
+            className="font-bold text-gray-900 text-sm sm:text-base mb-1.5 hover:underline hover:text-black decoration-1 underline-offset-2 transition-colors line-clamp-2"
             title={product.name}
           >
             {product.name}
           </Link>
 
           {/* Rating */}
-          <div className="flex items-center gap-1.5 mb-2">
+          <div className="flex items-center gap-1.5 mb-2.5">
             <div className="flex text-amber-400 text-xs">
               <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
             </div>
             <span className="text-xs font-bold text-gray-900">{product.rating || 4.9}</span>
-            <span className="text-[11px] text-gray-400">({product.reviews || 80})</span>
+            <span className="text-[11px] text-gray-400">({product.reviews || 80} reviews)</span>
           </div>
 
           {/* Price */}
-          <div className="flex items-baseline gap-2 mb-3">
-            <span className="font-extrabold text-red-600 text-base sm:text-lg">
+          <div className="flex items-baseline gap-2 mb-3.5">
+            <span className="font-extrabold text-red-600 text-lg sm:text-xl">
               ৳{product.price.toLocaleString('en-US')}
             </span>
             {product.oldPrice && product.oldPrice > product.price && (
-              <span className="text-xs text-gray-400 line-through font-medium">
+              <span className="text-xs sm:text-sm text-gray-400 line-through font-medium">
                 ৳{product.oldPrice.toLocaleString('en-US')}
               </span>
             )}
@@ -151,7 +151,7 @@ export default function ProductCard({ product, className = '', showCategory = tr
           <button
             onClick={handleAdd}
             disabled={isAdded || product.stock <= 0}
-            className={`mt-auto w-full rounded-full py-2 sm:py-2.5 flex items-center justify-center gap-2 text-xs font-bold transition-all duration-200 border-2 ${
+            className={`mt-auto w-full rounded-full py-3 sm:py-2.5 flex items-center justify-center gap-2 text-xs sm:text-sm font-bold transition-all duration-200 border-2 ${
               isAdded
                 ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
                 : product.stock <= 0
@@ -161,13 +161,13 @@ export default function ProductCard({ product, className = '', showCategory = tr
           >
             {isAdded ? (
               <>
-                <Check className="w-3.5 h-3.5" /> Added to Bag
+                <Check className="w-4 h-4" /> Added to Bag
               </>
             ) : product.stock <= 0 ? (
               'Sold Out'
             ) : (
               <>
-                <ShoppingBag className="w-3.5 h-3.5" /> Add to Cart
+                <ShoppingBag className="w-4 h-4" /> Add to Cart
               </>
             )}
           </button>

@@ -80,8 +80,8 @@ export default function TabbedProducts() {
         })}
       </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6 animate-in fade-in duration-300">
+      {/* Products Grid - Single product view on mobile (grid-cols-1) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 animate-in fade-in duration-300">
         {displayedProducts.map(p => (
           <ProductCard key={p.id} product={p} />
         ))}
