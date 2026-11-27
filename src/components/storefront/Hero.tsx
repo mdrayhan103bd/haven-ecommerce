@@ -67,7 +67,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans">
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-6 pb-6 sm:pb-8 grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans">
       {/* 3-Slide Carousel Main Hero Banner */}
       <div 
         className="lg:col-span-2 relative rounded-3xl overflow-hidden bg-[#F6F4EF] min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] flex items-center group shadow-sm"

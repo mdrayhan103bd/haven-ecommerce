@@ -12,6 +12,7 @@ import OrderTrackingModal from '@/components/storefront/OrderTrackingModal';
 export default function Header() {
   const router = useRouter();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const { cartCount, toggleCart } = useCart();
   const { wishlistCount, user, logout, settings, products } = useStore();
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,6 +32,17 @@ export default function Header() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Click outside to close search results
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowSearchResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const filteredSearchProducts = searchQuery.trim() 
@@ -67,7 +79,7 @@ export default function Header() {
                 <Menu className="w-6 h-6" />
               </button>
               <div className="flex flex-col">
-                <Link href="/" className="text-2xl md:text-3xl font-bold tracking-tight text-black leading-none">
+                <Link href="/" className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-black leading-none">
                   {settings.storeName || 'Cavrozone'}
                 </Link>
                 <span className="text-[10px] text-gray-500 font-medium tracking-wide mt-1 hidden sm:block">
@@ -137,7 +149,7 @@ export default function Header() {
             </div>
 
             {/* Right Action Icons */}
-            <div className="flex items-center gap-3 sm:gap-5">
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
               <Link href="/products" className="hidden lg:block text-sm font-semibold text-gray-700 hover:text-black">
                 Shop
               </Link>
@@ -237,14 +249,70 @@ export default function Header() {
                 ) : (
                   <Link 
                     href="/login" 
-                    className="flex items-center gap-1.5 text-xs font-bold bg-black text-white px-3.5 py-2 rounded-full hover:bg-gray-800 transition-colors shadow-sm"
+                    className="flex items-center gap-1.5 text-xs font-bold bg-black text-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full hover:bg-gray-800 transition-colors shadow-sm whitespace-nowrap shrink-0"
                   >
-                    <User className="w-3.5 h-3.5" />
-                    <span>Sign In</span>
+                    <User className="w-3.5 h-3.5 shrink-0" />
+                    <span className="whitespace-nowrap">Sign In</span>
                   </Link>
                 )}
               </div>
             </div>
+          </div>
+
+          {/* Mobile Search Bar - Sits prominently directly above the hero slider */}
+          <div ref={searchContainerRef} className="md:hidden mt-2.5 pt-0.5 relative">
+            <form onSubmit={handleSearchSubmit} className="flex items-center bg-[#F4F4F5] rounded-full px-3.5 py-2 border border-gray-100 focus-within:border-black/20 focus-within:bg-white shadow-xs transition-all">
+              <Search className="w-4 h-4 text-gray-500 mr-2 shrink-0" />
+              <input 
+                type="text" 
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSearchResults(true);
+                }}
+                onFocus={() => setShowSearchResults(true)}
+                placeholder="Search products, brands, or categories..." 
+                className="bg-transparent border-none outline-none flex-1 text-xs text-gray-800 placeholder-gray-400"
+              />
+              {searchQuery && (
+                <button 
+                  type="button" 
+                  onClick={() => { setSearchQuery(''); setShowSearchResults(false); }}
+                  className="text-xs text-gray-400 hover:text-black px-1"
+                >
+                  ✕
+                </button>
+              )}
+            </form>
+
+            {/* Mobile Live Search Dropdown */}
+            {showSearchResults && filteredSearchProducts.length > 0 && (
+              <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-2xl shadow-2xl border border-gray-100 p-2 z-50 max-h-[60vh] overflow-y-auto">
+                <div className="text-[10px] font-bold text-gray-400 px-3 py-1 uppercase tracking-wider">Products Found</div>
+                {filteredSearchProducts.map(p => (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.id}`}
+                    onClick={() => setShowSearchResults(false)}
+                    className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-xl transition-colors"
+                  >
+                    <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded-lg bg-gray-100 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-gray-900 truncate">{p.name}</div>
+                      <div className="text-[11px] text-gray-500">{p.category} • <span className="font-bold text-red-600">৳{p.price.toLocaleString('en-US')}</span></div>
+                    </div>
+                  </Link>
+                ))}
+                <div className="pt-1.5 border-t border-gray-100 text-center">
+                  <button 
+                    onClick={handleSearchSubmit}
+                    className="text-xs font-bold text-black py-1 hover:underline"
+                  >
+                    View all results for "{searchQuery}" →
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Desktop Category Navigation */}
