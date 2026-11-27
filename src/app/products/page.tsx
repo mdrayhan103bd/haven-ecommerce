@@ -136,13 +136,13 @@ function ProductsContent() {
         </div>
       </div>
 
-      {/* Category Pills Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 text-xs font-bold no-scrollbar">
+      {/* Category Pills Bar (Wraps smoothly on mobile into multiple lines) */}
+      <div className="flex flex-wrap items-center gap-2 mb-4 text-xs font-bold">
         {categories.map(cat => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-full whitespace-nowrap transition-all duration-200 ${
+            className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full whitespace-nowrap transition-all duration-200 ${
               selectedCategory.toLowerCase() === cat.toLowerCase()
                 ? 'bg-black text-white shadow-sm scale-102'
                 : 'bg-gray-100/80 text-gray-600 hover:bg-gray-200 hover:text-black'
