@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, Heart, ShoppingBag, Mic, Menu, X, User, ShieldCheck, LogOut, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,12 +10,26 @@ import CartDrawer from '@/components/storefront/CartDrawer';
 
 export default function Header() {
   const router = useRouter();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const { cartCount, toggleCart } = useCart();
   const { wishlistCount, user, logout, settings, products } = useStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  // Keyboard shortcut: Ctrl+K / Cmd+K to focus search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        setShowSearchResults(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const filteredSearchProducts = searchQuery.trim() 
     ? products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5)
@@ -38,7 +52,7 @@ export default function Header() {
         </div>
       )}
 
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-100 font-sans">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100/90 font-sans transition-all">
         <div className="container mx-auto px-4 lg:px-8 py-3.5">
           <div className="flex items-center justify-between gap-4 lg:gap-8">
             {/* Mobile Menu Toggle & Brand */}
@@ -65,6 +79,7 @@ export default function Header() {
               <form onSubmit={handleSearchSubmit} className="flex items-center bg-[#f5f5f5] rounded-full px-4 py-2 border border-transparent focus-within:border-black/20 focus-within:bg-white transition-all">
                 <Search className="w-4 h-4 text-gray-500 mr-2 shrink-0" />
                 <input 
+                  ref={searchInputRef}
                   type="text" 
                   value={searchQuery}
                   onChange={(e) => {
@@ -75,6 +90,9 @@ export default function Header() {
                   placeholder="Search products, brands, or categories..." 
                   className="bg-transparent border-none outline-none flex-1 px-1 text-sm text-gray-800 placeholder-gray-400"
                 />
+                <kbd className="hidden lg:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono text-gray-400 bg-white rounded border border-gray-200 shadow-xs mr-1">
+                  Ctrl K
+                </kbd>
                 {searchQuery && (
                   <button 
                     type="button" 

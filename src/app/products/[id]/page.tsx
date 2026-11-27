@@ -4,6 +4,8 @@ import React, { useState, use } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useStore } from '@/context/StoreContext';
 import { Product } from '@/types';
+import { useRouter } from 'next/navigation';
+import ProductCard from '@/components/ui/ProductCard';
 import { 
   ArrowLeft, 
   ShoppingCart, 
@@ -14,11 +16,13 @@ import {
   ShieldCheck, 
   Truck, 
   RotateCcw, 
-  Send 
+  Send,
+  Zap
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProductDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter();
   const resolvedParams = use(params);
   const { addToCart } = useCart();
   const { products, toggleWishlist, isInWishlist, showToast } = useStore();
@@ -44,6 +48,11 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
     addToCart(product, quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    router.push('/checkout');
   };
 
   const handleShare = () => {
@@ -166,41 +175,51 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
             <span className="text-xs text-gray-500">Subtotal: <strong className="text-gray-900">৳{(product.price * quantity).toLocaleString()}</strong></span>
           </div>
 
-          {/* Add to Cart & Wishlist Actions */}
-          <div className="flex items-center gap-3 mb-8">
+          {/* Add to Cart, Buy Now & Wishlist Actions */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-8">
             <button 
               onClick={handleAdd}
               disabled={added || product.stock === 0}
-              className={`flex-1 py-3.5 rounded-full font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+              className={`flex-1 py-3.5 px-6 rounded-full font-bold text-sm flex items-center justify-center gap-2 transition-all ${
                 added 
-                  ? 'bg-green-600 text-white' 
+                  ? 'bg-emerald-600 text-white' 
                   : product.stock === 0
                   ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                   : 'bg-black text-white hover:bg-gray-800 shadow-md'
               }`}
             >
-              {added ? <><Check className="w-4 h-4" /> Added to Cart</> : <><ShoppingCart className="w-4 h-4" /> Add to Cart</>}
+              {added ? <><Check className="w-4 h-4" /> Added to Bag</> : <><ShoppingCart className="w-4 h-4" /> Add to Bag</>}
             </button>
 
-            <button 
-              onClick={() => toggleWishlist(product)}
-              className={`w-12 h-12 border rounded-full flex items-center justify-center transition-all ${
-                inWishlist 
-                  ? 'border-red-200 bg-red-50 text-red-500' 
-                  : 'border-gray-200 text-gray-600 hover:border-black hover:text-black'
-              }`}
-              title={inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            <button
+              onClick={handleBuyNow}
+              disabled={product.stock === 0}
+              className="py-3.5 px-6 rounded-full font-bold text-sm bg-red-600 hover:bg-red-700 text-white flex items-center justify-center gap-2 shadow-md transition-all"
             >
-              <Heart className={`w-5 h-5 ${inWishlist ? 'fill-current' : ''}`} />
+              <Zap className="w-4 h-4 fill-current" /> Buy with COD
             </button>
 
-            <button 
-              onClick={handleShare}
-              className="w-12 h-12 border border-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:border-black hover:text-black transition-colors"
-              title="Share product link"
-            >
-              <Share2 className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3 justify-center">
+              <button 
+                onClick={() => toggleWishlist(product)}
+                className={`w-12 h-12 border rounded-full flex items-center justify-center transition-all ${
+                  inWishlist 
+                    ? 'border-red-200 bg-red-50 text-red-500' 
+                    : 'border-gray-200 text-gray-600 hover:border-black hover:text-black'
+                }`}
+                title={inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+              >
+                <Heart className={`w-5 h-5 ${inWishlist ? 'fill-current' : ''}`} />
+              </button>
+
+              <button 
+                onClick={handleShare}
+                className="w-12 h-12 border border-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:border-black hover:text-black transition-colors"
+                title="Share product link"
+              >
+                <Share2 className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Value Props */}
@@ -353,16 +372,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="border-t border-gray-100 pt-12">
-          <h2 className="text-2xl font-bold font-serif mb-6">You May Also Like</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mb-6">
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Recommended</span>
+            <h2 className="text-2xl font-bold font-serif text-gray-900 mt-1">You May Also Like</h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {relatedProducts.map(p => (
-              <Link key={p.id} href={`/products/${p.id}`} className="group flex flex-col bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition-all">
-                <div className="relative bg-[#F5F5F5] rounded-xl aspect-[4/3] mb-3 overflow-hidden flex items-center justify-center">
-                  <img src={p.image} alt={p.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" />
-                </div>
-                <div className="font-bold text-sm text-gray-900 truncate mb-1">{p.name}</div>
-                <div className="text-xs font-bold text-red-600">৳{p.price}</div>
-              </Link>
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </div>
