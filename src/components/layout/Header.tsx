@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Heart, ShoppingBag, Mic, Menu, X, User, ShieldCheck, LogOut, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Mic, Menu, X, User, ShieldCheck, LogOut, ChevronDown, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useStore } from '@/context/StoreContext';
 import CartDrawer from '@/components/storefront/CartDrawer';
+import OrderTrackingModal from '@/components/storefront/OrderTrackingModal';
 
 export default function Header() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function Header() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [isTrackingOpen, setIsTrackingOpen] = useState(false);
 
   // Keyboard shortcut: Ctrl+K / Cmd+K to focus search
   useEffect(() => {
@@ -135,10 +137,19 @@ export default function Header() {
             </div>
 
             {/* Right Action Icons */}
-            <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3 sm:gap-5">
               <Link href="/products" className="hidden lg:block text-sm font-semibold text-gray-700 hover:text-black">
                 Shop
               </Link>
+
+              {/* Live Order Tracking Trigger */}
+              <button
+                onClick={() => setIsTrackingOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200 transition-colors"
+              >
+                <Truck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Track Order</span>
+              </button>
 
               {/* Wishlist Link with Live Badge */}
               <Link href="/wishlist" className="text-gray-700 hover:text-black relative p-1" title="Wishlist">
@@ -312,6 +323,12 @@ export default function Header() {
               <div className="pt-4 border-t border-gray-100">
                 <div className="text-xs font-bold uppercase text-gray-400 mb-2.5">Quick Links</div>
                 <div className="flex flex-col space-y-2.5 text-sm font-medium">
+                  <button 
+                    onClick={() => { setIsTrackingOpen(true); setMobileMenuOpen(false); }}
+                    className="flex items-center gap-2 text-emerald-600 font-bold text-left"
+                  >
+                    <Truck className="w-4 h-4" /> Live Order Tracking
+                  </button>
                   <Link href="/wishlist" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between">
                     <span>Wishlist</span>
                     <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full font-bold">{wishlistCount}</span>
@@ -354,6 +371,12 @@ export default function Header() {
 
       {/* Cart Drawer Component */}
       <CartDrawer />
+
+      {/* Live Order Tracking Modal */}
+      <OrderTrackingModal 
+        isOpen={isTrackingOpen} 
+        onClose={() => setIsTrackingOpen(false)} 
+      />
     </>
   );
 }

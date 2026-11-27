@@ -1,20 +1,46 @@
 'use client';
 
-import React from 'react';
-import { X, Minus, Plus, ShoppingBag, Truck, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Minus, Plus, ShoppingBag, Truck, ArrowRight, ShieldCheck, Zap, Tag, Check, FileText } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useStore } from '@/context/StoreContext';
 import Link from 'next/link';
 
 export default function CartDrawer() {
   const { cart, isCartOpen, toggleCart, updateQuantity, removeFromCart, cartTotal, cartCount } = useCart();
-  const { settings } = useStore();
+  const { settings, applyDiscountCode, showToast } = useStore();
+
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; amount: number } | null>(null);
+  const [orderNote, setOrderNote] = useState('');
+  const [showNoteInput, setShowNoteInput] = useState(false);
 
   if (!isCartOpen) return null;
 
   const freeShippingThreshold = settings?.freeShippingThreshold || 1000;
   const progressPercent = Math.min(100, Math.round((cartTotal / freeShippingThreshold) * 100));
   const diff = freeShippingThreshold - cartTotal;
+
+  const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
+  const finalTotal = Math.max(0, cartTotal - discountAmount);
+
+  const handleApplyCoupon = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponCode.trim()) return;
+
+    const res = applyDiscountCode(couponCode, cartTotal);
+    if (res.valid) {
+      setAppliedDiscount({ code: couponCode.toUpperCase().trim(), amount: res.discountAmount });
+      showToast(res.message);
+    } else {
+      showToast(res.message, 'error');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedDiscount(null);
+    setCouponCode('');
+  };
 
   return (
     <>
@@ -148,6 +174,27 @@ export default function CartDrawer() {
                   </div>
                 </div>
               ))}
+
+              {/* Special Delivery Note Trigger */}
+              <div className="pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowNoteInput(!showNoteInput)}
+                  className="text-xs font-semibold text-gray-600 hover:text-black flex items-center gap-1.5"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  {showNoteInput ? 'Hide delivery instructions' : '+ Add delivery instructions / note'}
+                </button>
+                {showNoteInput && (
+                  <textarea
+                    rows={2}
+                    value={orderNote}
+                    onChange={(e) => setOrderNote(e.target.value)}
+                    placeholder="e.g. Call before delivery, delivery during office hours..."
+                    className="w-full mt-2 p-2.5 text-xs bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-black focus:bg-white resize-none"
+                  />
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -155,14 +202,56 @@ export default function CartDrawer() {
         {/* Footer Checkout Summary */}
         {cart.length > 0 && (
           <div className="p-5 sm:p-6 border-t border-gray-100 bg-gray-50/90">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-bold text-gray-700">Subtotal</span>
-              <span className="text-lg font-extrabold text-gray-900">
-                ৳{cartTotal.toLocaleString('en-US')}
+            {/* Promo Code Input */}
+            <form onSubmit={handleApplyCoupon} className="flex gap-2 mb-3">
+              <div className="relative flex-1">
+                <Tag className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Coupon (e.g. WELCOME10)"
+                  className="w-full pl-8 pr-3 py-2 text-xs bg-white border border-gray-200 rounded-full outline-none focus:border-black uppercase font-bold"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-gray-900 text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-black transition-colors shrink-0"
+              >
+                Apply
+              </button>
+            </form>
+
+            {appliedDiscount && (
+              <div className="flex items-center justify-between text-xs text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg mb-2">
+                <span>Coupon {appliedDiscount.code} applied:</span>
+                <span className="font-bold flex items-center gap-1">
+                  -৳{appliedDiscount.amount.toLocaleString()}
+                  <button type="button" onClick={handleRemoveCoupon} className="text-red-500 ml-1 hover:text-red-700">✕</button>
+                </span>
+              </div>
+            )}
+
+            <div className="flex justify-between items-center mb-1 text-xs text-gray-500">
+              <span>Subtotal</span>
+              <span>৳{cartTotal.toLocaleString('en-US')}</span>
+            </div>
+
+            {appliedDiscount && (
+              <div className="flex justify-between items-center mb-1 text-xs text-emerald-600 font-medium">
+                <span>Discount</span>
+                <span>-৳{appliedDiscount.amount.toLocaleString('en-US')}</span>
+              </div>
+            )}
+
+            <div className="flex justify-between items-center mb-3 text-base font-extrabold text-gray-900 pt-1 border-t border-gray-200/60">
+              <span>Estimated Total</span>
+              <span className="text-lg text-red-600">
+                ৳{finalTotal.toLocaleString('en-US')}
               </span>
             </div>
             
-            <div className="flex items-center gap-1.5 text-[11px] text-gray-500 mb-4">
+            <div className="flex items-center gap-1.5 text-[11px] text-gray-500 mb-3.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>100% Cash on Delivery Available Nationwide</span>
             </div>

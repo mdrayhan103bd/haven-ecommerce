@@ -29,9 +29,9 @@ export default function CheckoutPage() {
     email: user?.email || '',
     phone: user?.phone || defaultAddr?.phone || '',
     address: defaultAddr?.street || '',
-    city: defaultAddr?.city || '',
+    city: defaultAddr?.city || 'Dhaka',
     zip: defaultAddr?.zip || '',
-    country: defaultAddr?.country || 'United States'
+    country: defaultAddr?.country || 'Bangladesh'
   });
 
   // Payment Method - Cash on Delivery active, others temporarily disabled
@@ -182,7 +182,7 @@ export default function CheckoutPage() {
                   <input 
                     required 
                     type="tel" 
-                    placeholder="e.g. +1 555 234 5678" 
+                    placeholder="e.g. 01711-234567" 
                     className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black" 
                     value={formData.phone} 
                     onChange={e => setFormData({ ...formData, phone: e.target.value })} 
@@ -214,7 +214,7 @@ export default function CheckoutPage() {
                   <input 
                     required 
                     type="text" 
-                    placeholder="House number, street, apt / suite" 
+                    placeholder="House number, road, area/thana (e.g. House 12, Road 5, Banani)" 
                     className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black" 
                     value={formData.address} 
                     onChange={e => setFormData({ ...formData, address: e.target.value })} 
@@ -222,22 +222,31 @@ export default function CheckoutPage() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">City *</label>
-                    <input 
-                      required 
-                      type="text" 
-                      placeholder="City" 
-                      className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black" 
-                      value={formData.city} 
-                      onChange={e => setFormData({ ...formData, city: e.target.value })} 
-                    />
+                    <label className="block text-xs font-semibold text-gray-600 mb-1">City / Division *</label>
+                    <select
+                      value={formData.city}
+                      onChange={e => setFormData({ ...formData, city: e.target.value })}
+                      className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black bg-white cursor-pointer font-medium"
+                    >
+                      <option value="Dhaka">Dhaka</option>
+                      <option value="Chittagong">Chittagong</option>
+                      <option value="Sylhet">Sylhet</option>
+                      <option value="Rajshahi">Rajshahi</option>
+                      <option value="Khulna">Khulna</option>
+                      <option value="Barisal">Barisal</option>
+                      <option value="Rangpur">Rangpur</option>
+                      <option value="Mymensingh">Mymensingh</option>
+                      <option value="Gazipur">Gazipur</option>
+                      <option value="Narayanganj">Narayanganj</option>
+                      <option value="Comilla">Comilla</option>
+                    </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-600 mb-1">ZIP / Postal *</label>
                     <input 
                       required 
                       type="text" 
-                      placeholder="ZIP code" 
+                      placeholder="e.g. 1213" 
                       className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black" 
                       value={formData.zip} 
                       onChange={e => setFormData({ ...formData, zip: e.target.value })} 
@@ -247,9 +256,9 @@ export default function CheckoutPage() {
                     <label className="block text-xs font-semibold text-gray-600 mb-1">Country</label>
                     <input 
                       type="text" 
-                      className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-black bg-gray-50" 
+                      readOnly
+                      className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs outline-none bg-gray-50 text-gray-700 font-medium" 
                       value={formData.country} 
-                      onChange={e => setFormData({ ...formData, country: e.target.value })} 
                     />
                   </div>
                 </div>

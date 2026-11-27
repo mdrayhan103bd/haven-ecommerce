@@ -6,6 +6,7 @@ import { useStore } from '@/context/StoreContext';
 import { Product } from '@/types';
 import { useRouter } from 'next/navigation';
 import ProductCard from '@/components/ui/ProductCard';
+import StickyProductBuyBar from '@/components/storefront/StickyProductBuyBar';
 import { 
   ArrowLeft, 
   ShoppingCart, 
@@ -383,6 +384,9 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           </div>
         </div>
       )}
+
+      {/* Floating Sticky Buy Bar */}
+      <StickyProductBuyBar product={product} />
     </div>
   );
 }
